@@ -1,4 +1,4 @@
-FROM php:8.2-cli
+FROM php:8.3-cli
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -16,7 +16,6 @@ RUN apt-get update && apt-get install -y \
 # Install PHP extensions
 RUN docker-php-ext-install \
     pdo \
-    pdo_mysql \
     pdo_pgsql \
     mbstring \
     exif \
@@ -24,19 +23,18 @@ RUN docker-php-ext-install \
     bcmath \
     gd
 
-# Increase PHP memory limit for Composer
-RUN echo "memory_limit=-1" > /usr/local/etc/php/conf.d/memory.ini
+# Increase PHP memory limit
+RUN echo "memory_limit=256M" > /usr/local/etc/php/conf.d/memory.ini
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory
 WORKDIR /var/www
 
 # Copy composer files first (better layer caching)
 COPY composer.json composer.lock ./
 
-# Install PHP dependencies
+# Install PHP dependencies (no dev, optimized)
 RUN composer install \
     --no-dev \
     --optimize-autoloader \
@@ -57,7 +55,6 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache \
 # Make entrypoint executable
 RUN chmod +x /var/www/docker-entrypoint.sh
 
-# Expose port
 EXPOSE 8000
 
 CMD ["/var/www/docker-entrypoint.sh"]

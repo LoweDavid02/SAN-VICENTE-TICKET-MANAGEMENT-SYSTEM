@@ -2,29 +2,23 @@
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Cross-Origin Resource Sharing (CORS) Configuration
-    |--------------------------------------------------------------------------
-    |
-    | Allows the React frontend (http://localhost:5173) to communicate with
-    | the Laravel API. withCredentials must be true on the Axios side for
-    | cookie-based Sanctum auth; for token auth it is optional but harmless.
-    |
-    */
-
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => [
+    'allowed_origins' => array_filter([
+        // Local development
         'http://localhost:5173',
         'http://localhost:3000',
         'http://127.0.0.1:5173',
-        'https://san-vicente-ticket-management-system-90eq.onrender.com',
-    ],
+        // Production — set FRONTEND_URL in Render environment variables
+        env('FRONTEND_URL'),
+    ]),
 
-    'allowed_origins_patterns' => [],
+    'allowed_origins_patterns' => [
+        // Allow any *.onrender.com subdomain automatically
+        '#^https://.*\.onrender\.com$#',
+    ],
 
     'allowed_headers' => ['*'],
 
@@ -32,7 +26,6 @@ return [
 
     'max_age' => 0,
 
-    // Required when React sends withCredentials: true
-    'supports_credentials' => true,
+    'supports_credentials' => false,
 
 ];
