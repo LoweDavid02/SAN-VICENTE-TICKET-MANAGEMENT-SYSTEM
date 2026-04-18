@@ -21,6 +21,7 @@ return [
         'http://localhost:5173',
         'http://localhost:3000',
         'http://127.0.0.1:5173',
+        'https://san-vicente-ticket-management-system-90eq.onrender.com',
     ],
 
     'allowed_origins_patterns' => [],
