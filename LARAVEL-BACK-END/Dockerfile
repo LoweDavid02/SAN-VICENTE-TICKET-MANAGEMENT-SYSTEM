@@ -36,7 +36,7 @@ COPY composer.json composer.lock ./
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-scripts
 
-# Copy the rest of the project
+# Copy the rest of the project (includes entrypoint.sh)
 COPY . .
 
 # Run post-install scripts
@@ -46,11 +46,10 @@ RUN composer run-script post-autoload-dump || true
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache \
     && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
-# Copy entrypoint script
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# Make entrypoint executable
+RUN chmod +x /var/www/entrypoint.sh
 
 # Expose port
 EXPOSE 8000
 
-CMD ["/entrypoint.sh"]
+CMD ["/var/www/entrypoint.sh"]
