@@ -29,6 +29,9 @@ Route::prefix('v1')->group(function () {
             Route::patch('/tickets/{id}/status',        [AdminController::class, 'updateTicketStatus']);
             Route::post('/tickets/{id}/assign',         [AdminController::class, 'assignTicket']);
             Route::get('/users',                        [AdminController::class, 'users']);
+            Route::post('/users',                       [AdminController::class, 'createUser']);
+            Route::delete('/users/{id}',                [AdminController::class, 'deleteUser']);
+            Route::patch('/users/{id}/status',          [AdminController::class, 'updateUserStatus']);
             Route::get('/personnel',                    [AdminController::class, 'personnel']);
             Route::get('/profile',                      [AdminController::class, 'profile']);
             Route::patch('/profile',                    [AdminController::class, 'updateProfile']);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Resident;
 
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\Traits\FormatsUser;
 use App\Http\Requests\Api\SubmitTicketRequest;
 use App\Http\Requests\Api\UpdateProfileRequest;
 use App\Models\Ticket;
@@ -14,12 +15,13 @@ use Illuminate\Support\Str;
 
 class ResidentController extends Controller
 {
+    use FormatsUser;
     /** Resident dashboard — summary + recent tickets */
     public function dashboard(Request $request): JsonResponse
     {
         $user    = $request->user();
         $tickets = Ticket::where('resident_id', $user->id)
-            ->with(['assignedPersonnel', 'timeline'])
+            ->with(['assignedPersonnel', 'timeline.updatedBy'])
             ->orderByDesc('created_at')
             ->get();
 
@@ -109,22 +111,4 @@ class ResidentController extends Controller
         return ApiResponse::success($this->formatUser($user->fresh()), 'Profile updated successfully.');
     }
 
-    private function formatUser($user): array
-    {
-        return [
-            'id'         => $user->id,
-            'first_name' => $user->first_name,
-            'last_name'  => $user->last_name,
-            'full_name'  => $user->full_name,
-            'email'      => $user->email,
-            'phone'      => $user->phone,
-            'address'    => $user->address,
-            'bio'        => $user->bio,
-            'avatar'     => $user->avatar,
-            'portal'     => $user->portal,
-            'status'     => $user->status,
-            'role'       => $user->getRoleNames()->first(),
-            'created_at' => $user->created_at,
-        ];
-    }
 }

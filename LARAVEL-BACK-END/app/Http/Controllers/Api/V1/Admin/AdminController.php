@@ -4,15 +4,19 @@ namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\Traits\FormatsUser;
+use App\Http\Requests\Api\CreateUserRequest;
 use App\Http\Requests\Api\UpdateProfileRequest;
 use App\Models\Ticket;
 use App\Models\TicketTimeline;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
+    use FormatsUser;
     /** Admin dashboard summary */
     public function dashboard(Request $request): JsonResponse
     {
@@ -129,7 +133,16 @@ class AdminController extends Controller
     public function users(Request $request): JsonResponse
     {
         $users = User::with('roles')->orderBy('created_at', 'desc')->paginate(15);
-        return ApiResponse::success($users, 'Users retrieved.');
+
+        return ApiResponse::success([
+            'users'      => collect($users->items())->map(fn($u) => $this->formatUser($u))->values(),
+            'pagination' => [
+                'total'        => $users->total(),
+                'current_page' => $users->currentPage(),
+                'last_page'    => $users->lastPage(),
+                'per_page'     => $users->perPage(),
+            ],
+        ], 'Users retrieved.');
     }
 
     /** List all personnel */
@@ -170,22 +183,57 @@ class AdminController extends Controller
         return ApiResponse::success($this->formatUser($user->fresh()), 'Profile updated.');
     }
 
-    private function formatUser($user): array
+    /**
+     * Admin creates a new admin or personnel account.
+     * Residents self-register via POST /auth/register instead.
+     */
+    public function createUser(CreateUserRequest $request): JsonResponse
     {
-        return [
-            'id'         => $user->id,
-            'first_name' => $user->first_name,
-            'last_name'  => $user->last_name,
-            'full_name'  => $user->full_name,
-            'email'      => $user->email,
-            'phone'      => $user->phone,
-            'address'    => $user->address,
-            'bio'        => $user->bio,
-            'avatar'     => $user->avatar,
-            'portal'     => $user->portal,
-            'status'     => $user->status,
-            'role'       => $user->getRoleNames()->first(),
-            'created_at' => $user->created_at,
-        ];
+        $user = User::create([
+            'first_name' => $request->first_name,
+            'last_name'  => $request->last_name,
+            'email'      => $request->email,
+            'password'   => Hash::make($request->password),
+            'portal'     => $request->portal,
+            'status'     => 'active',
+        ]);
+
+        $user->assignRole($request->portal);
+
+        return ApiResponse::success($this->formatUser($user), 'User created successfully.', 201);
     }
+
+    /** Soft-delete a user account */
+    public function deleteUser(Request $request, int $id): JsonResponse
+    {
+        $user = User::findOrFail($id);
+
+        // Prevent self-deletion
+        if ($user->id === $request->user()->id) {
+            return ApiResponse::error('You cannot delete your own account.', 403);
+        }
+
+        $user->delete();
+
+        return ApiResponse::success(null, 'User deleted successfully.');
+    }
+
+    /** Activate or suspend a user account */
+    public function updateUserStatus(Request $request, int $id): JsonResponse
+    {
+        $request->validate([
+            'status' => ['required', 'in:active,inactive,suspended'],
+        ]);
+
+        $user = User::findOrFail($id);
+
+        if ($user->id === $request->user()->id) {
+            return ApiResponse::error('You cannot change your own status.', 403);
+        }
+
+        $user->update(['status' => $request->status]);
+
+        return ApiResponse::success($this->formatUser($user->fresh()), 'User status updated.');
+    }
+
 }

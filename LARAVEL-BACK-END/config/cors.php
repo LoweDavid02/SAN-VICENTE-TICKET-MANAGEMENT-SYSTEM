@@ -1,22 +1,18 @@
 <?php
 
 return [
-
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
     'allowed_methods' => ['*'],
 
     'allowed_origins' => array_filter([
-        // Local development
         'http://localhost:5173',
         'http://localhost:3000',
         'http://127.0.0.1:5173',
-        // Production — set FRONTEND_URL in Render environment variables
         env('FRONTEND_URL'),
     ]),
 
     'allowed_origins_patterns' => [
-        // Allow any *.onrender.com subdomain automatically
         '#^https://.*\.onrender\.com$#',
     ],
 
@@ -26,6 +22,8 @@ return [
 
     'max_age' => 0,
 
+    // Bearer token auth (Sanctum) does not use cookies, so credentials are not
+    // needed. Setting this to false also lifts the browser restriction that
+    // prevents wildcard origins when credentials are enabled.
     'supports_credentials' => false,
-
 ];

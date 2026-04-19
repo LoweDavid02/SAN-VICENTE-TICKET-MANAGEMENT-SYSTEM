@@ -11,7 +11,9 @@ class UpdateTicketStatusRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status'     => ['required', 'in:Pending,Under Review,In Progress,Completed,Rejected'],
+            // Personnel can only move tasks to these two states.
+            // Pending / Under Review / Rejected are admin-only transitions.
+            'status'     => ['required', 'in:In Progress,Completed'],
             'field_note' => ['nullable', 'string', 'max:1000'],
         ];
     }

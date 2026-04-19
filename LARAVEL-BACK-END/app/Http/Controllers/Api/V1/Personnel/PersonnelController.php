@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Personnel;
 
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\Traits\FormatsUser;
 use App\Http\Requests\Api\UpdateProfileRequest;
 use App\Http\Requests\Api\UpdateTicketStatusRequest;
 use App\Models\Ticket;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 
 class PersonnelController extends Controller
 {
+    use FormatsUser;
     /** Personnel dashboard */
     public function dashboard(Request $request): JsonResponse
     {
@@ -91,22 +93,4 @@ class PersonnelController extends Controller
         return ApiResponse::success($this->formatUser($user->fresh()), 'Profile updated.');
     }
 
-    private function formatUser($user): array
-    {
-        return [
-            'id'         => $user->id,
-            'first_name' => $user->first_name,
-            'last_name'  => $user->last_name,
-            'full_name'  => $user->full_name,
-            'email'      => $user->email,
-            'phone'      => $user->phone,
-            'address'    => $user->address,
-            'bio'        => $user->bio,
-            'avatar'     => $user->avatar,
-            'portal'     => $user->portal,
-            'status'     => $user->status,
-            'role'       => $user->getRoleNames()->first(),
-            'created_at' => $user->created_at,
-        ];
-    }
 }

@@ -18,7 +18,9 @@ class RegisterRequest extends FormRequest
             'last_name'  => ['required', 'string', 'max:100'],
             'email'      => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password'   => ['required', 'string', 'min:8', 'confirmed'],
-            'portal'     => ['required', 'string', 'in:admin,resident,personnel'],
+            // Only residents may self-register. Admin / personnel accounts
+            // must be created by an admin via the admin portal.
+            'portal'     => ['required', 'string', 'in:resident'],
         ];
     }
 }
