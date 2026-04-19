@@ -33,24 +33,16 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.code === 'ECONNABORTED' || error.message?.includes('timeout')) {
-      error.response = {
-        data: { message: 'Request timed out. Make sure the backend server is running on port 8000.' }
-      };
-    } else if (!error.response) {
-      // Server is not running or network error
-      error.response = {
-        data: {
-          message: 'Cannot connect to server. Start Laravel with:\n  cd LARAVEL-BACK-END && php artisan serve'
-        }
-      };
-    } else if (error.response.status === 401) {
+    // Handle 401 Unauthorized - clear auth and redirect to login
+    if (error.response?.status === 401) {
       localStorage.removeItem('auth_token');
       localStorage.removeItem('auth_user');
       if (window.location.pathname !== '/login') {
         window.location.href = '/login';
       }
     }
+    
+    // Let the calling code handle other errors with proper context
     return Promise.reject(error);
   }
 );

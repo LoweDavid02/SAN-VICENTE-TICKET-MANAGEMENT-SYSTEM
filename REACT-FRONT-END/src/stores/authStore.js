@@ -46,11 +46,19 @@ const useAuthStore = create((set) => ({
 
       return { portal: user.portal };
     } catch (err) {
-      const raw = err.response?.data?.message;
-      // Distinguish server-down from bad credentials
-      const message = raw
-        ? raw
-        : 'Cannot connect to server. Make sure Laravel is running:\n  cd LARAVEL-BACK-END && php artisan serve';
+      // Extract meaningful error message
+      let message = 'Login failed. Please try again.';
+      
+      if (err.response?.data?.message) {
+        // Server returned an error message (e.g., "Invalid credentials")
+        message = err.response.data.message;
+      } else if (err.code === 'ECONNABORTED' || err.message?.includes('timeout')) {
+        message = 'Request timed out. Please check your connection and try again.';
+      } else if (!err.response) {
+        // Network error - server not reachable
+        message = 'Cannot connect to server. Please check if the backend is running.';
+      }
+      
       set({ isLoading: false, error: message });
       throw new Error(message);
     }
