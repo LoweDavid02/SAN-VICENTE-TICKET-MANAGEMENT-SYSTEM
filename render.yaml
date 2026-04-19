@@ -19,7 +19,7 @@ services:
       - key: APP_DEBUG
         value: "false"
       - key: APP_KEY
-        generateValue: true
+        sync: false
       - key: APP_URL
         value: https://san-vicente-api.onrender.com
       - key: LOG_CHANNEL
@@ -48,6 +48,8 @@ services:
         fromDatabase:
           name: san-vicente-db
           property: password
+      - key: DB_SSLMODE
+        value: require
       - key: SESSION_DRIVER
         value: file
       - key: CACHE_STORE

@@ -1,0 +1,50 @@
+═══════════════════════════════════════════════════════════════
+  🚀 RENDER DEPLOYMENT - QUICK FIX
+═══════════════════════════════════════════════════════════════
+
+PROBLEM: "Cannot connect to server" on Render production
+
+ROOT CAUSE: Missing proper APP_KEY configuration
+
+═══════════════════════════════════════════════════════════════
+  ✅ SOLUTION (3 STEPS)
+═══════════════════════════════════════════════════════════════
+
+STEP 1: Go to Render Dashboard
+  → https://dashboard.render.com
+  → Find service: "san-vicente-api"
+  → Click "Environment" tab
+
+STEP 2: Set APP_KEY
+  → Find or add variable: APP_KEY
+  → Set value to:
+    base64:KISn5xhEXdifAiFYPHV/iLtb3Vro03BiQ6d9rtykL+M=
+  → Click "Save Changes"
+
+STEP 3: Deploy Code Changes
+  → Run in terminal:
+    git add render.yaml
+    git commit -m "fix: Configure APP_KEY for Render"
+    git push origin main
+  
+  → Render will auto-deploy (wait 5-10 min)
+
+═══════════════════════════════════════════════════════════════
+  🧪 TEST AFTER DEPLOYMENT
+═══════════════════════════════════════════════════════════════
+
+1. Backend Health:
+   https://san-vicente-api.onrender.com/up
+   Should return: {"status":"ok",...}
+
+2. Frontend:
+   https://san-vicente-frontend.onrender.com
+   Try login with:
+   - Email: admin@barangay.gov
+   - Password: Admin@123
+
+═══════════════════════════════════════════════════════════════
+
+⚠️  IMPORTANT: The APP_KEY must start with "base64:" prefix!
+
+═══════════════════════════════════════════════════════════════
