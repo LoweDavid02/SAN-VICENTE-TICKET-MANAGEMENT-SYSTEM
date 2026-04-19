@@ -243,15 +243,18 @@ export default function Login() {
 
                 {/* Portal selector */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '10.5px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
+                  <label htmlFor="portal-select" style={{ display: 'block', fontSize: '10.5px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
                     Select Portal
                   </label>
                   <div style={{ position: 'relative' }}>
                     <ChevronDown size={14} style={{ position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: '#94a3b8' }} />
                     <select
+                      id="portal-select"
+                      name="portal"
                       value={form.portal}
                       onChange={set('portal')}
                       required
+                      aria-label="Select your portal"
                       style={{
                         ...inputStyle,
                         paddingLeft: 14,
@@ -280,18 +283,21 @@ export default function Login() {
 
                 {/* Email */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '10.5px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
+                  <label htmlFor="email-input" style={{ display: 'block', fontSize: '10.5px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
                     Email Address
                   </label>
                   <div style={{ position: 'relative' }}>
                     <Mail size={14} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: form.email ? '#14b8a6' : '#94a3b8', transition: 'color .15s' }} />
                     <input
+                      id="email-input"
+                      name="email"
                       type="email"
                       value={form.email}
                       onChange={set('email')}
                       placeholder="you@barangay.gov"
                       required
                       autoComplete="email"
+                      aria-label="Email address"
                       style={inputStyle}
                       onFocus={onFocus}
                       onBlur={onBlur}
@@ -301,18 +307,21 @@ export default function Login() {
 
                 {/* Password */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '10.5px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
+                  <label htmlFor="password-input" style={{ display: 'block', fontSize: '10.5px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
                     Password
                   </label>
                   <div style={{ position: 'relative' }}>
                     <Lock size={14} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: form.password ? '#14b8a6' : '#94a3b8', transition: 'color .15s' }} />
                     <input
+                      id="password-input"
+                      name="password"
                       type={showPass ? 'text' : 'password'}
                       value={form.password}
                       onChange={set('password')}
                       placeholder="••••••••"
                       required
                       autoComplete="current-password"
+                      aria-label="Password"
                       style={{ ...inputStyle, paddingRight: 44 }}
                       onFocus={onFocus}
                       onBlur={onBlur}
@@ -321,6 +330,7 @@ export default function Login() {
                       type="button"
                       onClick={() => setShowPass((v) => !v)}
                       aria-label={showPass ? 'Hide password' : 'Show password'}
+                      aria-controls="password-input"
                       style={{
                         position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)',
                         width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center',
