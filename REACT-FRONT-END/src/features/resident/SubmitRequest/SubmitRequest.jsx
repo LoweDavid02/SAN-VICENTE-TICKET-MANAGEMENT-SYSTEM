@@ -67,6 +67,8 @@ export default function SubmitRequest() {
     addImages, removeImage, handleDrop,
     goNext, goBack, handleSubmit, reset,
     getCategoryLabel,
+    error: submitError,
+    isSubmitting,
   } = useSubmitRequest();
 
   /* ── Success screen ── */
@@ -299,9 +301,23 @@ export default function SubmitRequest() {
               {t('continue')} <ArrowRight size={15} />
             </button>
           ) : (
-            <button onClick={handleSubmit} style={{ display: 'flex', alignItems: 'center', gap: 7, marginLeft: 'auto', padding: '11px 28px', borderRadius: 11, cursor: 'pointer', fontSize: '0.9375rem', fontWeight: 700, fontFamily: 'inherit', color: '#fff', border: 'none', background: '#059669', boxShadow: '0 2px 10px rgba(5,150,105,.32)', transition: 'all .15s' }} onMouseEnter={(e) => { e.currentTarget.style.background = '#047857'; e.currentTarget.style.transform = 'translateY(-1px)'; }} onMouseLeave={(e) => { e.currentTarget.style.background = '#059669'; e.currentTarget.style.transform = ''; }}>
-              <CheckCircle size={15} /> {t('submitBtn')}
-            </button>
+            <div style={{ marginLeft: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8 }}>
+              {submitError && (
+                <p style={{ fontSize: 12, color: '#dc2626', maxWidth: 320, textAlign: 'right', lineHeight: 1.5 }}>⚠ {submitError}</p>
+              )}
+              <button
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+                style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '11px 28px', borderRadius: 11, cursor: isSubmitting ? 'not-allowed' : 'pointer', fontSize: '0.9375rem', fontWeight: 700, fontFamily: 'inherit', color: '#fff', border: 'none', background: isSubmitting ? '#6b7280' : '#059669', boxShadow: isSubmitting ? 'none' : '0 2px 10px rgba(5,150,105,.32)', opacity: isSubmitting ? 0.8 : 1, transition: 'all .15s' }}
+                onMouseEnter={(e) => { if (!isSubmitting) { e.currentTarget.style.background = '#047857'; e.currentTarget.style.transform = 'translateY(-1px)'; } }}
+                onMouseLeave={(e) => { if (!isSubmitting) { e.currentTarget.style.background = '#059669'; e.currentTarget.style.transform = ''; } }}
+              >
+                {isSubmitting
+                  ? <><span style={{ width: 14, height: 14, borderRadius: '50%', border: '2px solid rgba(255,255,255,.3)', borderTopColor: '#fff', animation: 'spin .65s linear infinite', flexShrink: 0 }} /> Submitting…</>
+                  : <><CheckCircle size={15} /> {t('submitBtn')}</>
+                }
+              </button>
+            </div>
           )}
         </div>
 

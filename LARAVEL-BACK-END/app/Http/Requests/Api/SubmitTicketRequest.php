@@ -13,7 +13,7 @@ class SubmitTicketRequest extends FormRequest
         return [
             'title'       => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'min:10', 'max:5000'],
-            'category'    => ['required', 'string', 'in:streetlight,drainage,road,waste,water,other'],
+            'category'    => ['required', 'string', 'in:streetlight,drainage,road,waste,water,other,Streetlight Outage,Drainage / Flood,Road Damage,Waste Management,Water Supply,Other Issues'],
             'location'    => ['required', 'string', 'max:255'],
             'severity'    => ['required', 'in:Low,Medium,High'],
             // Accept base64 data URIs or HTTPS URLs only

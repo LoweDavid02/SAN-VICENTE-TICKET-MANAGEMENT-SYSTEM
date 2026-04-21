@@ -76,23 +76,28 @@ export function useSubmitRequest() {
   const handleSubmit = useCallback(async () => {
     setError(null);
     try {
-      const categoryLabel = TICKET_CATEGORIES.find(c => c.id === form.category)?.label || form.category;
-      const title = `${categoryLabel} — ${form.location}`;
+      const categoryObj = TICKET_CATEGORIES.find(c => c.id === form.category);
+      // Send category ID (not label) — backend validates against the ID whitelist
+      const title = `${categoryObj?.label || form.category} — ${form.location}`;
 
       const { data } = await submitToApi({
         title,
         description: form.description,
-        category:    categoryLabel,
+        category:    form.category,   // ← ID: 'streetlight', 'drainage', etc.
         location:    form.location,
         severity:    form.severity,
-        images:      [], // file upload handled separately
+        images:      [],
       });
 
       const trackingId = data.data.trackingId;
       notifyNewTicket(trackingId, title);
       setSubmitted({ ...form, trackingId });
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to submit request. Please try again.');
+      // Surface validation errors clearly
+      const msg = err.response?.data?.message
+        || err.response?.data?.errors
+        || 'Failed to submit request. Please try again.';
+      setError(typeof msg === 'object' ? Object.values(msg).flat().join(' ') : msg);
     }
   }, [form, submitToApi, notifyNewTicket]);
 
