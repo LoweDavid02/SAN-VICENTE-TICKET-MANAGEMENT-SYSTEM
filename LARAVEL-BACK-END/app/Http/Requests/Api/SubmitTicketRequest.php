@@ -12,12 +12,22 @@ class SubmitTicketRequest extends FormRequest
     {
         return [
             'title'       => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'min:10'],
-            'category'    => ['required', 'string', 'max:100'],
+            'description' => ['required', 'string', 'min:10', 'max:5000'],
+            'category'    => ['required', 'string', 'in:streetlight,drainage,road,waste,water,other'],
             'location'    => ['required', 'string', 'max:255'],
             'severity'    => ['required', 'in:Low,Medium,High'],
+            // Accept base64 data URIs or HTTPS URLs only
             'images'      => ['nullable', 'array', 'max:5'],
-            'images.*'    => ['nullable', 'string'],
+            'images.*'    => ['nullable', 'string', 'max:2097152',
+                              'regex:/^(data:image\/(jpeg|png|gif|webp);base64,[A-Za-z0-9+\/]+=*|https:\/\/.+)$/'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'category.in'   => 'Invalid category selected.',
+            'images.*.regex'=> 'Each image must be a valid base64 image or HTTPS URL.',
         ];
     }
 }

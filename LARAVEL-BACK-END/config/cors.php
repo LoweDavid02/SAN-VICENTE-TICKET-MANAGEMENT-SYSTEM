@@ -3,7 +3,7 @@
 return [
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['*'],
+    'allowed_methods' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
 
     'allowed_origins' => array_filter([
         'http://localhost:5173',
@@ -13,14 +13,16 @@ return [
     ]),
 
     'allowed_origins_patterns' => [
-        '#^https://.*\.onrender\.com$#',
+        // Only allow HTTPS Render subdomains — not HTTP
+        '#^https://[a-z0-9\-]+\.onrender\.com$#',
     ],
 
-    'allowed_headers' => ['*'],
+    // Explicitly list allowed headers instead of wildcard
+    'allowed_headers' => ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With'],
 
     'exposed_headers' => [],
 
-    'max_age' => 0,
+    'max_age' => 86400, // Cache preflight for 24 hours
 
     // Bearer token auth (Sanctum) does not use cookies, so credentials are not
     // needed. Setting this to false also lifts the browser restriction that

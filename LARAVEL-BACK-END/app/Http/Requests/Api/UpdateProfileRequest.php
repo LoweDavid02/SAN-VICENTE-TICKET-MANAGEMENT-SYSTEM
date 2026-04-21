@@ -11,13 +11,25 @@ class UpdateProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => ['sometimes', 'string', 'max:100'],
-            'last_name'  => ['sometimes', 'string', 'max:100'],
-            'email'      => ['sometimes', 'email', 'unique:users,email,' . $this->user()->id],
-            'phone'      => ['nullable', 'string', 'max:30'],
+            'first_name' => ['sometimes', 'string', 'max:100', 'regex:/^[\pL\s\-]+$/u'],
+            'last_name'  => ['sometimes', 'string', 'max:100', 'regex:/^[\pL\s\-]+$/u'],
+            'email'      => ['sometimes', 'email:rfc', 'max:255', 'unique:users,email,' . $this->user()->id],
+            'phone'      => ['nullable', 'string', 'max:30', 'regex:/^[0-9\+\-\s\(\)]+$/'],
             'address'    => ['nullable', 'string', 'max:255'],
             'bio'        => ['nullable', 'string', 'max:500'],
-            'avatar'     => ['nullable', 'string'], // base64 or URL
+            // Accept base64 data URI or HTTPS URL only — reject arbitrary strings
+            'avatar'     => ['nullable', 'string', 'max:2097152', // 2 MB base64 limit
+                             'regex:/^(data:image\/(jpeg|png|gif|webp);base64,[A-Za-z0-9+\/]+=*|https:\/\/.+)$/'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'avatar.regex'     => 'Avatar must be a valid base64 image or HTTPS URL.',
+            'phone.regex'      => 'Phone number may only contain digits, spaces, +, -, (, ).',
+            'first_name.regex' => 'First name may only contain letters, spaces, and hyphens.',
+            'last_name.regex'  => 'Last name may only contain letters, spaces, and hyphens.',
         ];
     }
 }

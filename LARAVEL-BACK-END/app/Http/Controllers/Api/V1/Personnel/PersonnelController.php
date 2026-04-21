@@ -65,13 +65,13 @@ class PersonnelController extends Controller
         $ticket->update([
             'status'     => $request->status,
             'progress'   => Ticket::$statusProgress[$request->status] ?? $ticket->progress,
-            'field_note' => $request->field_note,
+            'field_note' => $request->field_note ? strip_tags($request->field_note) : null,
         ]);
 
         TicketTimeline::create([
             'ticket_id'  => $ticket->id,
             'status'     => $request->status,
-            'note'       => $request->field_note,
+            'note'       => $request->field_note ? strip_tags($request->field_note) : null,
             'updated_by' => $user->id,
         ]);
 

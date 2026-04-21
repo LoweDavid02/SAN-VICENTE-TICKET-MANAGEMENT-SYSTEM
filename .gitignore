@@ -1,0 +1,25 @@
+# ── Environment files — NEVER commit these ──────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── OS files ─────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── IDE files ─────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+
+# ── Security audit / temp files ──────────────────────────────────────────────
+QUICK_FIX.txt
+SYSTEM_AUDIT_REPORT.md
+ACCESSIBILITY_FIXES.md
+RENDER_DEPLOYMENT_FIX.md

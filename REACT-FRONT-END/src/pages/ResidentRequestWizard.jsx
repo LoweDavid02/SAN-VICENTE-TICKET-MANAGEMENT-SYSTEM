@@ -4,6 +4,8 @@ import {
   MapPin, AlertTriangle, FileText, Hash,
   Upload, X, Image as ImageIcon,
 } from 'lucide-react';
+import { useSubmitTicket } from '../hooks/useTicketApi';
+import { useNavigate } from 'react-router-dom';
 
 const CATEGORIES = [
   { id: 'streetlight', label: 'Streetlight Outage', icon: '💡', dept: 'Infrastructure' },
@@ -70,11 +72,14 @@ const labelStyle = {
 };
 
 export default function ResidentRequestWizard() {
+  const navigate               = useNavigate();
   const [step, setStep]        = useState(0);
   const [submitted, setSubmit] = useState(null);
   const [form, setForm]        = useState({ category: '', description: '', location: '', severity: 'Medium' });
-  const [images, setImages]    = useState([]);   // { file, url, name, size }
+  const [images, setImages]    = useState([]);
+  const [submitError, setSubmitError] = useState(null);
   const fileInputRef           = useRef(null);
+  const { mutateAsync: submitTicket, isPending: isSubmitting } = useSubmitTicket();
 
   const set = (k) => (v) => setForm((f) => ({ ...f, [k]: v }));
 
@@ -102,9 +107,35 @@ export default function ResidentRequestWizard() {
     return true;
   };
 
-  const submit = () => {
-    const trackingNumber = `SV-${Date.now().toString().slice(-6)}`;
-    setSubmit({ ...form, images, trackingNumber });
+  const submit = async () => {
+    setSubmitError(null);
+    try {
+      // Convert image files to base64 for API submission
+      const imageBase64 = await Promise.all(
+        images.map((img) => new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onload = (e) => resolve(e.target.result);
+          reader.readAsDataURL(img.file);
+        }))
+      );
+
+      const { data } = await submitTicket({
+        title:       CATEGORIES.find((c) => c.id === form.category)?.label || form.category,
+        description: form.description,
+        category:    form.category,
+        location:    form.location,
+        severity:    form.severity,
+        images:      imageBase64,
+      });
+
+      setSubmit({
+        ...form,
+        images,
+        trackingNumber: data.data?.trackingId || data.data?.ticket?.tracking_id,
+      });
+    } catch (err) {
+      setSubmitError(err.response?.data?.message || 'Failed to submit request. Please try again.');
+    }
   };
 
   /* ── Success screen ── */
@@ -182,6 +213,7 @@ export default function ResidentRequestWizard() {
               Submit Another
             </button>
             <button
+              onClick={() => navigate('/resident/dashboard')}
               style={{
                 padding: '11px 24px', borderRadius: 11, cursor: 'pointer',
                 fontSize: '0.9375rem', fontWeight: 700, fontFamily: 'inherit',
@@ -719,30 +751,49 @@ export default function ResidentRequestWizard() {
               Continue <ArrowRight size={15} />
             </button>
           ) : (
-            <button
-              onClick={submit}
-              style={{
-                display: 'flex', alignItems: 'center', gap: 7,
-                marginLeft: 'auto', padding: '11px 28px', borderRadius: 11, cursor: 'pointer',
-                fontSize: '0.9375rem', fontWeight: 700, fontFamily: 'inherit',
-                color: '#fff', border: 'none',
-                background: '#059669',
-                boxShadow: '0 2px 10px rgba(5,150,105,.32)',
-                transition: 'all .15s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#047857';
-                e.currentTarget.style.transform = 'translateY(-1px)';
-                e.currentTarget.style.boxShadow = '0 4px 16px rgba(5,150,105,.38)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = '#059669';
-                e.currentTarget.style.transform = '';
-                e.currentTarget.style.boxShadow = '0 2px 10px rgba(5,150,105,.32)';
-              }}
-            >
-              <CheckCircle size={15} /> Submit Request
-            </button>
+            <div style={{ marginLeft: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8 }}>
+              {submitError && (
+                <p style={{ fontSize: 12, color: '#dc2626', maxWidth: 300, textAlign: 'right' }}>{submitError}</p>
+              )}
+              <button
+                onClick={submit}
+                disabled={isSubmitting}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 7,
+                  padding: '11px 28px', borderRadius: 11,
+                  cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                  fontSize: '0.9375rem', fontWeight: 700, fontFamily: 'inherit',
+                  color: '#fff', border: 'none',
+                  background: isSubmitting ? '#6b7280' : '#059669',
+                  boxShadow: isSubmitting ? 'none' : '0 2px 10px rgba(5,150,105,.32)',
+                  transition: 'all .15s',
+                  opacity: isSubmitting ? 0.8 : 1,
+                }}
+                onMouseEnter={(e) => {
+                  if (!isSubmitting) {
+                    e.currentTarget.style.background = '#047857';
+                    e.currentTarget.style.transform = 'translateY(-1px)';
+                    e.currentTarget.style.boxShadow = '0 4px 16px rgba(5,150,105,.38)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isSubmitting) {
+                    e.currentTarget.style.background = '#059669';
+                    e.currentTarget.style.transform = '';
+                    e.currentTarget.style.boxShadow = '0 2px 10px rgba(5,150,105,.32)';
+                  }
+                }}
+              >
+                {isSubmitting ? (
+                  <>
+                    <span style={{ width: 14, height: 14, borderRadius: '50%', border: '2px solid rgba(255,255,255,.3)', borderTopColor: '#fff', animation: 'spin .65s linear infinite' }} />
+                    Submitting…
+                  </>
+                ) : (
+                  <><CheckCircle size={15} /> Submit Request</>
+                )}
+              </button>
+            </div>
           )}
         </div>
 

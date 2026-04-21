@@ -48,15 +48,25 @@ class AdminController extends Controller
             ->orderByDesc('created_at');
 
         if ($request->status && $request->status !== 'All') {
-            $query->where('status', $request->status);
+            // Whitelist-validate status values to prevent injection
+            $allowed = ['Pending', 'Under Review', 'In Progress', 'Completed', 'Rejected'];
+            if (in_array($request->status, $allowed, true)) {
+                $query->where('status', $request->status);
+            }
         }
         if ($request->severity && $request->severity !== 'All') {
-            $query->where('severity', $request->severity);
+            $allowed = ['Low', 'Medium', 'High'];
+            if (in_array($request->severity, $allowed, true)) {
+                $query->where('severity', $request->severity);
+            }
         }
         if ($request->search) {
-            $query->where(function ($q) use ($request) {
-                $q->where('title', 'ilike', "%{$request->search}%")
-                  ->orWhere('tracking_id', 'ilike', "%{$request->search}%");
+            // Sanitize search — strip special regex/SQL characters, limit length
+            $search = substr(strip_tags($request->search), 0, 100);
+            $query->where(function ($q) use ($search) {
+                // Eloquent uses parameterized bindings — safe from SQL injection
+                $q->where('title', 'ilike', "%{$search}%")
+                  ->orWhere('tracking_id', 'ilike', "%{$search}%");
             });
         }
 
@@ -78,20 +88,20 @@ class AdminController extends Controller
     {
         $request->validate([
             'status'     => ['required', 'in:Pending,Under Review,In Progress,Completed,Rejected'],
-            'field_note' => ['nullable', 'string'],
+            'field_note' => ['nullable', 'string', 'max:1000'],
         ]);
 
         $ticket = Ticket::findOrFail($id);
         $ticket->update([
             'status'     => $request->status,
             'progress'   => Ticket::$statusProgress[$request->status] ?? $ticket->progress,
-            'field_note' => $request->field_note,
+            'field_note' => $request->field_note ? strip_tags($request->field_note) : null,
         ]);
 
         TicketTimeline::create([
             'ticket_id'  => $ticket->id,
             'status'     => $request->status,
-            'note'       => $request->field_note,
+            'note'       => $request->field_note ? strip_tags($request->field_note) : null,
             'updated_by' => $request->user()->id,
         ]);
 
@@ -104,12 +114,15 @@ class AdminController extends Controller
     public function assignTicket(Request $request, int $id): JsonResponse
     {
         $request->validate([
-            'personnel_id' => ['required', 'exists:users,id'],
-            'note'         => ['nullable', 'string'],
+            'personnel_id' => ['required', 'integer', 'exists:users,id'],
+            'note'         => ['nullable', 'string', 'max:500'],
         ]);
 
         $ticket    = Ticket::findOrFail($id);
-        $personnel = User::where('portal', 'personnel')->findOrFail($request->personnel_id);
+        // Scope to personnel portal only — prevents assigning to admin/resident
+        $personnel = User::where('portal', 'personnel')
+                         ->where('status', 'active')
+                         ->findOrFail($request->personnel_id);
 
         $ticket->update([
             'assigned_to' => $personnel->id,
@@ -117,10 +130,12 @@ class AdminController extends Controller
             'progress'    => $ticket->status === 'Pending' ? 30 : $ticket->progress,
         ]);
 
+        $note = "Assigned to {$personnel->full_name}." . ($request->note ? ' Note: ' . strip_tags($request->note) : '');
+
         TicketTimeline::create([
             'ticket_id'  => $ticket->id,
             'status'     => $ticket->status,
-            'note'       => "Assigned to {$personnel->full_name}." . ($request->note ? " Note: {$request->note}" : ''),
+            'note'       => $note,
             'updated_by' => $request->user()->id,
         ]);
 

@@ -17,6 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Global middleware — security headers on every response
+        $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
+
         // Register middleware aliases
         $middleware->alias([
             'portal'            => EnsurePortalAccess::class,
@@ -30,14 +33,19 @@ return Application::configure(basePath: dirname(__DIR__))
         // when the React frontend sends requests with withCredentials: true.
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        // Return JSON for all API exceptions
+        // Return JSON for all API exceptions — never expose stack traces
         $exceptions->render(function (\Throwable $e, Request $request) {
             if ($request->is('api/*') || $request->expectsJson()) {
                 $status = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
 
+                // In production, hide internal error details to prevent information leakage
+                $message = config('app.debug')
+                    ? $e->getMessage() ?: 'Server error.'
+                    : ($status < 500 ? ($e->getMessage() ?: 'Request error.') : 'An unexpected error occurred. Please try again.');
+
                 return response()->json([
                     'success' => false,
-                    'message' => $e->getMessage() ?: 'Server error.',
+                    'message' => $message,
                     'data'    => null,
                     'errors'  => null,
                 ], $status);
