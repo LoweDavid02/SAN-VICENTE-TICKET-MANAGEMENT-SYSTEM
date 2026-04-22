@@ -171,18 +171,65 @@ export default function Requests() {
           <Search size={13} style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-4)', pointerEvents: 'none' }} />
           <input className="input" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search requests or ID…" style={{ paddingLeft: 32, width: 220 }} />
         </div>
-        <div style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
-          <span style={{ fontSize: 11.5, color: 'var(--text-4)', fontWeight: 600, marginRight: 2 }}>Severity</span>
-          {SEVERITIES.map((s) => (
-            <button key={s} onClick={() => setSev(s)} className="btn" style={{ padding: '5px 11px', fontSize: 11, borderRadius: 99, background: sev === s ? 'var(--navy)' : 'var(--surface-3)', color: sev === s ? '#fff' : 'var(--text-3)', border: sev === s ? 'none' : '1px solid var(--border)' }}>{s}</button>
-          ))}
+        
+        {/* Severity Dropdown */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <label style={{ fontSize: 11.5, color: 'var(--text-4)', fontWeight: 600 }}>Severity</label>
+          <select 
+            value={sev} 
+            onChange={(e) => setSev(e.target.value)}
+            style={{
+              padding: '6px 32px 6px 12px',
+              fontSize: 12,
+              fontWeight: 600,
+              borderRadius: 8,
+              border: '1px solid var(--border)',
+              background: 'var(--surface)',
+              color: 'var(--text-2)',
+              cursor: 'pointer',
+              fontFamily: 'inherit',
+              outline: 'none',
+              appearance: 'none',
+              backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\' viewBox=\'0 0 12 12\'%3E%3Cpath fill=\'%2394a3b8\' d=\'M6 8L2 4h8z\'/%3E%3C/svg%3E")',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'right 8px center',
+            }}
+          >
+            {SEVERITIES.map((s) => (
+              <option key={s} value={s}>{s}</option>
+            ))}
+          </select>
         </div>
-        <div style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
-          <span style={{ fontSize: 11.5, color: 'var(--text-4)', fontWeight: 600, marginRight: 2 }}>Status</span>
-          {STATUSES.map((s) => (
-            <button key={s} onClick={() => setStat(s)} className="btn" style={{ padding: '5px 11px', fontSize: 11, borderRadius: 99, background: stat === s ? 'var(--navy)' : 'var(--surface-3)', color: stat === s ? '#fff' : 'var(--text-3)', border: stat === s ? 'none' : '1px solid var(--border)' }}>{s}</button>
-          ))}
+
+        {/* Status Dropdown */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <label style={{ fontSize: 11.5, color: 'var(--text-4)', fontWeight: 600 }}>Status</label>
+          <select 
+            value={stat} 
+            onChange={(e) => setStat(e.target.value)}
+            style={{
+              padding: '6px 32px 6px 12px',
+              fontSize: 12,
+              fontWeight: 600,
+              borderRadius: 8,
+              border: '1px solid var(--border)',
+              background: 'var(--surface)',
+              color: 'var(--text-2)',
+              cursor: 'pointer',
+              fontFamily: 'inherit',
+              outline: 'none',
+              appearance: 'none',
+              backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\' viewBox=\'0 0 12 12\'%3E%3Cpath fill=\'%2394a3b8\' d=\'M6 8L2 4h8z\'/%3E%3C/svg%3E")',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'right 8px center',
+            }}
+          >
+            {STATUSES.map((s) => (
+              <option key={s} value={s}>{s}</option>
+            ))}
+          </select>
         </div>
+
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 8, alignItems: 'center' }}>
           <button onClick={() => refetch()} className="btn btn-outline" style={{ fontSize: 12, gap: 6 }}>
             <RefreshCw size={13} /> Refresh
