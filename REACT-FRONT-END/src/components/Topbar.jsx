@@ -40,6 +40,9 @@ export default function Topbar({ sidebarWidth }) {
     '/personnel/history':   { title: t('history'),             sub: 'Completed field activity archive'       },
     '/personnel/profile':   { title: t('profile'),             sub: 'Personnel account information'          },
     '/personnel/faq':       { title: t('faqs'),                sub: 'Frequently asked questions'             },
+    '/admin/notifications':     { title: t('notifications'), sub: 'All system alerts and updates'          },
+    '/resident/notifications':  { title: t('notifications'), sub: 'Your service request updates'           },
+    '/personnel/notifications': { title: t('notifications'), sub: 'Task assignments and status updates'    },
   };
 
   const meta        = PAGE_META[location.pathname] || { title: 'Portal', sub: '' };
@@ -111,7 +114,19 @@ export default function Topbar({ sidebarWidth }) {
               const cfg  = NOTIF_ICON[n.type] || NOTIF_ICON.info;
               const Icon = cfg.icon;
               return (
-                <div key={n.id} onClick={() => markRead(n.id)} style={{ display: 'flex', gap: 12, padding: '13px 16px', borderBottom: '1px solid var(--border)', background: n.read ? 'transparent' : 'var(--surface-2)', cursor: 'pointer', transition: 'background .12s' }} onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-3)'; }} onMouseLeave={(e) => { e.currentTarget.style.background = n.read ? 'transparent' : 'var(--surface-2)'; }}>
+                <div
+                  key={n.id}
+                  onClick={() => {
+                    markRead(n.id);
+                    if (n.link) {
+                      setNotifOpen(false);
+                      navigate(n.link);
+                    }
+                  }}
+                  style={{ display: 'flex', gap: 12, padding: '13px 16px', borderBottom: '1px solid var(--border)', background: n.read ? 'transparent' : 'var(--surface-2)', cursor: n.link ? 'pointer' : 'default', transition: 'background .12s' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-3)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = n.read ? 'transparent' : 'var(--surface-2)'; }}
+                >
                   <div style={{ width: 34, height: 34, borderRadius: 8, background: cfg.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <Icon size={15} color={cfg.color} />
                   </div>
@@ -127,7 +142,17 @@ export default function Topbar({ sidebarWidth }) {
               );
             })}
             <div style={{ padding: '10px 16px', textAlign: 'center' }}>
-              <span style={{ fontSize: 12, color: 'var(--brand)', fontWeight: 600, cursor: 'pointer' }}>{t('viewAll_notif')}</span>
+              <span
+                onClick={() => {
+                  setNotifOpen(false);
+                  // Navigate to the notifications page for the current portal
+                  const portal = location.pathname.split('/')[1] || 'admin';
+                  navigate(`/${portal}/notifications`);
+                }}
+                style={{ fontSize: 12, color: 'var(--brand)', fontWeight: 600, cursor: 'pointer' }}
+              >
+                {t('viewAll_notif')}
+              </span>
             </div>
           </div>
         )}

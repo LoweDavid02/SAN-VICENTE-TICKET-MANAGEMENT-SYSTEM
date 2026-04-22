@@ -10,30 +10,34 @@ export const ROUTES = {
 
   // Admin
   ADMIN: {
-    ROOT:       '/admin',
-    DASHBOARD:  '/admin/dashboard',
-    ANALYTICS:  '/admin/analytics',
-    PERSONNEL:  '/admin/personnel',
-    TASKS:      '/admin/tasks',
-    TICKETS:    '/admin/tickets',
-    SETTINGS:   '/admin/settings',
-    PROFILE:    '/admin/profile',
+    ROOT:          '/admin',
+    DASHBOARD:     '/admin/dashboard',
+    ANALYTICS:     '/admin/analytics',
+    PERSONNEL:     '/admin/personnel',
+    TASKS:         '/admin/tasks',
+    TICKETS:       '/admin/tickets',
+    SETTINGS:      '/admin/settings',
+    PROFILE:       '/admin/profile',
+    NOTIFICATIONS: '/admin/notifications',
   },
 
   // Resident
   RESIDENT: {
-    ROOT:       '/resident',
-    DASHBOARD:  '/resident/dashboard',
-    REQUEST:    '/resident/request',
-    PROFILE:    '/resident/profile',
+    ROOT:          '/resident',
+    DASHBOARD:     '/resident/dashboard',
+    REQUEST:       '/resident/request',
+    HISTORY:       '/resident/history',
+    PROFILE:       '/resident/profile',
+    NOTIFICATIONS: '/resident/notifications',
   },
 
   // Personnel
   PERSONNEL: {
-    ROOT:       '/personnel',
-    DASHBOARD:  '/personnel/dashboard',
-    TASKS:      '/personnel/tasks',
-    HISTORY:    '/personnel/history',
-    PROFILE:    '/personnel/profile',
+    ROOT:          '/personnel',
+    DASHBOARD:     '/personnel/dashboard',
+    TASKS:         '/personnel/tasks',
+    HISTORY:       '/personnel/history',
+    PROFILE:       '/personnel/profile',
+    NOTIFICATIONS: '/personnel/notifications',
   },
 };

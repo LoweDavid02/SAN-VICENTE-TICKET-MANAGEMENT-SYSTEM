@@ -49,6 +49,7 @@ import PersonnelProfile   from './pages/personnel/PersonnelProfile';
 import SubmitRequest      from './features/resident/SubmitRequest/SubmitRequest';
 import FieldWorkTask      from './features/personnel/FieldWorkTask/FieldWorkTask';
 import AnalyticsDashboard from './features/admin/AnalyticsDashboard/AnalyticsDashboard';
+import Notifications      from './pages/Notifications';
 
 export default function App() {
   return (
@@ -103,6 +104,7 @@ function AppRoutes() {
             <Route path="settings"    element={<Settings />} />
             <Route path="profile"     element={<Profile />} />
             <Route path="faq"         element={<FAQ />} />
+            <Route path="notifications" element={<Notifications />} />
             <Route path="*"           element={<Navigate to="dashboard" replace />} />
           </Route>
 
@@ -116,6 +118,7 @@ function AppRoutes() {
             <Route path="history"     element={<ResidentHistory />} />
             <Route path="profile"     element={<Profile />} />
             <Route path="faq"         element={<FAQ />} />
+            <Route path="notifications" element={<Notifications />} />
             <Route path="*"           element={<Navigate to="dashboard" replace />} />
           </Route>
 
@@ -129,6 +132,7 @@ function AppRoutes() {
             <Route path="history"     element={<PersonnelHistory />} />
             <Route path="profile"     element={<PersonnelProfile />} />
             <Route path="faq"         element={<FAQ />} />
+            <Route path="notifications" element={<Notifications />} />
             <Route path="analytics"   element={<Navigate to="/personnel/dashboard" replace />} />
             <Route path="*"           element={<Navigate to="dashboard" replace />} />
           </Route>

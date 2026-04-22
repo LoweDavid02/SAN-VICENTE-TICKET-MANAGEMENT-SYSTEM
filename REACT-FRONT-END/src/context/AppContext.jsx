@@ -13,11 +13,11 @@ import useAuthStore from '../stores/authStore';
 const AppContext = createContext(null);
 
 const INITIAL_NOTIFICATIONS = [
-  { id: 1, title: 'Flash Flood Warning — Zone 4',      body: 'High severity incident reported in San Jose District.',  time: '2 min ago',  read: false, type: 'danger'  },
-  { id: 2, title: 'Social Services at 95% capacity',   body: 'Department has exceeded the 90% threshold.',             time: '14 min ago', read: false, type: 'warning' },
-  { id: 3, title: 'New ticket submitted: REQ-2406',    body: 'Pothole reported near Batasan Hills by Juan Dela Cruz.', time: '1 hr ago',   read: false, type: 'info'    },
-  { id: 4, title: 'REQ-2401 resolved',                 body: 'Pothole on Main Street has been marked as resolved.',    time: '3 hrs ago',  read: true,  type: 'success' },
-  { id: 5, title: 'Weekly report ready',               body: 'Your performance digest for this week is available.',    time: '1 day ago',  read: true,  type: 'info'    },
+  { id: 1, title: 'Flash Flood Warning — Zone 4',      body: 'High severity incident reported in San Jose District.',  time: '2 min ago',  read: false, type: 'danger',  portal: 'admin',     link: '/admin/tickets'    },
+  { id: 2, title: 'Social Services at 95% capacity',   body: 'Department has exceeded the 90% threshold.',             time: '14 min ago', read: false, type: 'warning', portal: 'admin',     link: '/admin/dashboard'  },
+  { id: 3, title: 'New ticket submitted: REQ-2406',    body: 'Pothole reported near Batasan Hills by Juan Dela Cruz.', time: '1 hr ago',   read: false, type: 'info',    portal: 'admin',     link: '/admin/tickets'    },
+  { id: 4, title: 'REQ-2401 resolved',                 body: 'Pothole on Main Street has been marked as resolved.',    time: '3 hrs ago',  read: true,  type: 'success', portal: 'resident',  link: '/resident/history' },
+  { id: 5, title: 'Weekly report ready',               body: 'Your performance digest for this week is available.',    time: '1 day ago',  read: true,  type: 'info',    portal: 'admin',     link: '/admin/analytics'  },
 ];
 
 export function AppProvider({ children }) {

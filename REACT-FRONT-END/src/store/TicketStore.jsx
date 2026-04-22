@@ -50,15 +50,17 @@ export function TicketProvider({ children, addNotification }) {
         newStatus === TICKET_STATUS.IN_PROGRESS ? 'info' : 'warning';
 
       addNotification({
-        id:    Date.now(),
-        title: `Ticket ${ticketId} — ${newStatus}`,
-        body:  note
+        id:      Date.now(),
+        title:   `Ticket ${ticketId} — ${newStatus}`,
+        body:    note
           ? `Status updated: ${note}`
           : `Status updated to "${newStatus}" by field personnel.`,
-        time:  'Just now',
-        read:  false,
-        type:  notifType,
+        time:    'Just now',
+        read:    false,
+        type:    notifType,
         ticketId,
+        link:    '/admin/tickets',
+        portal:  'admin',
       });
     }
   }, [addNotification]);
@@ -69,13 +71,15 @@ export function TicketProvider({ children, addNotification }) {
   const notifyNewTicket = useCallback((trackingId, title) => {
     if (addNotification) {
       addNotification({
-        id:    Date.now(),
-        title: `New ticket submitted: ${trackingId}`,
-        body:  `${title} — awaiting review.`,
-        time:  'Just now',
-        read:  false,
-        type:  'info',
+        id:       Date.now(),
+        title:    `New ticket submitted: ${trackingId}`,
+        body:     `${title} — awaiting review.`,
+        time:     'Just now',
+        read:     false,
+        type:     'info',
         ticketId: trackingId,
+        link:     '/admin/tickets',
+        portal:   'admin',
       });
     }
   }, [addNotification]);
