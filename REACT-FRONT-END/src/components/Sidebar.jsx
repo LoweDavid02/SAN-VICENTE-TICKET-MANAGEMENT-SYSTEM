@@ -1,12 +1,13 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, BarChart2, Users, FileText,
-  Settings, Plus, Shield, ChevronRight,
+  Settings, Plus, ChevronRight,
   Home, ChevronLeft, ClipboardList, History,
   HelpCircle, PlusCircle,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useT } from '../stores/langStore';
+import SanVicenteLogo from './SanVicenteLogo';
 
 const PORTAL_META = {
   admin:     { avatarBg: 'rgba(20,184,166,.2)',  avatarColor: 'var(--brand)' },
@@ -80,15 +81,16 @@ export default function Sidebar({ portalType }) {
         style={{ width: w, background: 'var(--sidebar-bg)', minHeight: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0, display: 'flex', flexDirection: 'column', zIndex: 100, borderRight: '1px solid var(--sidebar-border)', overflow: 'hidden', ...activeStyle }}
       >
         {/* Brand */}
-        <div style={{ padding: '20px 16px 16px', borderBottom: '1px solid var(--sidebar-border)', flexShrink: 0 }}>
+        <div style={{ padding: '16px 12px 14px', borderBottom: '1px solid var(--sidebar-border)', flexShrink: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <div style={{ width: 34, height: 34, background: isPersonnel ? 'linear-gradient(135deg, #f59e0b, #d97706)' : 'var(--brand)', borderRadius: 9, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <Shield size={17} color="#fff" strokeWidth={2.5} />
+            {/* San Vicente logo — always visible */}
+            <div style={{ flexShrink: 0, lineHeight: 0 }}>
+              <SanVicenteLogo size={sidebarCollapsed ? 36 : 38} />
             </div>
             {!sidebarCollapsed && (
               <div className="sidebar-label">
-                <p style={{ fontSize: 13, fontWeight: 700, color: '#fff', lineHeight: 1.2 }}>{portalLabel}</p>
-                <p style={{ fontSize: 10.5, color: 'rgba(255,255,255,.35)', marginTop: 1 }}>{portalSub}</p>
+                <p style={{ fontSize: 12.5, fontWeight: 700, color: '#fff', lineHeight: 1.2 }}>{portalLabel}</p>
+                <p style={{ fontSize: 10, color: 'rgba(255,255,255,.35)', marginTop: 1 }}>{portalSub}</p>
               </div>
             )}
           </div>

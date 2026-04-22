@@ -15,7 +15,7 @@
   --color-navy-800: #243b53;
   --color-navy-900: #102a43;
 
-  --color-teal-50:  #f0fdfa;
+  --color-teal-50:  #f0fdf4;
   --color-teal-100: #ccfbf1;
   --color-teal-200: #99f6e4;
   --color-teal-300: #5eead4;
@@ -87,15 +87,16 @@
 
 /* ── CSS Tokens ──────────────────────────────────────────── */
 :root {
-  --brand:          #14b8a6;
-  --brand-dark:     #0d9488;
-  --brand-light:    #f0fdfa;
-  --brand-muted:    rgba(20,184,166,.1);
-  --navy:           #102a43;
-  --sidebar-bg:     #0f172a;
-  --sidebar-border: rgba(255,255,255,.06);
+  /* San Vicente barangay seal color scheme */
+  --brand:          #22a83a;   /* deep green from seal ring */
+  --brand-dark:     #1a7a2e;   /* darker green */
+  --brand-light:    #f0fdf4;
+  --brand-muted:    rgba(34,168,58,.1);
+  --navy:           #0d1b2a;
+  --sidebar-bg:     #0d1b2a;   /* dark navy — matches seal outer border */
+  --sidebar-border: rgba(255,255,255,.07);
   --sidebar-hover:  rgba(255,255,255,.05);
-  --sidebar-active: rgba(20,184,166,.15);
+  --sidebar-active: rgba(34,168,58,.18);  /* green active state */
   --surface:        #ffffff;
   --surface-2:      #f8fafc;
   --surface-3:      #f1f5f9;
@@ -285,13 +286,13 @@ body {
 .badge-green  { background: #ecfdf5; color: #059669 }
 .badge-blue   { background: #eff6ff; color: #2563eb }
 .badge-slate  { background: var(--surface-3); color: var(--text-3) }
-.badge-teal   { background: #f0fdfa; color: #0d9488 }
+.badge-teal   { background: #f0fdf4; color: #1a7a2e }
 .dark .badge-red   { background: rgba(220,38,38,.15);  color: #f87171 }
 .dark .badge-amber { background: rgba(245,158,11,.15); color: #fbbf24 }
 .dark .badge-green { background: rgba(16,185,129,.15); color: #34d399 }
 .dark .badge-blue  { background: rgba(37,99,235,.15);  color: #60a5fa }
 .dark .badge-slate { background: rgba(255,255,255,.07); color: var(--text-3) }
-.dark .badge-teal  { background: rgba(20,184,166,.15); color: #2dd4bf }
+.dark .badge-teal  { background: rgba(34,168,58,.15); color: #4ade80 }
 
 /* ── Input ───────────────────────────────────────────────── */
 .input {
@@ -376,8 +377,8 @@ body {
 }
 .data-table tbody tr { cursor: pointer; transition: background .12s }
 .data-table tbody tr:hover { background: var(--surface-2) }
-.data-table tbody tr.active { background: #f0fdfa; border-left: 3px solid var(--brand) }
-.dark .data-table tbody tr.active { background: rgba(20,184,166,.08) }
+.data-table tbody tr.active { background: #f0fdf4; border-left: 3px solid var(--brand) }
+.dark .data-table tbody tr.active { background: rgba(34,168,58,.08) }
 
 /* ── Toggle switch ───────────────────────────────────────── */
 .toggle {
