@@ -212,7 +212,6 @@ export default function Requests() {
                     <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-1)' }}>{r.title}</p>
                     <p style={{ fontSize: 11, color: 'var(--text-4)', marginTop: 2 }}>{r.resident?.full_name}</p>
                   </td>
-                  <td style={{ whiteSpace: 'nowrap' }}>{r.category}</td>
                   <td><SeverityBadge severity={r.severity} /></td>
                   <td><StatusBadge status={r.status} /></td>
                   <td style={{ whiteSpace: 'nowrap', fontSize: 11.5 }}>{r.updated}</td>
