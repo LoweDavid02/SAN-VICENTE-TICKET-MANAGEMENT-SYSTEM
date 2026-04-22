@@ -47,7 +47,7 @@ return [
     |
     */
 
-    'expiration' => null,
+    'expiration' => env('SANCTUM_TOKEN_EXPIRY', null), // Set in Render env vars if needed
 
     /*
     |--------------------------------------------------------------------------

@@ -61,7 +61,9 @@ services:
       - key: FRONTEND_URL
         value: https://san-vicente-frontend.onrender.com
       - key: SANCTUM_STATEFUL_DOMAINS
-        value: san-vicente-frontend.onrender.com
+        value: san-vicente-frontend.onrender.com,san-vicente-ticket-management-system-90eq.onrender.com
+      - key: SANCTUM_TOKEN_EXPIRY
+        value: "10080"
 
   # ── 2. React Frontend (Static Site) ──────────────────────────────────────
   - type: web

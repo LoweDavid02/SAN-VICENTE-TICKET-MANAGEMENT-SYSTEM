@@ -48,7 +48,6 @@ class AdminController extends Controller
             ->orderByDesc('created_at');
 
         if ($request->status && $request->status !== 'All') {
-            // Whitelist-validate status values to prevent injection
             $allowed = ['Pending', 'Under Review', 'In Progress', 'Completed', 'Rejected'];
             if (in_array($request->status, $allowed, true)) {
                 $query->where('status', $request->status);
@@ -61,16 +60,16 @@ class AdminController extends Controller
             }
         }
         if ($request->search) {
-            // Sanitize search — strip special regex/SQL characters, limit length
             $search = substr(strip_tags($request->search), 0, 100);
             $query->where(function ($q) use ($search) {
-                // Eloquent uses parameterized bindings — safe from SQL injection
                 $q->where('title', 'ilike', "%{$search}%")
                   ->orWhere('tracking_id', 'ilike', "%{$search}%");
             });
         }
 
-        $tickets = $query->paginate(20);
+        // Cap per_page to max 50 to prevent resource exhaustion (API4)
+        $perPage = min((int) ($request->per_page ?? 20), 50);
+        $tickets = $query->paginate($perPage);
 
         return ApiResponse::success([
             'tickets'    => collect($tickets->items())->map(fn($t) => $t->toApiArray())->values(),
