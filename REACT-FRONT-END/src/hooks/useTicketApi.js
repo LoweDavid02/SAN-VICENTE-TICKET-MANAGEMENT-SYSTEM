@@ -19,9 +19,16 @@ import useAuthStore from '../stores/authStore';
 
 // ── Shared query options ──────────────────────────────────────────────────
 const QUERY_OPTS = {
-  retry:           3,
-  retryDelay:      (attempt) => Math.min(1000 * (attempt + 1), 5000),
+  retry:           2,
+  retryDelay:      (attempt) => Math.min(1000 * (attempt + 1), 4000),
   placeholderData: keepPreviousData,
+};
+
+// ── Polling intervals — longer in production to reduce server load ────────
+const POLL = {
+  dashboard: 60_000,  // 60s
+  tickets:   45_000,  // 45s
+  tasks:     50_000,  // 50s
 };
 
 // ── Query keys ────────────────────────────────────────────────────────────
@@ -46,7 +53,7 @@ export function useAdminDashboard() {
       const { data } = await api.get('/admin/dashboard');
       return data.data;
     },
-    refetchInterval: 30000, // 30s — staggered from tickets (20s)
+    refetchInterval: POLL.dashboard,
   });
 }
 
@@ -58,7 +65,7 @@ export function useAdminTickets(filters = {}) {
       const { data } = await api.get('/admin/tickets', { params: filters });
       return data.data;
     },
-    refetchInterval: 20000, // 20s
+    refetchInterval: POLL.tickets,
   });
 }
 
@@ -109,7 +116,7 @@ export function useResidentDashboard() {
       const { data } = await api.get('/resident/dashboard');
       return data.data;
     },
-    refetchInterval: 30000, // 30s
+    refetchInterval: POLL.dashboard,
   });
 }
 
@@ -146,7 +153,7 @@ export function usePersonnelDashboard() {
       const { data } = await api.get('/personnel/dashboard');
       return data.data;
     },
-    refetchInterval: 30000, // 30s
+    refetchInterval: POLL.dashboard,
   });
 }
 

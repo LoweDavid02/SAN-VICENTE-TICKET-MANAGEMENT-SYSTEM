@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard, BarChart2, Users, FileText,
@@ -34,27 +34,29 @@ export default function Sidebar({ portalType }) {
     setMobileDrawerOpen(false);
   }, [location.pathname, setMobileDrawerOpen]);
 
-  // Nav items
-  const ADMIN_NAV = [
+  // Nav items — memoized so they don't rebuild on every render
+  const ADMIN_NAV = useMemo(() => [
     { to: '/admin/dashboard', label: t('dashboard'),   icon: LayoutDashboard },
     { to: '/admin/analytics', label: t('analytics'),   icon: BarChart2       },
     { to: '/admin/personnel', label: t('personnel'),   icon: Users           },
     { to: '/admin/tickets',   label: t('requests'),    icon: FileText        },
     { to: '/admin/settings',  label: t('settings'),    icon: Settings        },
     { to: '/admin/faq',       label: t('faqs'),        icon: HelpCircle      },
-  ];
-  const RESIDENT_NAV = [
+  ], [t]);
+
+  const RESIDENT_NAV = useMemo(() => [
     { to: '/resident/dashboard', label: t('myDashboard'),   icon: Home        },
     { to: '/resident/request',   label: t('submitRequest'), icon: PlusCircle  },
     { to: '/resident/history',   label: t('myHistory'),     icon: History     },
     { to: '/resident/faq',       label: t('faqs'),          icon: HelpCircle  },
-  ];
-  const PERSONNEL_NAV = [
+  ], [t]);
+
+  const PERSONNEL_NAV = useMemo(() => [
     { to: '/personnel/dashboard', label: t('dashboard'), icon: LayoutDashboard },
     { to: '/personnel/tasks',     label: t('myTasks'),   icon: ClipboardList   },
     { to: '/personnel/history',   label: t('history'),   icon: History         },
     { to: '/personnel/faq',       label: t('faqs'),      icon: HelpCircle      },
-  ];
+  ], [t]);
 
   const nav = isAdmin ? ADMIN_NAV : isPersonnel ? PERSONNEL_NAV : RESIDENT_NAV;
 

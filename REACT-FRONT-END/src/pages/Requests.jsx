@@ -4,6 +4,7 @@ import { StatusBadge, SeverityBadge } from '../components/ui/Components';
 import { useAdminTickets, useUpdateTicketStatus, useAssignTicket, useAdminPersonnel } from '../hooks/useTicketApi';
 import { useTickets } from '../store/TicketStore';
 import { useLang } from '../stores/langStore';
+import { useDebounce } from '../hooks/useDebounce';
 import Portal from '../components/Portal';
 
 const SEVERITIES    = ['All', 'High', 'Medium', 'Low'];
@@ -123,12 +124,15 @@ export default function Requests() {
   const [search, setSearch]           = useState('');
   const [sev,    setSev]              = useState('All');
   const [stat,   setStat]             = useState('All');
+
+  // Debounce search — prevents API call on every keystroke
+  const debouncedSearch = useDebounce(search, 300);
   const [sel,    setSel]              = useState(null);
   const [updateModal, setUpdateModal] = useState(null);
   const [reassignModal, setReassignModal] = useState(null);
 
   const { applyOptimisticUpdate, mergeOptimistic } = useTickets();
-  const { data: ticketData, isLoading, refetch } = useAdminTickets({ search, status: stat !== 'All' ? stat : undefined, severity: sev !== 'All' ? sev : undefined });
+  const { data: ticketData, isLoading, refetch } = useAdminTickets({ search: debouncedSearch, status: stat !== 'All' ? stat : undefined, severity: sev !== 'All' ? sev : undefined });
   const { data: personnelList = [] } = useAdminPersonnel();
   const { mutateAsync: updateStatus, isPending: isUpdating } = useUpdateTicketStatus();
   const { mutateAsync: assignTicket, isPending: isAssigning } = useAssignTicket();

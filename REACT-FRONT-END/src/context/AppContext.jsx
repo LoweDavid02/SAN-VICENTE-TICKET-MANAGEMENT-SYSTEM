@@ -6,7 +6,7 @@
  * status updates from Personnel propagate here and appear in all topbars.
  */
 
-import { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useContext, useState, useCallback, useMemo } from 'react';
 import { TicketProvider } from '../store/TicketStore';
 import useAuthStore from '../stores/authStore';
 
@@ -55,7 +55,7 @@ export function AppProvider({ children }) {
   const openModal  = useCallback((type, props = {}) => setModal({ type, props }), []);
   const closeModal = useCallback(() => setModal(null), []);
 
-  const contextValue = {
+  const contextValue = useMemo(() => ({
     sidebarCollapsed, setSidebarCollapsed,
     mobileDrawerOpen, setMobileDrawerOpen,
     darkMode, setDarkMode,
@@ -63,7 +63,11 @@ export function AppProvider({ children }) {
     modal, openModal, closeModal,
     user,
     logout,
-  };
+  }), [
+    sidebarCollapsed, mobileDrawerOpen, darkMode,
+    notifications, unreadCount, markAllRead, markRead, addNotification,
+    modal, openModal, closeModal, user, logout,
+  ]);
 
   return (
     <AppContext.Provider value={contextValue}>

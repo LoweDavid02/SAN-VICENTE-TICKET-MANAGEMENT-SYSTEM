@@ -528,6 +528,26 @@ body { overflow-x: hidden; }
 }
 .text-wrap { overflow-wrap: break-word; word-break: break-word; }
 
+/* ── Performance: contain layout on isolated components ─── */
+.card, .notif-dropdown, .modal-box {
+  contain: layout style;
+}
+
+/* ── Performance: promote animated elements to GPU layer ── */
+.sidebar, .mobile-drawer, .topbar {
+  will-change: transform;
+}
+
+/* ── Font display: swap prevents invisible text ─────────── */
+@font-face {
+  font-family: 'DM Sans';
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DM Serif Display';
+  font-display: swap;
+}
+
 /* ── Mobile bottom nav — REMOVED ────────────────────────── */
 /* Bottom nav is no longer used — navigation is via burger drawer */
 .mobile-bottom-nav { display: none !important; }

@@ -2,15 +2,60 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Barangay Connect — Admin Portal</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <meta name="description" content="Barangay Connect — Centralized service request and incident management platform for Barangay San Vicente, Apalit, Pampanga." />
+    <meta name="theme-color" content="#0d1b2a" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <title>Barangay Connect — San Vicente</title>
+
+    <!--
+      Fonts: loaded from Google Fonts with display=swap.
+      font-display:swap is set in the URL so text is visible immediately.
+      Preconnect hints reduce DNS + TLS handshake time.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <!-- Fallback for no-JS -->
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap"
+      />
+    </noscript>
+
+    <!--
+      Critical inline CSS — prevents FOUC (flash of unstyled content).
+      Only the absolute minimum needed before the main CSS loads.
+    -->
+    <style>
+      *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+      html{height:100%;scroll-behavior:smooth}
+      body{
+        font-family:'DM Sans',system-ui,-apple-system,sans-serif;
+        background:#f8fafc;color:#0f172a;
+        -webkit-font-smoothing:antialiased;
+        min-height:100vh;overflow-x:hidden;
+      }
+      #root{min-height:100vh}
+      /* Prevent layout shift while fonts load */
+      @font-face{font-family:'DM Sans';font-display:swap}
+      @font-face{font-family:'DM Serif Display';font-display:swap}
+      /* Spinner for initial load */
+      @keyframes _spin{to{transform:rotate(360deg)}}
+    </style>
   </head>
   <body>
     <div id="root"></div>
+    <!-- Module script — browser only downloads if ES modules supported -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
