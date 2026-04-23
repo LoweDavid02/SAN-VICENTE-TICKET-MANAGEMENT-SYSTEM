@@ -36,7 +36,16 @@ return Application::configure(basePath: dirname(__DIR__))
         // Return JSON for all API exceptions — never expose stack traces
         $exceptions->render(function (\Throwable $e, Request $request) {
             if ($request->is('api/*') || $request->expectsJson()) {
-                $status = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
+                // Map exception types to correct HTTP status codes
+                $status = match (true) {
+                    $e instanceof \Illuminate\Auth\AuthenticationException          => 401,
+                    $e instanceof \Illuminate\Auth\Access\AuthorizationException    => 403,
+                    $e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException => 404,
+                    $e instanceof \Illuminate\Validation\ValidationException        => 422,
+                    $e instanceof \Symfony\Component\HttpKernel\Exception\HttpException => $e->getStatusCode(),
+                    method_exists($e, 'getStatusCode')                             => $e->getStatusCode(),
+                    default                                                         => 500,
+                };
 
                 // In production, hide internal error details to prevent information leakage
                 $message = config('app.debug')
@@ -47,7 +56,9 @@ return Application::configure(basePath: dirname(__DIR__))
                     'success' => false,
                     'message' => $message,
                     'data'    => null,
-                    'errors'  => null,
+                    'errors'  => $e instanceof \Illuminate\Validation\ValidationException
+                        ? $e->errors()
+                        : null,
                 ], $status);
             }
         });
