@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Bell, Sun, Moon, X, AlertTriangle, CheckCircle, Info, User, ChevronRight, Globe } from 'lucide-react';
+import { Bell, Sun, Moon, X, AlertTriangle, CheckCircle, Info, User, ChevronRight, Globe, Menu } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useT } from '../stores/langStore';
 
@@ -12,7 +12,7 @@ const NOTIF_ICON = {
 };
 
 export default function Topbar({ sidebarWidth }) {
-  const { darkMode, setDarkMode, notifications, unreadCount, markAllRead, markRead, user, openModal, logout } = useApp();
+  const { darkMode, setDarkMode, notifications, unreadCount, markAllRead, markRead, user, openModal, logout, mobileDrawerOpen, setMobileDrawerOpen } = useApp();
   const { t, lang, setLang } = useT();
   const navigate  = useNavigate();
   const location  = useLocation();
@@ -63,6 +63,17 @@ export default function Topbar({ sidebarWidth }) {
 
   return (
     <header className="topbar" style={{ left: sidebarWidth }}>
+      {/* Burger menu — visible on mobile/tablet only */}
+      <button
+        className="topbar-burger"
+        onClick={() => setMobileDrawerOpen(!mobileDrawerOpen)}
+        aria-label={mobileDrawerOpen ? 'Close navigation menu' : 'Open navigation menu'}
+        aria-expanded={mobileDrawerOpen}
+        aria-controls="mobile-drawer"
+      >
+        <Menu size={20} strokeWidth={2} />
+      </button>
+
       {/* Title */}
       <div style={{ flex: 1 }}>
         <h1 style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-1)', lineHeight: 1.2 }}>{meta.title}</h1>

@@ -22,6 +22,7 @@ const INITIAL_NOTIFICATIONS = [
 
 export function AppProvider({ children }) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [darkMode,         setDarkMode]         = useState(false);
   const [notifications,    setNotifications]    = useState(INITIAL_NOTIFICATIONS);
   const [modal,            setModal]            = useState(null);
@@ -56,6 +57,7 @@ export function AppProvider({ children }) {
 
   const contextValue = {
     sidebarCollapsed, setSidebarCollapsed,
+    mobileDrawerOpen, setMobileDrawerOpen,
     darkMode, setDarkMode,
     notifications, unreadCount, markAllRead, markRead, addNotification,
     modal, openModal, closeModal,

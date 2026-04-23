@@ -18,38 +18,13 @@ function ModalWrapper({ children }) {
     <Portal>
       <div
         onClick={closeModal}
-        style={{
-          position: 'fixed',
-          inset: 0,
-          zIndex: 99999,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '1rem',
-          background: 'rgba(9,18,32,.6)',
-          backdropFilter: 'blur(8px)',
-          WebkitBackdropFilter: 'blur(8px)',
-          animation: 'fadeIn .2s ease-out both',
-        }}
+        className="modal-backdrop"
         role="dialog"
         aria-modal="true"
       >
         <div
           onClick={(e) => e.stopPropagation()}
-          style={{
-            width: '100%',
-            maxWidth: 420,
-            background: '#ffffff',
-            border: '1px solid rgba(226,232,240,.9)',
-            borderRadius: 18,
-            boxShadow:
-              '0 1px 0 rgba(255,255,255,.9) inset,' +
-              '0 4px 8px rgba(15,23,42,.05),' +
-              '0 16px 40px rgba(15,23,42,.14),' +
-              '0 40px 80px rgba(15,23,42,.1)',
-            animation: 'scaleIn .22s cubic-bezier(.34,1.56,.64,1) both',
-            overflow: 'hidden',
-          }}
+          className="modal-box"
         >
           {children}
         </div>

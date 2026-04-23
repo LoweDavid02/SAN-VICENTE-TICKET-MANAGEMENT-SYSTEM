@@ -6,16 +6,36 @@ import ModalRoot from './Modal';
 import { useApp } from '../context/AppContext';
 
 export default function AppShell({ portalType }) {
-  const { sidebarCollapsed, darkMode } = useApp();
+  const { sidebarCollapsed, darkMode, mobileDrawerOpen, setMobileDrawerOpen } = useApp();
   const sidebarW = sidebarCollapsed ? 'var(--sidebar-w-sm)' : 'var(--sidebar-w)';
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', darkMode);
   }, [darkMode]);
 
+  // Close drawer on route change
+  useEffect(() => {
+    setMobileDrawerOpen(false);
+  }, [setMobileDrawerOpen]);
+
+  // Prevent body scroll when drawer is open
+  useEffect(() => {
+    document.body.style.overflow = mobileDrawerOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileDrawerOpen]);
+
   return (
     <div style={{ background: 'var(--surface-2)', minHeight: '100vh' }}>
       <Sidebar portalType={portalType} />
+
+      {/* Mobile drawer backdrop */}
+      {mobileDrawerOpen && (
+        <div
+          className="mobile-drawer-backdrop"
+          onClick={() => setMobileDrawerOpen(false)}
+          aria-hidden="true"
+        />
+      )}
 
       {/* Topbar: left offset matches sidebar on desktop, 0 on mobile (CSS overrides) */}
       <Topbar sidebarWidth={sidebarW} />
