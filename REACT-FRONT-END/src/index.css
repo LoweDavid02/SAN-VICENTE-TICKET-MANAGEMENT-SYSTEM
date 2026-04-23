@@ -528,7 +528,8 @@ body { overflow-x: hidden; }
 }
 .text-wrap { overflow-wrap: break-word; word-break: break-word; }
 
-/* ── Mobile bottom nav — hidden by default (desktop) ────── */
+/* ── Mobile bottom nav — REMOVED ────────────────────────── */
+/* Bottom nav is no longer used — navigation is via burger drawer */
 .mobile-bottom-nav { display: none !important; }
 
 /* ── Topbar burger — hidden by default (desktop) ────────── */
@@ -676,11 +677,16 @@ body { overflow-x: hidden; }
 
   /* Add bottom padding so content isn't hidden behind bottom nav */
   .app-main {
-    padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px)) !important;
+    padding-bottom: 16px !important;
   }
 
   /* Dashboards: 2-col on tablet */
   .stat-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* Dashboard KPIs: 2-col on tablet */
+  .dash-kpi-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  /* Dashboard heatmap+workload: stack on tablet */
+  .dash-two-col  { grid-template-columns: 1fr !important; }
 
   /* Notification dropdown: wider on tablet */
   .notif-dropdown { width: 320px; }
@@ -723,10 +729,9 @@ body { overflow-x: hidden; }
 
   .app-content { padding: 16px 14px; }
 
-  /* Bottom nav visible */
-  .mobile-bottom-nav { display: flex !important; }
+  /* Bottom nav removed — no extra padding needed */
   .app-main {
-    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
+    padding-bottom: 16px !important;
   }
 
   /* Modal → bottom sheet on mobile */
@@ -782,6 +787,10 @@ body { overflow-x: hidden; }
 
   /* Stat cards: 2 cols */
   .stat-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* Dashboard: 1-col on mobile */
+  .dash-kpi-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .dash-two-col  { grid-template-columns: 1fr !important; }
 
   /* Forms: single column, full-width inputs */
   .form-grid { grid-template-columns: 1fr !important; }
@@ -866,5 +875,9 @@ body { overflow-x: hidden; }
 
   /* Topbar safe area */
   .topbar { padding-top: env(safe-area-inset-top, 0px); }
+
+  /* Dashboard grids — full layout on desktop */
+  .dash-kpi-grid { grid-template-columns: repeat(4, 1fr) !important; }
+  .dash-two-col  { grid-template-columns: 1.45fr 1fr !important; }
 }
 

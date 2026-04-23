@@ -368,56 +368,6 @@ export default function Sidebar({ portalType }) {
         </div>
       </div>
 
-      {/* ── Mobile bottom tab bar ── */}
-      <nav
-        className="mobile-bottom-nav"
-        role="navigation"
-        aria-label="Bottom navigation"
-        style={{
-          position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 100,
-          background: 'var(--sidebar-bg)',
-          borderTop: '1px solid var(--sidebar-border)',
-          paddingBottom: 'env(safe-area-inset-bottom, 0px)',
-        }}
-      >
-        {nav.map(({ to, label, icon: NavIcon }) => (
-          <NavLink
-            key={to}
-            to={to}
-            style={({ isActive }) => ({
-              flex: 1,
-              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-              padding: '10px 4px 8px', gap: 4,
-              color: isActive ? 'var(--brand)' : 'rgba(255,255,255,.4)',
-              textDecoration: 'none',
-              transition: 'color .15s',
-              fontSize: '10px', fontWeight: 600,
-              borderTop: isActive ? '2px solid var(--brand)' : '2px solid transparent',
-              minHeight: 44,
-            })}
-          >
-            <NavIcon size={20} strokeWidth={1.8} />
-            <span>{label}</span>
-          </NavLink>
-        ))}
-        {isAdmin && (
-          <button
-            onClick={() => navigate('/admin/tickets')}
-            style={{
-              flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-              padding: '10px 4px 8px', gap: 4,
-              color: 'rgba(255,255,255,.4)',
-              background: 'none', border: 'none', cursor: 'pointer',
-              fontSize: '10px', fontWeight: 600, fontFamily: 'inherit',
-              borderTop: '2px solid transparent',
-              minHeight: 44,
-            }}
-          >
-            <Plus size={20} strokeWidth={1.8} />
-            <span>{t('add')}</span>
-          </button>
-        )}
-      </nav>
     </>
   );
 }

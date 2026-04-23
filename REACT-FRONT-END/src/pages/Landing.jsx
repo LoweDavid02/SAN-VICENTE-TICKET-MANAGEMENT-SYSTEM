@@ -55,7 +55,8 @@ export default function Landing() {
 
       {/* TOP NAV */}
       <nav style={{ position:'fixed', top:0, left:0, right:0, zIndex:200, background:'rgba(255,255,255,.92)', backdropFilter:'blur(16px)', borderBottom:'1px solid rgba(226,232,240,.8)', boxShadow:'0 1px 12px rgba(15,23,42,.06)' }}>
-        <div style={{ maxWidth:1200, margin:'0 auto', padding:'0 24px', height:64, display:'flex', alignItems:'center', justifyContent:'space-between', gap:16 }}>
+        <div style={{ maxWidth:1200, margin:'0 auto', padding:'0 16px', height:64, display:'flex', alignItems:'center', justifyContent:'space-between', gap:12 }}>
+          {/* Logo */}
           <div style={{ display:'flex', alignItems:'center', gap:10, flexShrink:0 }}>
             <div style={{ width:36, height:36, borderRadius:10, background:'linear-gradient(135deg,#14b8a6,#0d9488)', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 4px 12px rgba(20,184,166,.3)' }}>
               <Shield size={18} color="#fff" strokeWidth={2.5} />
@@ -65,31 +66,35 @@ export default function Landing() {
               <p style={{ fontSize:10, color:'#94a3b8', letterSpacing:'0.05em' }}>San Vicente</p>
             </div>
           </div>
-          <div style={{ display:'flex', alignItems:'center', gap:4, flex:1, justifyContent:'center' }}>
+
+          {/* Desktop nav links — hidden on mobile via CSS */}
+          <div className="land-nav-links" style={{ display:'flex', alignItems:'center', gap:4, flex:1, justifyContent:'center' }}>
             {NAV.map((l) => (
-              <button key={l.label} onClick={() => scrollTo(l.href)} style={{ padding:'7px 14px', borderRadius:8, border:'none', background:'none', cursor:'pointer', fontSize:14, fontWeight:500, color:'#475569', fontFamily:'inherit', transition:'all .15s' }} onMouseEnter={(e) => { e.currentTarget.style.background='#f1f5f9'; e.currentTarget.style.color='#0f172a'; }} onMouseLeave={(e) => { e.currentTarget.style.background='none'; e.currentTarget.style.color='#475569'; }}>
+              <button key={l.label} onClick={() => scrollTo(l.href)} style={{ padding:'7px 14px', borderRadius:8, border:'none', background:'none', cursor:'pointer', fontSize:14, fontWeight:500, color:'#475569', fontFamily:'inherit', transition:'all .15s', whiteSpace:'nowrap' }} onMouseEnter={(e) => { e.currentTarget.style.background='#f1f5f9'; e.currentTarget.style.color='#0f172a'; }} onMouseLeave={(e) => { e.currentTarget.style.background='none'; e.currentTarget.style.color='#475569'; }}>
                 {l.label}
               </button>
             ))}
           </div>
-          <div style={{ display:'flex', alignItems:'center', gap:10, flexShrink:0 }}>
-            <div style={{ position:'relative' }}>
-              <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search..." style={{ height:36, paddingLeft:36, paddingRight:12, borderRadius:20, border:'1.5px solid #e2e8f0', background:'#f8fafc', fontSize:13, color:'#0f172a', outline:'none', fontFamily:'inherit', width:160, transition:'all .18s' }} onFocus={(e) => { e.target.style.borderColor='#14b8a6'; e.target.style.width='200px'; e.target.style.background='#fff'; }} onBlur={(e) => { e.target.style.borderColor='#e2e8f0'; e.target.style.width='160px'; e.target.style.background='#f8fafc'; }} />
-              <svg style={{ position:'absolute', left:11, top:'50%', transform:'translateY(-50%)', pointerEvents:'none' }} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-            </div>
-            <button onClick={() => navigate('/login')} style={{ height:36, padding:'0 16px', borderRadius:20, border:'1.5px solid #e2e8f0', background:'#fff', fontSize:13, fontWeight:600, color:'#334155', cursor:'pointer', fontFamily:'inherit', transition:'all .15s' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor='#14b8a6'; e.currentTarget.style.color='#0d9488'; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor='#e2e8f0'; e.currentTarget.style.color='#334155'; }}>Sign In</button>
-            <button onClick={() => navigate('/login')} style={{ height:36, padding:'0 18px', borderRadius:20, border:'none', background:'linear-gradient(135deg,#14b8a6,#0d9488)', fontSize:13, fontWeight:700, color:'#fff', cursor:'pointer', fontFamily:'inherit', boxShadow:'0 4px 12px rgba(20,184,166,.35)', transition:'all .15s' }} onMouseEnter={(e) => { e.currentTarget.style.transform='translateY(-1px)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform=''; }}>Register</button>
-            <button onClick={() => setMenuOpen((v) => !v)} style={{ display:'none', width:36, height:36, borderRadius:8, border:'1px solid #e2e8f0', background:'#fff', cursor:'pointer', alignItems:'center', justifyContent:'center' }} className="land-ham">
-              {menuOpen ? <X size={18} color="#475569" /> : <Menu size={18} color="#475569" />}
-            </button>
+
+          {/* Desktop actions — hidden on mobile via CSS */}
+          <div className="land-nav-actions" style={{ display:'flex', alignItems:'center', gap:8, flexShrink:0 }}>
+            <button onClick={() => navigate('/login')} style={{ height:36, padding:'0 16px', borderRadius:20, border:'1.5px solid #e2e8f0', background:'#fff', fontSize:13, fontWeight:600, color:'#334155', cursor:'pointer', fontFamily:'inherit', transition:'all .15s', whiteSpace:'nowrap' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor='#14b8a6'; e.currentTarget.style.color='#0d9488'; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor='#e2e8f0'; e.currentTarget.style.color='#334155'; }}>Sign In</button>
+            <button onClick={() => navigate('/login')} style={{ height:36, padding:'0 18px', borderRadius:20, border:'none', background:'linear-gradient(135deg,#14b8a6,#0d9488)', fontSize:13, fontWeight:700, color:'#fff', cursor:'pointer', fontFamily:'inherit', boxShadow:'0 4px 12px rgba(20,184,166,.35)', transition:'all .15s', whiteSpace:'nowrap' }} onMouseEnter={(e) => { e.currentTarget.style.transform='translateY(-1px)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform=''; }}>Register</button>
           </div>
+
+          {/* Burger button — shown on mobile via CSS */}
+          <button onClick={() => setMenuOpen((v) => !v)} className="land-ham" style={{ width:44, height:44, borderRadius:8, border:'1px solid #e2e8f0', background:'#fff', cursor:'pointer', display:'none', alignItems:'center', justifyContent:'center', flexShrink:0 }} aria-label={menuOpen ? 'Close menu' : 'Open menu'}>
+            {menuOpen ? <X size={20} color="#475569" /> : <Menu size={20} color="#475569" />}
+          </button>
         </div>
+
+        {/* Mobile menu drawer */}
         {menuOpen && (
-          <div style={{ borderTop:'1px solid #f1f5f9', background:'#fff', padding:'12px 24px 16px' }}>
-            {NAV.map((l) => (<button key={l.label} onClick={() => scrollTo(l.href)} style={{ display:'block', width:'100%', textAlign:'left', padding:'10px 0', border:'none', background:'none', fontSize:15, fontWeight:500, color:'#334155', cursor:'pointer', fontFamily:'inherit', borderBottom:'1px solid #f8fafc' }}>{l.label}</button>))}
-            <div style={{ display:'flex', gap:10, marginTop:12 }}>
-              <button onClick={() => navigate('/login')} style={{ flex:1, height:40, borderRadius:10, border:'1.5px solid #e2e8f0', background:'#fff', fontSize:14, fontWeight:600, color:'#334155', cursor:'pointer', fontFamily:'inherit' }}>Sign In</button>
-              <button onClick={() => navigate('/login')} style={{ flex:1, height:40, borderRadius:10, border:'none', background:'linear-gradient(135deg,#14b8a6,#0d9488)', fontSize:14, fontWeight:700, color:'#fff', cursor:'pointer', fontFamily:'inherit' }}>Register</button>
+          <div style={{ borderTop:'1px solid #f1f5f9', background:'#fff', padding:'12px 16px 20px' }}>
+            {NAV.map((l) => (<button key={l.label} onClick={() => scrollTo(l.href)} style={{ display:'block', width:'100%', textAlign:'left', padding:'12px 8px', border:'none', background:'none', fontSize:15, fontWeight:500, color:'#334155', cursor:'pointer', fontFamily:'inherit', borderBottom:'1px solid #f8fafc', minHeight:44 }}>{l.label}</button>))}
+            <div style={{ display:'flex', gap:10, marginTop:14 }}>
+              <button onClick={() => navigate('/login')} style={{ flex:1, height:44, borderRadius:10, border:'1.5px solid #e2e8f0', background:'#fff', fontSize:14, fontWeight:600, color:'#334155', cursor:'pointer', fontFamily:'inherit' }}>Sign In</button>
+              <button onClick={() => navigate('/login')} style={{ flex:1, height:44, borderRadius:10, border:'none', background:'linear-gradient(135deg,#14b8a6,#0d9488)', fontSize:14, fontWeight:700, color:'#fff', cursor:'pointer', fontFamily:'inherit' }}>Register</button>
             </div>
           </div>
         )}
@@ -121,11 +126,11 @@ export default function Landing() {
               Learn More
             </button>
           </div>
-          <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:0, borderRadius:16, overflow:'hidden', border:'1px solid rgba(255,255,255,.08)', maxWidth:700, margin:'0 auto' }}>
+          <div className="land-stats-grid" style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:0, borderRadius:16, overflow:'hidden', border:'1px solid rgba(255,255,255,.08)', maxWidth:700, margin:'0 auto' }}>
             {STATS.map((s,i) => (
-              <div key={s.label} style={{ padding:'18px 16px', background:'rgba(255,255,255,.05)', borderRight:i<3?'1px solid rgba(255,255,255,.07)':'none', textAlign:'center' }}>
-                <p className="font-display" style={{ fontSize:'1.75rem', fontWeight:400, color:'#14b8a6', lineHeight:1, marginBottom:4 }}>{s.value}</p>
-                <p style={{ fontSize:11, color:'rgba(148,163,184,.65)', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.07em' }}>{s.label}</p>
+              <div key={s.label} style={{ padding:'18px 12px', background:'rgba(255,255,255,.05)', borderRight:i<3?'1px solid rgba(255,255,255,.07)':'none', textAlign:'center' }}>
+                <p className="font-display" style={{ fontSize:'1.5rem', fontWeight:400, color:'#14b8a6', lineHeight:1, marginBottom:4 }}>{s.value}</p>
+                <p style={{ fontSize:10, color:'rgba(148,163,184,.65)', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.07em', lineHeight:1.3 }}>{s.label}</p>
               </div>
             ))}
           </div>
@@ -300,8 +305,28 @@ export default function Landing() {
       )}
 
       <style>{`
-        @media (max-width: 768px) {
+        /* Mobile: show burger, hide nav links + actions */
+        @media (max-width: 767px) {
           .land-ham { display: flex !important; }
+          .land-nav-links { display: none !important; }
+          .land-nav-actions { display: none !important; }
+          .land-stats-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            max-width: 100% !important;
+          }
+          .land-stats-grid > div {
+            border-right: none !important;
+            border-bottom: 1px solid rgba(255,255,255,.07);
+          }
+          .land-stats-grid > div:nth-child(odd) {
+            border-right: 1px solid rgba(255,255,255,.07) !important;
+          }
+        }
+        /* Tablet: show burger, hide nav links + actions */
+        @media (min-width: 768px) and (max-width: 1023px) {
+          .land-ham { display: flex !important; }
+          .land-nav-links { display: none !important; }
+          .land-nav-actions { display: none !important; }
         }
       `}</style>
     </div>

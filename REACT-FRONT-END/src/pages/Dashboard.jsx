@@ -69,14 +69,14 @@ export default function Dashboard() {
       </div>
 
       {/* KPIs */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 16, marginBottom: 24 }}>
+      <div className="dash-kpi-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 16, marginBottom: 24 }}>
         {kpis.map((k) => (
           <StatCard key={k.label} label={k.label} value={k.value} change={k.change} trend={k.trend} note={k.note} accent={k.accent} delay={k.delay} />
         ))}
       </div>
 
       {/* Heatmap + Workload */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1.45fr 1fr', gap: 20, marginBottom: 24 }}>
+      <div className="dash-two-col" style={{ display: 'grid', gridTemplateColumns: '1.45fr 1fr', gap: 20, marginBottom: 24 }}>
         <div className="card animate-fade-up" style={{ padding: 24, animationDelay: '100ms' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 18 }}>
             <div>
