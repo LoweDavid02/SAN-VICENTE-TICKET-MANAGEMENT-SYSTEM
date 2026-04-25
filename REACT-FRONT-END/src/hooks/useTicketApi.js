@@ -203,6 +203,7 @@ export function useUpdateProfile(portal) {
   return useMutation({
     mutationFn: (profileData) => api.patch(`/${portal}/profile`, profileData),
     onSuccess: ({ data }) => {
+      // Update authStore so avatar persists across page reloads
       setUser(data.data);
       qc.invalidateQueries({ queryKey: QUERY_KEYS.profile(portal) });
     },

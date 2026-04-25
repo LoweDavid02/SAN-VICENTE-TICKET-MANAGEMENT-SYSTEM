@@ -1,19 +1,8 @@
 import { useState, useRef } from 'react';
 import { Camera, Save, Star, Shield, Briefcase, Calendar, Phone, Mail } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
-
-const PERSONNEL = {
-  name: 'Engr. Elias Santos',
-  role: 'Field Engineer',
-  dept: 'Infrastructure',
-  level: 3,
-  avatar: 'ES',
-  rating: 4.8,
-  joined: 'Mar 2021',
-  phone: '+63 912 345 6789',
-  email: 'e.santos@barangay.gov',
-  bio: 'Field engineer specializing in road and drainage infrastructure. 4+ years of service.',
-};
+import { useUpdateProfile } from '../../hooks/useTicketApi';
+import useAuthStore from '../../stores/authStore';
 
 const RATINGS = [
   { label: 'Resolution Speed',      score: 4.8 },
@@ -34,13 +23,30 @@ function StarRow({ score }) {
 
 export default function PersonnelProfile() {
   const { openModal } = useApp();
+  const { user } = useAuthStore();
+  const { mutateAsync: saveProfile } = useUpdateProfile('personnel');
+
   const [editing, setEditing] = useState(false);
-  const [form, setForm] = useState({ name: PERSONNEL.name, email: PERSONNEL.email, phone: PERSONNEL.phone, bio: PERSONNEL.bio });
-  const [savedForm, setSavedForm] = useState({ name: PERSONNEL.name, email: PERSONNEL.email, phone: PERSONNEL.phone, bio: PERSONNEL.bio });
-  const [avatar, setAvatar] = useState(null);
+  const [form, setForm] = useState({
+    name:  user?.full_name || '',
+    email: user?.email     || '',
+    phone: user?.phone     || '',
+    bio:   user?.bio       || '',
+  });
+  const [savedForm, setSavedForm] = useState({ ...form });
+  const [avatar, setAvatar] = useState(user?.avatar || null);
   const fileRef             = useRef(null);
 
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
+
+  const handleAvatarChange = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (ev) => setAvatar(ev.target.result);
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSaveClick = () => {
     openModal('confirm', {
@@ -48,10 +54,36 @@ export default function PersonnelProfile() {
       message: 'Your profile information will be updated.',
       confirmLabel: 'Save Changes',
       danger: false,
-      onConfirm: () => {
-        setSavedForm({ ...form });
-        setEditing(false);
-        openModal('success', { title: 'Profile updated', message: 'Your profile information has been saved.' });
+      onConfirm: async () => {
+        try {
+          const nameParts  = form.name.trim().split(' ');
+          const first_name = nameParts[0] || '';
+          const last_name  = nameParts.slice(1).join(' ') || '';
+
+          const result = await saveProfile({
+            first_name,
+            last_name,
+            email:  form.email,
+            phone:  form.phone,
+            bio:    form.bio,
+            avatar: avatar,
+          });
+
+          // Sync avatar from API response so it persists on reload
+          const updatedUser = result?.data?.data;
+          if (updatedUser?.avatar) {
+            setAvatar(updatedUser.avatar);
+          }
+
+          setSavedForm({ ...form });
+          setEditing(false);
+          openModal('success', { title: 'Profile updated', message: 'Your profile information has been saved.' });
+        } catch (err) {
+          openModal('success', {
+            title:   'Error',
+            message: err.response?.data?.message || 'Failed to save profile.',
+          });
+        }
       },
     });
   };
@@ -60,6 +92,11 @@ export default function PersonnelProfile() {
 
   const inputFocus = (e) => { e.target.style.borderColor = '#f59e0b'; e.target.style.boxShadow = '0 0 0 3px rgba(245,158,11,.1)'; e.target.style.background = '#fff'; };
   const inputBlur  = (e) => { e.target.style.borderColor = '#e2e8f0'; e.target.style.boxShadow = ''; e.target.style.background = '#f8fafc'; };
+
+  const initials = form.name.split(' ').map((n) => n[0]).join('').slice(0, 2).toUpperCase() || 'P';
+  const joinedDate = user?.created_at
+    ? new Date(user.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+    : 'N/A';
 
   return (
     <div className="animate-fade-up" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -86,17 +123,18 @@ export default function PersonnelProfile() {
             <div style={{ padding: '0 20px 20px' }}>
               <div style={{ position: 'relative', width: 'fit-content', marginTop: -28, marginBottom: 12 }}>
                 <div style={{ width: 56, height: 56, borderRadius: 14, background: 'linear-gradient(135deg, #f59e0b, #d97706)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', fontWeight: 700, color: '#fff', border: '3px solid #fff', boxShadow: '0 4px 12px rgba(245,158,11,.3)', overflow: 'hidden' }}>
-                  {avatar ? <img src={avatar} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : PERSONNEL.avatar}
+                  {avatar
+                    ? <img src={avatar} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    : initials}
                 </div>
                 <button onClick={() => fileRef.current?.click()} style={{ position: 'absolute', bottom: -2, right: -2, width: 22, height: 22, borderRadius: '50%', background: '#0f172a', border: '2px solid #fff', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff' }}>
                   <Camera size={11} />
                 </button>
-                <input ref={fileRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={(e) => { const f = e.target.files?.[0]; if (f) setAvatar(URL.createObjectURL(f)); }} />
+                <input ref={fileRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={handleAvatarChange} />
               </div>
               <p style={{ fontSize: '14px', fontWeight: 700, color: '#0f172a' }}>{form.name}</p>
-              <p style={{ fontSize: '12px', color: '#64748b', marginTop: 2 }}>{PERSONNEL.role}</p>
+              <p style={{ fontSize: '12px', color: '#64748b', marginTop: 2 }}>{user?.role || 'Personnel'}</p>
               <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
-                <span style={{ fontSize: '11px', fontWeight: 600, padding: '3px 8px', borderRadius: 99, background: '#fffbeb', color: '#d97706', border: '1px solid #fde68a' }}>Level {PERSONNEL.level}</span>
                 <span style={{ fontSize: '11px', fontWeight: 600, padding: '3px 8px', borderRadius: 99, background: '#ecfdf5', color: '#059669', border: '1px solid #a7f3d0' }}>● Active</span>
               </div>
             </div>
@@ -108,10 +146,10 @@ export default function PersonnelProfile() {
               <p style={{ fontSize: '10.5px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Account Details</p>
             </div>
             {[
-              { icon: Calendar,  label: 'Joined',      value: PERSONNEL.joined,  color: '#f59e0b' },
-              { icon: Briefcase, label: 'Department',   value: PERSONNEL.dept,    color: '#2563eb' },
-              { icon: Shield,    label: 'Level',        value: `Level ${PERSONNEL.level}`, color: '#8b5cf6' },
-              { icon: Star,      label: 'Rating',       value: `${PERSONNEL.rating}/5.0`, color: '#f59e0b' },
+              { icon: Calendar,  label: 'Joined',     value: joinedDate,              color: '#f59e0b' },
+              { icon: Briefcase, label: 'Portal',      value: 'Personnel',             color: '#2563eb' },
+              { icon: Shield,    label: 'Status',      value: user?.status || 'Active', color: '#8b5cf6' },
+              { icon: Star,      label: 'Rating',      value: '4.8/5.0',               color: '#f59e0b' },
             ].map(({ icon: Icon, label, value, color }, idx, arr) => (
               <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 16px', borderBottom: idx < arr.length - 1 ? '1px solid #f8fafc' : 'none' }}>
                 <div style={{ width: 30, height: 30, borderRadius: 8, background: `${color}14`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -119,7 +157,7 @@ export default function PersonnelProfile() {
                 </div>
                 <div>
                   <p style={{ fontSize: '10px', color: '#94a3b8' }}>{label}</p>
-                  <p style={{ fontSize: '12px', fontWeight: 600, color: '#0f172a' }}>{value}</p>
+                  <p style={{ fontSize: '12px', fontWeight: 600, color: '#0f172a', textTransform: 'capitalize' }}>{value}</p>
                 </div>
               </div>
             ))}
@@ -198,7 +236,7 @@ export default function PersonnelProfile() {
                   ].map(({ label, value }) => (
                     <div key={label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: 12, borderBottom: '1px solid #f1f5f9' }}>
                       <span style={{ fontSize: '11px', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.07em' }}>{label}</span>
-                      <span style={{ fontSize: '13.5px', fontWeight: 600, color: '#0f172a' }}>{value}</span>
+                      <span style={{ fontSize: '13.5px', fontWeight: 600, color: '#0f172a' }}>{value || '—'}</span>
                     </div>
                   ))}
                   {form.bio && (

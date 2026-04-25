@@ -111,7 +111,7 @@ export default function Profile() {
           const first_name = nameParts[0] || form.first_name;
           const last_name  = nameParts.slice(1).join(' ') || form.last_name;
 
-          await saveProfile({
+          const result = await saveProfile({
             first_name,
             last_name,
             email:   form.email,
@@ -120,6 +120,12 @@ export default function Profile() {
             bio:     form.bio,
             avatar:  avatar,
           });
+
+          // Sync avatar from the saved response so it persists on reload
+          const updatedUser = result?.data?.data;
+          if (updatedUser?.avatar) {
+            setAvatar(updatedUser.avatar);
+          }
 
           setSavedForm({ ...form });
           setEditing(false);
