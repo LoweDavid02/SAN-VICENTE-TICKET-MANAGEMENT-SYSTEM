@@ -18,6 +18,9 @@ class Ticket extends Model
         'description',
         'category',
         'location',
+        'latitude',
+        'longitude',
+        'geocoded_address',
         'severity',
         'status',
         'progress',
@@ -28,7 +31,9 @@ class Ticket extends Model
     ];
 
     protected $casts = [
-        'images' => 'array',
+        'images'    => 'array',
+        'latitude'  => 'float',
+        'longitude' => 'float',
     ];
 
     // Progress map per status
@@ -61,16 +66,19 @@ class Ticket extends Model
     public function toApiArray(): array
     {
         return [
-            'id'           => $this->id,
-            'tracking_id'  => $this->tracking_id,
-            'title'        => $this->title,
-            'description'  => $this->description,
-            'category'     => $this->category,
-            'location'     => $this->location,
-            'severity'     => $this->severity,
-            'status'       => $this->status,
-            'progress'     => $this->progress,
-            'resident'     => $this->resident ? [
+            'id'               => $this->id,
+            'tracking_id'      => $this->tracking_id,
+            'title'            => $this->title,
+            'description'      => $this->description,
+            'category'         => $this->category,
+            'location'         => $this->location,
+            'latitude'         => $this->latitude,
+            'longitude'        => $this->longitude,
+            'geocoded_address' => $this->geocoded_address,
+            'severity'         => $this->severity,
+            'status'           => $this->status,
+            'progress'         => $this->progress,
+            'resident'         => $this->resident ? [
                 'id'        => $this->resident->id,
                 'full_name' => $this->resident->full_name,
                 'email'     => $this->resident->email,
