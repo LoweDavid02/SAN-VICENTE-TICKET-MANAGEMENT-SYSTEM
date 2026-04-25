@@ -9,6 +9,7 @@ use App\Http\Requests\Api\SubmitTicketRequest;
 use App\Http\Requests\Api\UpdateProfileRequest;
 use App\Models\Ticket;
 use App\Models\TicketTimeline;
+use App\Services\GeocodingService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -43,18 +44,25 @@ class ResidentController extends Controller
 
         $trackingId = 'SVR-' . strtoupper(Str::random(6));
 
+        // Geocode the location address
+        $geocoder = new GeocodingService();
+        $coords   = $geocoder->geocode($request->location);
+
         $ticket = Ticket::create([
-            'tracking_id' => $trackingId,
-            'title'       => $request->title,
-            'description' => $request->description,
-            'category'    => $request->category,
-            'location'    => $request->location,
-            'severity'    => $request->severity,
-            'status'      => 'Pending',
-            'progress'    => 10,
-            'resident_id' => $user->id,
-            'assigned_to' => null,
-            'images'      => $request->images ?? [],
+            'tracking_id'      => $trackingId,
+            'title'            => $request->title,
+            'description'      => $request->description,
+            'category'         => $request->category,
+            'location'         => $request->location,
+            'latitude'         => $coords['latitude'],
+            'longitude'        => $coords['longitude'],
+            'geocoded_address' => $coords['geocoded_address'],
+            'severity'         => $request->severity,
+            'status'           => 'Pending',
+            'progress'         => 10,
+            'resident_id'      => $user->id,
+            'assigned_to'      => null,
+            'images'           => $request->images ?? [],
         ]);
 
         // Create initial timeline entry
