@@ -35,6 +35,7 @@ Route::prefix('v1')->group(function () {
             Route::get('/personnel',                    [AdminController::class, 'personnel']);
             Route::get('/profile',                      [AdminController::class, 'profile']);
             Route::patch('/profile',                    [AdminController::class, 'updateProfile']);
+            Route::get('/map',                          [AdminController::class, 'mapTickets']);
         });
 
         // ── Resident ───────────────────────────────────────────────────────

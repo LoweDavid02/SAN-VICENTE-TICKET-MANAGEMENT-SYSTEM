@@ -188,9 +188,7 @@ class AdminController extends Controller
     public function profile(Request $request): JsonResponse
     {
         return ApiResponse::success($this->formatUser($request->user()), 'Profile retrieved.');
-    }
-
-    public function updateProfile(UpdateProfileRequest $request): JsonResponse
+    }    public function updateProfile(UpdateProfileRequest $request): JsonResponse
     {
         $user = $request->user();
         $user->update($request->only(['first_name', 'last_name', 'email', 'phone', 'address', 'bio', 'avatar']));
@@ -248,6 +246,73 @@ class AdminController extends Controller
         $user->update(['status' => $request->status]);
 
         return ApiResponse::success($this->formatUser($user->fresh()), 'User status updated.');
+    }
+
+    /**
+     * Map data — all tickets with coordinates for the geospatial map.
+     * Supports filtering by status, category, date range, and search.
+     */
+    public function mapTickets(Request $request): JsonResponse
+    {
+        $query = Ticket::with(['resident'])
+            ->whereNotNull('latitude')
+            ->whereNotNull('longitude')
+            ->orderByDesc('created_at');
+
+        // Filter by status
+        if ($request->status && $request->status !== 'All') {
+            $allowed = ['Pending', 'Under Review', 'In Progress', 'Completed', 'Rejected'];
+            if (in_array($request->status, $allowed, true)) {
+                $query->where('status', $request->status);
+            }
+        }
+
+        // Filter by category
+        if ($request->category && $request->category !== 'All') {
+            $query->where('category', $request->category);
+        }
+
+        // Filter by date range
+        if ($request->date_from) {
+            $query->whereDate('created_at', '>=', $request->date_from);
+        }
+        if ($request->date_to) {
+            $query->whereDate('created_at', '<=', $request->date_to);
+        }
+
+        // Search by resident name or address
+        if ($request->search) {
+            $search = substr(strip_tags($request->search), 0, 100);
+            $query->where(function ($q) use ($search) {
+                $q->where('location', 'ilike', "%{$search}%")
+                  ->orWhere('title', 'ilike', "%{$search}%")
+                  ->orWhereHas('resident', fn($r) => $r->whereRaw(
+                      "CONCAT(first_name, ' ', last_name) ILIKE ?", ["%{$search}%"]
+                  ));
+            });
+        }
+
+        $tickets = $query->get();
+
+        $markers = $tickets->map(fn($t) => [
+            'id'            => $t->id,
+            'tracking_id'   => $t->tracking_id,
+            'title'         => $t->title,
+            'description'   => $t->description,
+            'category'      => $t->category,
+            'location'      => $t->location,
+            'latitude'      => (float) $t->latitude,
+            'longitude'     => (float) $t->longitude,
+            'severity'      => $t->severity,
+            'status'        => $t->status,
+            'submitted'     => $t->created_at->format('M d, Y'),
+            'resident_name' => $t->resident?->full_name ?? 'Unknown',
+        ])->values();
+
+        return ApiResponse::success([
+            'markers' => $markers,
+            'total'   => $markers->count(),
+        ], 'Map tickets retrieved.');
     }
 
 }
