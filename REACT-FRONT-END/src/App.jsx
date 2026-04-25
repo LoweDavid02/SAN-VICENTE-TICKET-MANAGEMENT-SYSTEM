@@ -19,6 +19,28 @@ import AppShell from './components/AppShell';
 import Preloader from './components/Preloader';
 import useAuthStore from './stores/authStore';
 
+/**
+ * ProtectedRoute — guards portal routes from unauthenticated access.
+ *
+ * - If not authenticated → redirect to /login
+ * - If authenticated but wrong portal → redirect to correct portal dashboard
+ * - If authenticated and correct portal → render children
+ */
+function ProtectedRoute({ portalType, children }) {
+  const { isAuthenticated, user } = useAuthStore();
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // Redirect to the user's own portal if they try to access another
+  if (user?.portal && user.portal !== portalType) {
+    return <Navigate to={`/${user.portal}/dashboard`} replace />;
+  }
+
+  return children;
+}
+
 /* ── Public pages — loaded eagerly (entry points) ── */
 import Landing  from './pages/Landing';
 import Login    from './pages/Login';
@@ -116,7 +138,11 @@ function AppRoutes() {
           {/* ════════════════════════════════════
               ADMIN PORTAL
           ════════════════════════════════════ */}
-          <Route path="/admin" element={<AppShell portalType="admin" />}>
+          <Route path="/admin" element={
+            <ProtectedRoute portalType="admin">
+              <AppShell portalType="admin" />
+            </ProtectedRoute>
+          }>
             <Route index                element={<Navigate to="dashboard" replace />} />
             <Route path="dashboard"     element={<Dashboard />} />
             <Route path="analytics"     element={<AnalyticsDashboard />} />
@@ -134,7 +160,11 @@ function AppRoutes() {
           {/* ════════════════════════════════════
               RESIDENT PORTAL
           ════════════════════════════════════ */}
-          <Route path="/resident" element={<AppShell portalType="resident" />}>
+          <Route path="/resident" element={
+            <ProtectedRoute portalType="resident">
+              <AppShell portalType="resident" />
+            </ProtectedRoute>
+          }>
             <Route index                element={<Navigate to="dashboard" replace />} />
             <Route path="dashboard"     element={<ResidentDashboard />} />
             <Route path="request"       element={<SubmitRequest />} />
@@ -148,7 +178,11 @@ function AppRoutes() {
           {/* ════════════════════════════════════
               PERSONNEL PORTAL
           ════════════════════════════════════ */}
-          <Route path="/personnel" element={<AppShell portalType="personnel" />}>
+          <Route path="/personnel" element={
+            <ProtectedRoute portalType="personnel">
+              <AppShell portalType="personnel" />
+            </ProtectedRoute>
+          }>
             <Route index                element={<Navigate to="dashboard" replace />} />
             <Route path="dashboard"     element={<PersonnelDashboard />} />
             <Route path="tasks"         element={<FieldWorkTask />} />
