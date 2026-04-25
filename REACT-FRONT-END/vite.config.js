@@ -40,6 +40,10 @@ export default defineConfig({
             if (id.includes('recharts') || id.includes('d3-') || id.includes('victory')) {
               return 'vendor-charts';
             }
+            // Map — Leaflet + react-leaflet
+            if (id.includes('leaflet') || id.includes('react-leaflet')) {
+              return 'vendor-map';
+            }
             // PDF generation — only loaded when user clicks Download
             if (id.includes('jspdf') || id.includes('jspdf-autotable')) {
               return 'vendor-pdf';
@@ -87,6 +91,8 @@ export default defineConfig({
       'axios',
       'zustand',
       'lucide-react',
+      'leaflet',
+      'react-leaflet',
     ],
   },
 });
