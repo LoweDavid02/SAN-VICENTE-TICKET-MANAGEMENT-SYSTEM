@@ -111,7 +111,7 @@ export default function Profile() {
           const first_name = nameParts[0] || form.first_name;
           const last_name  = nameParts.slice(1).join(' ') || form.last_name;
 
-          const result = await saveProfile({
+          const response = await saveProfile({
             first_name,
             last_name,
             email:   form.email,
@@ -121,8 +121,8 @@ export default function Profile() {
             avatar:  avatar,
           });
 
-          // Sync avatar from the saved response so it persists on reload
-          const updatedUser = result?.data?.data;
+          // response.data.data is the updated user from the API
+          const updatedUser = response?.data?.data;
           if (updatedUser?.avatar) {
             setAvatar(updatedUser.avatar);
           }
@@ -134,9 +134,25 @@ export default function Profile() {
             message: 'Your profile information has been saved successfully.',
           });
         } catch (err) {
-          openModal('success', {
-            title:   'Error',
-            message: err.response?.data?.message || 'Failed to save profile.',
+          // Extract the real error message from the API response
+          const apiMessage = err?.response?.data?.message;
+          const apiErrors  = err?.response?.data?.errors;
+          let message = 'Failed to save profile. Please try again.';
+
+          if (apiMessage) {
+            message = apiMessage;
+          } else if (apiErrors) {
+            // Flatten validation errors into a readable string
+            message = Object.values(apiErrors).flat().join(' ');
+          }
+
+          // Use 'confirm' modal type for errors so it shows correctly
+          openModal('confirm', {
+            title:        'Save Failed',
+            message,
+            confirmLabel: 'OK',
+            danger:       true,
+            onConfirm:    () => {},
           });
         }
       },

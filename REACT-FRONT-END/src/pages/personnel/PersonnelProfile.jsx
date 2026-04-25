@@ -60,7 +60,7 @@ export default function PersonnelProfile() {
           const first_name = nameParts[0] || '';
           const last_name  = nameParts.slice(1).join(' ') || '';
 
-          const result = await saveProfile({
+          const response = await saveProfile({
             first_name,
             last_name,
             email:  form.email,
@@ -70,7 +70,7 @@ export default function PersonnelProfile() {
           });
 
           // Sync avatar from API response so it persists on reload
-          const updatedUser = result?.data?.data;
+          const updatedUser = response?.data?.data;
           if (updatedUser?.avatar) {
             setAvatar(updatedUser.avatar);
           }
@@ -79,9 +79,14 @@ export default function PersonnelProfile() {
           setEditing(false);
           openModal('success', { title: 'Profile updated', message: 'Your profile information has been saved.' });
         } catch (err) {
-          openModal('success', {
-            title:   'Error',
-            message: err.response?.data?.message || 'Failed to save profile.',
+          const apiMessage = err?.response?.data?.message;
+          const apiErrors  = err?.response?.data?.errors;
+          let message = 'Failed to save profile. Please try again.';
+          if (apiMessage) message = apiMessage;
+          else if (apiErrors) message = Object.values(apiErrors).flat().join(' ');
+
+          openModal('confirm', {
+            title: 'Save Failed', message, confirmLabel: 'OK', danger: true, onConfirm: () => {},
           });
         }
       },

@@ -202,9 +202,14 @@ export function useUpdateProfile(portal) {
   const { setUser } = useAuthStore();
   return useMutation({
     mutationFn: (profileData) => api.patch(`/${portal}/profile`, profileData),
-    onSuccess: ({ data }) => {
-      // Update authStore so avatar persists across page reloads
-      setUser(data.data);
+    onSuccess: (response) => {
+      // response is the axios response object
+      // response.data is the API JSON body: { success, message, data: user }
+      // response.data.data is the actual user object
+      const updatedUser = response?.data?.data;
+      if (updatedUser) {
+        setUser(updatedUser);
+      }
       qc.invalidateQueries({ queryKey: QUERY_KEYS.profile(portal) });
     },
   });
