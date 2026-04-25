@@ -208,3 +208,18 @@ export function useUpdateProfile(portal) {
     },
   });
 }
+
+// ── Map hooks ─────────────────────────────────────────────
+
+export function useMapTickets(filters = {}) {
+  return useQuery({
+    ...QUERY_OPTS,
+    queryKey: ['admin', 'map', filters],
+    queryFn: async () => {
+      const { data } = await api.get('/admin/map', { params: filters });
+      return data.data;
+    },
+    refetchInterval: 60_000,
+    staleTime: 30_000,
+  });
+}

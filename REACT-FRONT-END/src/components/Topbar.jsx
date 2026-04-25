@@ -41,6 +41,7 @@ export default function Topbar({ sidebarWidth }) {
     '/personnel/profile':   { title: t('profile'),             sub: 'Personnel account information'          },
     '/personnel/faq':       { title: t('faqs'),                sub: 'Frequently asked questions'             },
     '/admin/notifications':     { title: t('notifications'), sub: 'All system alerts and updates'          },
+    '/admin/map':               { title: 'Complaint Map',    sub: 'Geospatial view of all service requests' },
     '/resident/notifications':  { title: t('notifications'), sub: 'Your service request updates'           },
     '/personnel/notifications': { title: t('notifications'), sub: 'Task assignments and status updates'    },
   };

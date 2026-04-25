@@ -13,6 +13,7 @@ export const ROUTES = {
     ROOT:          '/admin',
     DASHBOARD:     '/admin/dashboard',
     ANALYTICS:     '/admin/analytics',
+    MAP:           '/admin/map',
     PERSONNEL:     '/admin/personnel',
     TASKS:         '/admin/tasks',
     TICKETS:       '/admin/tickets',

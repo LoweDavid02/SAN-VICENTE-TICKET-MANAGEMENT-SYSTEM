@@ -4,7 +4,7 @@ import {
   LayoutDashboard, BarChart2, Users, FileText,
   Settings, Plus, ChevronRight,
   Home, ChevronLeft, ClipboardList, History,
-  HelpCircle, PlusCircle, X, Bell, User, LogOut,
+  HelpCircle, PlusCircle, X, Bell, User, LogOut, Map,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useT } from '../stores/langStore';
@@ -38,6 +38,7 @@ export default function Sidebar({ portalType }) {
   const ADMIN_NAV = useMemo(() => [
     { to: '/admin/dashboard', label: t('dashboard'),   icon: LayoutDashboard },
     { to: '/admin/analytics', label: t('analytics'),   icon: BarChart2       },
+    { to: '/admin/map',       label: 'Complaint Map',  icon: Map             },
     { to: '/admin/personnel', label: t('personnel'),   icon: Users           },
     { to: '/admin/tickets',   label: t('requests'),    icon: FileText        },
     { to: '/admin/settings',  label: t('settings'),    icon: Settings        },
