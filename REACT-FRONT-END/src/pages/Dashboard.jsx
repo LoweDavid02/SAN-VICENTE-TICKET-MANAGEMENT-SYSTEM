@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Lightbulb, X, MapPin, Clock, User, Tag, RefreshCw } from 'lucide-react';
+import { Lightbulb, X, MapPin, Clock, User, Tag, RefreshCw, ExternalLink } from 'lucide-react';
 import { StatCard, WorkloadBar, IncidentRow, SectionHeader } from '../components/ui/Components';
 import { StatusBadge, SeverityBadge } from '../components/ui/Components';
 import { useAdminDashboard } from '../hooks/useTicketApi';
-import { kpiData, departments, heatmapZones } from '../data/mockData';
+import { kpiData, departments } from '../data/mockData';
 import { useT } from '../stores/langStore';
 import Portal from '../components/Portal';
+import { useNavigate } from 'react-router-dom';
 
 const HEAT_BG = [
   'rgba(20,184,166,.12)', 'rgba(20,184,166,.28)',
@@ -20,9 +21,9 @@ const SEV_BG = {
 };
 
 export default function Dashboard() {
-  const [zone,     setZone]     = useState(null);
   const [incident, setIncident] = useState(null);
   const { t } = useT();
+  const navigate = useNavigate();
 
   const { data, isLoading, refetch } = useAdminDashboard();
 
@@ -75,33 +76,78 @@ export default function Dashboard() {
         ))}
       </div>
 
-      {/* Heatmap + Workload */}
+      {/* Map Preview + Workload */}
       <div className="dash-two-col" style={{ display: 'grid', gridTemplateColumns: '1.45fr 1fr', gap: 20, marginBottom: 24 }}>
-        <div className="card animate-fade-up" style={{ padding: 24, animationDelay: '100ms' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 18 }}>
+        {/* Map preview card */}
+        <div className="card animate-fade-up" style={{ padding: 24, animationDelay: '100ms', cursor: 'pointer', transition: 'box-shadow .2s' }}
+          onClick={() => navigate('/admin/map')}
+          onMouseEnter={e => e.currentTarget.style.boxShadow = 'var(--shadow-lg)'}
+          onMouseLeave={e => e.currentTarget.style.boxShadow = ''}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 14 }}>
             <div>
               <h2 style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-1)' }}>{t('issueHeatmap')}</h2>
               <p style={{ fontSize: 12, color: 'var(--text-4)', marginTop: 3 }}>Geographical distribution of reported incidents</p>
             </div>
+            <button
+              onClick={e => { e.stopPropagation(); navigate('/admin/map'); }}
+              className="btn btn-outline"
+              style={{ fontSize: 11, gap: 5, padding: '5px 10px' }}
+            >
+              <ExternalLink size={12} /> Open Map
+            </button>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 7, marginBottom: 16 }}>
-            {heatmapZones.map((z) => (
-              <button key={z.zone} onClick={() => setZone(zone?.zone === z.zone ? null : z)} title={z.label}
-                style={{ aspectRatio: '1', borderRadius: 10, border: 'none', background: HEAT_BG[z.intensity - 1], color: HEAT_FG[z.intensity - 1], display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', gap: 2, outline: zone?.zone === z.zone ? '2px solid var(--brand)' : '2px solid transparent', outlineOffset: 2, transition: 'transform .12s, outline .1s', fontFamily: 'var(--font-sans)' }}
-                onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.07)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.transform = ''; }}
-              >
-                <span style={{ fontSize: 12, fontWeight: 700 }}>{z.zone}</span>
-                <span style={{ fontSize: 9.5, fontWeight: 500, opacity: .8 }}>{z.count}</span>
-              </button>
+
+          {/* Static map preview */}
+          <div style={{
+            height: 200, borderRadius: 10, overflow: 'hidden', position: 'relative',
+            background: 'linear-gradient(135deg, #e8f4f8 0%, #c8e0ec 100%)',
+            border: '1px solid var(--border)',
+          }}>
+            {/* Grid overlay */}
+            <div style={{
+              position: 'absolute', inset: 0, opacity: 0.12,
+              backgroundImage: 'linear-gradient(#64748b 1px, transparent 1px), linear-gradient(90deg, #64748b 1px, transparent 1px)',
+              backgroundSize: '30px 30px',
+            }} />
+            {/* Scatter markers */}
+            {[
+              { top: '25%', left: '30%', color: '#EF4444' },
+              { top: '45%', left: '55%', color: '#F59E0B' },
+              { top: '60%', left: '25%', color: '#EF4444' },
+              { top: '30%', left: '70%', color: '#10B981' },
+              { top: '70%', left: '60%', color: '#F59E0B' },
+              { top: '50%', left: '40%', color: '#EF4444' },
+              { top: '20%', left: '50%', color: '#10B981' },
+            ].map((m, i) => (
+              <div key={i} style={{
+                position: 'absolute', top: m.top, left: m.left,
+                width: 12, height: 12, borderRadius: '50% 50% 50% 0',
+                transform: 'rotate(-45deg)',
+                background: m.color, border: '2px solid white',
+                boxShadow: '0 2px 6px rgba(0,0,0,.25)',
+              }} />
+            ))}
+            {/* Center label */}
+            <div style={{
+              position: 'absolute', bottom: 10, left: '50%', transform: 'translateX(-50%)',
+              background: 'rgba(255,255,255,.9)', borderRadius: 6, padding: '4px 10px',
+              fontSize: 10, fontWeight: 700, color: '#334155', whiteSpace: 'nowrap',
+              boxShadow: '0 1px 4px rgba(0,0,0,.1)',
+            }}>
+              📍 Brgy. San Vicente, Apalit, Pampanga
+            </div>
+          </div>
+
+          {/* Legend */}
+          <div style={{ display: 'flex', gap: 16, marginTop: 12 }}>
+            {[['#EF4444','Pending'],['#F59E0B','In Progress'],['#10B981','Resolved']].map(([c,l]) => (
+              <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+                <div style={{ width: 8, height: 8, borderRadius: '50%', background: c }} />
+                <span style={{ fontSize: 11, color: 'var(--text-4)' }}>{l}</span>
+              </div>
             ))}
           </div>
-          {zone && (
-            <div className="animate-fade-up" style={{ marginTop: 12, padding: '10px 14px', background: 'var(--brand-muted)', borderRadius: 'var(--radius)', border: '1px solid rgba(20,184,166,.2)' }}>
-              <p style={{ fontSize: 12.5, fontWeight: 600, color: 'var(--brand)' }}>{zone.label}</p>
-              <p style={{ fontSize: 12, color: 'var(--text-3)', marginTop: 2 }}>{zone.count} active tickets this month</p>
-            </div>
-          )}
         </div>
 
         <div className="card animate-fade-up" style={{ padding: 24, animationDelay: '175ms' }}>
