@@ -40,6 +40,10 @@ export default defineConfig({
             if (id.includes('recharts') || id.includes('d3-') || id.includes('victory')) {
               return 'vendor-charts';
             }
+            // PDF generation — only loaded when user clicks Download
+            if (id.includes('jspdf') || id.includes('jspdf-autotable')) {
+              return 'vendor-pdf';
+            }
             // Animations
             if (id.includes('framer-motion') || id.includes('motion-')) {
               return 'vendor-motion';

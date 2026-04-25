@@ -14,8 +14,9 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
   Legend, ResponsiveContainer,
 } from 'recharts';
-import { TrendingUp, CheckCircle2, Clock, AlertTriangle, Download } from 'lucide-react';
+import { TrendingUp, CheckCircle2, Clock, AlertTriangle, FileDown, Loader2 } from 'lucide-react';
 import { useAnalyticsDashboard } from './useAnalyticsDashboard';
+import { useState } from 'react';
 
 const TOOLTIP_STYLE = {
   background: 'var(--surface)', border: '1px solid var(--border)',
@@ -28,6 +29,9 @@ export default function AnalyticsDashboard() {
     monthlyTrends, categoryBreakdown, resolutionData, deptWorkload,
   } = useAnalyticsDashboard();
 
+  const [pdfLoading, setPdfLoading] = useState(false);
+  const [pdfError,   setPdfError]   = useState(null);
+
   const SUMMARY_CARDS = [
     { label: 'Total Tickets',   value: summary.total,      color: 'var(--brand)',  icon: TrendingUp,   delta: '+12.5%' },
     { label: 'Resolved',        value: summary.resolved,   color: 'var(--green)',  icon: CheckCircle2, delta: `${summary.rate}% rate` },
@@ -35,49 +39,47 @@ export default function AnalyticsDashboard() {
     { label: 'Pending Review',  value: summary.pending,    color: 'var(--red)',    icon: AlertTriangle,delta: 'Needs action' },
   ];
 
-  const handleDownloadReport = () => {
-    const now = new Date().toLocaleString();
-    const lines = [
-      '=== BARANGAY CONNECT — ANALYTICS REPORT ===',
-      `Generated: ${now}`,
-      `Period: ${period.charAt(0).toUpperCase() + period.slice(1)}`,
-      '',
-      '--- SUMMARY ---',
-      `Total Tickets:    ${summary.total}`,
-      `Resolved:         ${summary.resolved} (${summary.rate}% resolution rate)`,
-      `In Progress:      ${summary.inProgress}`,
-      `Pending Review:   ${summary.pending}`,
-      '',
-      '--- TICKET VOLUME (Monthly) ---',
-      'Month,Submitted,Resolved',
-      ...monthlyTrends.map((m) => `${m.month},${m.tickets},${m.resolved}`),
-      '',
-      '--- CATEGORY BREAKDOWN ---',
-      'Category,Percentage',
-      ...categoryBreakdown.map((c) => `${c.name},${c.value}%`),
-      '',
-      '--- AVG RESOLUTION TIME BY DEPARTMENT ---',
-      'Department,Avg Hours',
-      ...resolutionData.map((r) => `${r.dept},${r.avg}h`),
-      '',
-      '--- DEPARTMENT WORKLOAD ---',
-      'Department,Active Tickets,Capacity %',
-      ...deptWorkload.map((d) => `${d.name},${d.liveTickets},${d.capacity}%`),
-      '',
-      '=== END OF REPORT ===',
-    ];
-
-    const blob = new Blob([lines.join('\n')], { type: 'text/plain;charset=utf-8' });
-    const url  = URL.createObjectURL(blob);
-    const a    = document.createElement('a');
-    a.href     = url;
-    a.download = `analytics-report-${period}-${Date.now()}.txt`;
-    a.click();
-    URL.revokeObjectURL(url);
+  const handleDownloadReport = async () => {
+    setPdfLoading(true);
+    setPdfError(null);
+    try {
+      // Lazy-load the PDF library — only downloaded when user clicks the button
+      const { generateAnalyticsPDF } = await import('../../../lib/generateAnalyticsPDF');
+      await generateAnalyticsPDF({
+        summary,
+        period,
+        monthlyTrends,
+        categoryBreakdown,
+        resolutionData,
+        deptWorkload,
+      });
+    } catch (err) {
+      console.error('PDF generation failed:', err);
+      setPdfError('PDF generation failed. Please try again.');
+      setTimeout(() => setPdfError(null), 4000);
+    } finally {
+      setPdfLoading(false);
+    }
   };
 
   return (
     <div className="animate-fade-up" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+
+      {/* Error toast */}
+      {pdfError && (
+        <div role="alert" style={{
+          position: 'fixed', bottom: 24, right: 24, zIndex: 9999,
+          display: 'flex', alignItems: 'center', gap: 10,
+          padding: '12px 18px', borderRadius: 12,
+          background: '#fef2f2', border: '1px solid #fecaca',
+          boxShadow: '0 4px 16px rgba(239,68,68,.2)',
+          animation: 'fadeUp .3s ease-out both',
+          maxWidth: 360,
+        }}>
+          <span style={{ fontSize: 16 }}>⚠️</span>
+          <p style={{ fontSize: 13, fontWeight: 600, color: '#b91c1c' }}>{pdfError}</p>
+        </div>
+      )}
 
       {/* Page header with download button */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
@@ -87,13 +89,22 @@ export default function AnalyticsDashboard() {
         </div>
         <button
           onClick={handleDownloadReport}
+          disabled={pdfLoading}
           className="btn btn-brand"
-          style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '9px 18px', fontSize: 13, fontWeight: 600 }}
-          onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(20,184,166,.35)'; }}
+          style={{
+            display: 'flex', alignItems: 'center', gap: 7,
+            padding: '9px 18px', fontSize: 13, fontWeight: 600,
+            opacity: pdfLoading ? 0.75 : 1,
+            cursor: pdfLoading ? 'not-allowed' : 'pointer',
+          }}
+          aria-label="Download PDF Report"
+          onMouseEnter={(e) => { if (!pdfLoading) { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(34,168,58,.35)'; } }}
           onMouseLeave={(e) => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = ''; }}
         >
-          <Download size={14} strokeWidth={2.5} />
-          Download Report
+          {pdfLoading
+            ? <><Loader2 size={14} style={{ animation: 'spin .65s linear infinite' }} /> Generating PDF…</>
+            : <><FileDown size={14} strokeWidth={2.5} /> Download PDF Report</>
+          }
         </button>
       </div>
 
