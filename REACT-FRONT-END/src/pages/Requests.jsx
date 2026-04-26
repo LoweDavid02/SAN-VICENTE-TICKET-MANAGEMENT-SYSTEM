@@ -8,7 +8,7 @@ import { useDebounce } from '../hooks/useDebounce';
 import Portal from '../components/Portal';
 
 const SEVERITIES    = ['All', 'High', 'Medium', 'Low'];
-const STATUSES      = ['All', 'Urgent', 'In Progress', 'Under Review', 'Pending', 'Resolved', 'Completed'];
+const STATUSES      = ['All', 'Pending', 'Under Review', 'In Progress', 'Completed', 'Rejected'];
 const STATUS_OPTIONS = ['Pending', 'Under Review', 'In Progress', 'Completed', 'Rejected'];
 
 const STATUS_COLORS = {

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { MapPin, Clock, CheckCircle, Phone, Camera } from 'lucide-react';
-import Header from '../components/Header';
 
 const PRIORITY_STYLE = {
   HIGH:   { bg: '#fef2f2', text: '#b91c1c', border: '#fecaca', dot: '#dc2626' },
@@ -25,7 +24,10 @@ export default function PersonnelTasks() {
 
   return (
     <div className="animate-fade-up space-y-6">
-      <Header title="Field Tasks" subtitle="Assigned service requests for today" />
+      <div style={{ marginBottom: 8 }}>
+        <h1 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-1)' }}>Field Tasks</h1>
+        <p style={{ fontSize: '12px', color: 'var(--text-4)', marginTop: 2 }}>Assigned service requests for today</p>
+      </div>
 
       {/* Progress */}
       <div className="card p-5">

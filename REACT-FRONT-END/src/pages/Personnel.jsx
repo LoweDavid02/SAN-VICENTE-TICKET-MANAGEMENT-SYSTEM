@@ -205,7 +205,7 @@ function EditPersonnelModal({ person, onClose, onSave }) {
 
 /* -- Assign Ticket Modal ----------------------------------- */
 function AssignTicketModal({ person, onClose, onAssign }) {
-  const unassigned = requests.filter((r) => r.assigned === 'Unassigned');
+  const unassigned = requests.filter((r) => r.assignedTo === 'Unassigned');
   const [selected, setSelected] = useState(null);
 
   return (

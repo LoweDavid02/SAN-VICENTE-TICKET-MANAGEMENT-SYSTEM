@@ -62,8 +62,8 @@ class AdminController extends Controller
         if ($request->search) {
             $search = substr(strip_tags($request->search), 0, 100);
             $query->where(function ($q) use ($search) {
-                $q->where('title', 'ilike', "%{$search}%")
-                  ->orWhere('tracking_id', 'ilike', "%{$search}%");
+                $q->where('title', 'LIKE', "%{$search}%")
+                  ->orWhere('tracking_id', 'LIKE', "%{$search}%");
             });
         }
 
@@ -284,10 +284,10 @@ class AdminController extends Controller
         if ($request->search) {
             $search = substr(strip_tags($request->search), 0, 100);
             $query->where(function ($q) use ($search) {
-                $q->where('location', 'ilike', "%{$search}%")
-                  ->orWhere('title', 'ilike', "%{$search}%")
+                $q->where('location', 'LIKE', "%{$search}%")
+                  ->orWhere('title', 'LIKE', "%{$search}%")
                   ->orWhereHas('resident', fn($r) => $r->whereRaw(
-                      "CONCAT(first_name, ' ', last_name) ILIKE ?", ["%{$search}%"]
+                      "LOWER(first_name || ' ' || last_name) LIKE LOWER(?)", ["%{$search}%"]
                   ));
             });
         }
