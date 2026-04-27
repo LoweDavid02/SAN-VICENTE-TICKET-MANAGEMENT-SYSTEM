@@ -271,7 +271,7 @@ export default function Profile() {
               <p style={{ fontSize: 12.5, color: 'var(--text-4)', margin: '3px 0 12px' }}>{form.email}</p>
               <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                 <span style={{ fontSize: 11, fontWeight: 600, padding: '3px 10px', borderRadius: 99, background: 'var(--blue-muted)', color: '#1d4ed8' }}>
-                  Resident
+                  {user?.portal ? user.portal.charAt(0).toUpperCase() + user.portal.slice(1) : 'Resident'}
                 </span>
                 <span style={{ fontSize: 11, fontWeight: 600, padding: '3px 10px', borderRadius: 99, background: 'rgba(5,150,105,.12)', color: '#059669' }}>
                   ● Verified

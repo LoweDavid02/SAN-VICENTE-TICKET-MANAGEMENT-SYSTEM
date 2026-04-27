@@ -1,0 +1,14 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1b2a"/>
+      <stop offset="100%" style="stop-color:#1a3a2a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#g1)"/>
+  <circle cx="960" cy="540" r="200" fill="none" stroke="#22a83a" stroke-width="3" opacity="0.4"/>
+  <circle cx="960" cy="540" r="140" fill="none" stroke="#22a83a" stroke-width="2" opacity="0.3"/>
+  <text x="960" y="510" font-family="Arial,sans-serif" font-size="48" font-weight="bold" fill="#22a83a" text-anchor="middle">Barangay San Vicente</text>
+  <text x="960" y="570" font-family="Arial,sans-serif" font-size="28" fill="#86efac" text-anchor="middle">Multi-Purpose Building</text>
+  <text x="960" y="620" font-family="Arial,sans-serif" font-size="20" fill="rgba(148,163,184,0.7)" text-anchor="middle">Add hero-1.jpg to REACT-FRONT-END/public/</text>
+</svg>

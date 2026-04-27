@@ -1,16 +1,7 @@
 import { useState } from 'react';
-import { CheckCircle2, Clock, MapPin, Search, AlertTriangle, Loader, X } from 'lucide-react';
+import { CheckCircle2, Clock, MapPin, Search, AlertTriangle, Loader, X, RefreshCw } from 'lucide-react';
 import Portal from '../components/Portal';
-
-const ALL_HISTORY = [
-  { id: 'SVR-001', title: 'Streetlight Outage on Main St',    category: 'Infrastructure', severity: 'High',   status: 'In Progress',  location: 'Main Street, Zone A',       submitted: 'Apr 10, 2025', updated: '2 hrs ago',  progress: 65,  description: 'Streetlight at corner of Main St. has been out for 3 days. It creates a safety hazard at night for pedestrians and motorists.' },
-  { id: 'SVR-002', title: 'Pothole Near Community Center',    category: 'Road Damage',    severity: 'Medium', status: 'Under Review', location: 'Purok 3, Community Center', submitted: 'Apr 14, 2025', updated: '30 min ago', progress: 30,  description: 'Large pothole approximately 1 meter wide near the entrance of the Community Center. Vehicles have been damaged.' },
-  { id: 'SVR-003', title: 'Drainage Overflow — Rizal St.',    category: 'Drainage',       severity: 'High',   status: 'Pending',      location: 'Rizal Street, Zone B',      submitted: 'Apr 14, 2025', updated: 'Just now',   progress: 10,  description: 'Drainage canal overflowing after heavy rain. Water is flooding the road and nearby homes.' },
-  { id: 'SVR-H01', title: 'Broken Curb — Burgos Ave.',        category: 'Infrastructure', severity: 'Medium', status: 'Completed',    location: 'Burgos Avenue, Block 2',    submitted: 'Mar 28, 2025', updated: 'Apr 2, 2025',  progress: 100, description: 'Concrete curb broken and hazardous to pedestrians. Repaired successfully.' },
-  { id: 'SVR-H02', title: 'Garbage Overflow — Market Area',   category: 'Waste',          severity: 'Low',    status: 'Completed',    location: 'Market Area, Zone C',       submitted: 'Mar 15, 2025', updated: 'Mar 17, 2025', progress: 100, description: 'Garbage bins overflowing near the market entrance. Cleared and bins replaced.' },
-  { id: 'SVR-H03', title: 'Water Supply Interruption',        category: 'Water Supply',   severity: 'High',   status: 'Completed',    location: 'Purok 5, Zone D',           submitted: 'Feb 20, 2025', updated: 'Feb 22, 2025', progress: 100, description: 'No water supply for 2 days in Purok 5. Issue resolved — pipe repaired.' },
-  { id: 'SVR-H04', title: 'Streetlight — Gomez Ave.',         category: 'Infrastructure', severity: 'Low',    status: 'Rejected',     location: 'Gomez Avenue',              submitted: 'Feb 10, 2025', updated: 'Feb 11, 2025', progress: 0,   description: 'Streetlight flickering. Duplicate report — already being handled under REQ-2025-0028.' },
-];
+import { useResidentTickets } from '../hooks/useTicketApi';
 
 const STATUS_CFG = {
   'In Progress':  { color: '#d97706', bg: 'rgba(217,119,6,.08)',  badge: 'badge-amber', icon: Loader,        dot: '#f59e0b' },
@@ -28,11 +19,14 @@ export default function ResidentHistory() {
   const [statusFilter, setStatus]  = useState('All');
   const [selected,     setSelected] = useState(null);
 
+  const { data: rawTickets, isLoading, isError, refetch } = useResidentTickets();
+  const ALL_HISTORY = rawTickets || [];
+
   const visible = ALL_HISTORY.filter((h) => {
     const matchStatus = statusFilter === 'All' || h.status === statusFilter;
     const matchSearch = !search
-      || h.title.toLowerCase().includes(search.toLowerCase())
-      || h.id.toLowerCase().includes(search.toLowerCase());
+      || h.title?.toLowerCase().includes(search.toLowerCase())
+      || h.tracking_id?.toLowerCase().includes(search.toLowerCase());
     return matchStatus && matchSearch;
   });
 
@@ -41,6 +35,26 @@ export default function ResidentHistory() {
     completed: ALL_HISTORY.filter((h) => h.status === 'Completed').length,
     rejected:  ALL_HISTORY.filter((h) => h.status === 'Rejected').length,
   };
+
+  if (isLoading && !ALL_HISTORY.length) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 300, flexDirection: 'column', gap: 12 }}>
+        <div style={{ width: 32, height: 32, borderRadius: '50%', border: '3px solid #e2e8f0', borderTopColor: 'var(--brand)', animation: 'spin .65s linear infinite' }} />
+        <p style={{ fontSize: 13, color: '#94a3b8' }}>Loading history…</p>
+      </div>
+    );
+  }
+
+  if (isError && !ALL_HISTORY.length) {
+    return (
+      <div style={{ padding: 32, textAlign: 'center' }}>
+        <p style={{ color: '#ef4444', marginBottom: 12 }}>Failed to load history.</p>
+        <button onClick={() => refetch()} className="btn btn-brand" style={{ fontSize: 13, gap: 6 }}>
+          <RefreshCw size={13} /> Retry
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="animate-fade-up" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -118,7 +132,7 @@ export default function ResidentHistory() {
           const StatusIcon = cfg.icon;
           return (
             <div
-              key={h.id}
+              key={h.id || h.tracking_id}
               onClick={() => setSelected(h)}
               style={{
                 display: 'flex', alignItems: 'flex-start', gap: 14,
@@ -137,7 +151,7 @@ export default function ResidentHistory() {
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, marginBottom: 3 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-                    <span style={{ fontFamily: 'monospace', fontSize: '11px', fontWeight: 700, color: 'var(--brand)' }}>{h.id}</span>
+                    <span style={{ fontFamily: 'monospace', fontSize: '11px', fontWeight: 700, color: 'var(--brand)' }}>{h.tracking_id || h.id}</span>
                     <span style={{ fontSize: '10px', fontWeight: 600, padding: '1px 6px', borderRadius: 5, background: 'var(--surface-3)', color: 'var(--text-4)' }}>{h.category}</span>
                     <span style={{ fontSize: '10px', fontWeight: 600, color: SEV_COLOR[h.severity] }}>{h.severity}</span>
                   </div>
@@ -221,7 +235,7 @@ export default function ResidentHistory() {
                 >
                   <div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                      <span style={{ fontFamily: 'monospace', fontSize: '12px', fontWeight: 700, color: 'var(--brand)' }}>{selected.id}</span>
+                      <span style={{ fontFamily: 'monospace', fontSize: '12px', fontWeight: 700, color: 'var(--brand)' }}>{selected.tracking_id || selected.id}</span>
                       <span className={`badge ${cfg.badge}`}>{selected.status}</span>
                     </div>
                     <h2 style={{ fontSize: '0.9375rem', fontWeight: 700, color: 'var(--text-1)', lineHeight: 1.3 }}>{selected.title}</h2>

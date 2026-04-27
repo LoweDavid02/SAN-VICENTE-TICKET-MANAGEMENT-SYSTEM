@@ -6,9 +6,11 @@ import { Shield, ArrowRight, Menu, X, ChevronUp, ChevronLeft, ChevronRight, User
 // Place your photos in REACT-FRONT-END/public/ as:
 //   hero-1.jpg  → Barangay San Vicente Multi-Purpose Building
 //   hero-2.jpg  → Barangay Officials Group Photo
+// SVG placeholders are used as fallback until real photos are added.
 const HERO_SLIDES = [
   {
     image:    '/hero-2.jpg',
+    fallback: '/hero-2.svg',
     position: 'center 30%',
     title:    'Serving Our Community',
     subtitle: 'Barangay San Vicente, Apalit, Pampanga',
@@ -16,6 +18,7 @@ const HERO_SLIDES = [
   },
   {
     image:    '/hero-1.jpg',
+    fallback: '/hero-1.svg',
     position: 'center center',
     title:    'Your Barangay Hall',
     subtitle: 'Modern governance for a better community',
@@ -150,7 +153,7 @@ export default function Landing() {
             style={{
               position:   'absolute',
               inset:      0,
-              backgroundImage:    `url(${s.image})`,
+              backgroundImage:    `url(${s.image}), url(${s.fallback})`,
               backgroundSize:     'cover',
               backgroundPosition: s.position,
               backgroundRepeat:   'no-repeat',
