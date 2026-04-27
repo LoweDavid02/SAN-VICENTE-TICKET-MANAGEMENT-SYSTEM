@@ -1,6 +1,27 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Shield, ArrowRight, Menu, X, ChevronUp, ChevronLeft, ChevronRight, Users, FileText, CheckCircle, Zap, MapPin, Phone, Mail } from 'lucide-react';
+import { Shield, ArrowRight, Menu, X, ChevronUp, ChevronLeft, ChevronRight, Users, FileText, CheckCircle, Zap, MapPin, Phone, Mail, Play, Pause } from 'lucide-react';
+
+// ── Hero background photos ────────────────────────────────────────────────
+// Place your photos in REACT-FRONT-END/public/ as:
+//   hero-1.jpg  → Barangay San Vicente Multi-Purpose Building
+//   hero-2.jpg  → Barangay Officials Group Photo
+const HERO_SLIDES = [
+  {
+    image:    '/hero-2.jpg',
+    position: 'center 30%',
+    title:    'Serving Our Community',
+    subtitle: 'Barangay San Vicente, Apalit, Pampanga',
+    tag:      'Dedicated Public Servants',
+  },
+  {
+    image:    '/hero-1.jpg',
+    position: 'center center',
+    title:    'Your Barangay Hall',
+    subtitle: 'Modern governance for a better community',
+    tag:      'Brgy. San Vicente Multi-Purpose Building',
+  },
+];
 
 const SLIDES = [
   { id:1, title:'Community-First Governance', desc:'Barangay San Vicente serves over 12,000 residents with transparent, responsive, technology-driven public service.', stat:'12,000+', statLabel:'Residents Served' },
@@ -28,12 +49,23 @@ const STATS = [
 
 export default function Landing() {
   const navigate = useNavigate();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [slide, setSlide] = useState(0);
-  const [showLearn, setShowLearn] = useState(false);
-  const [showTop, setShowTop] = useState(false);
-  const [search, setSearch] = useState('');
+  const [menuOpen,   setMenuOpen]   = useState(false);
+  const [slide,      setSlide]      = useState(0);
+  const [heroSlide,  setHeroSlide]  = useState(0);
+  const [heroPaused, setHeroPaused] = useState(false);
+  const [heroLoaded, setHeroLoaded] = useState([false, false]);
+  const [showLearn,  setShowLearn]  = useState(false);
+  const [showTop,    setShowTop]    = useState(false);
+  const [search,     setSearch]     = useState('');
 
+  // Hero slideshow auto-advance
+  useEffect(() => {
+    if (heroPaused) return;
+    const t = setInterval(() => setHeroSlide(s => (s + 1) % HERO_SLIDES.length), 6000);
+    return () => clearInterval(t);
+  }, [heroPaused]);
+
+  // Learn modal slide auto-advance
   useEffect(() => {
     const timer = setInterval(() => setSlide((s) => (s + 1) % SLIDES.length), 5000);
     return () => clearInterval(timer);
@@ -43,6 +75,12 @@ export default function Landing() {
     const onScroll = () => setShowTop(window.scrollY > 400);
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const goHero = useCallback((idx) => {
+    setHeroSlide(idx);
+    setHeroPaused(true);
+    setTimeout(() => setHeroPaused(false), 8000);
   }, []);
 
   const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -100,40 +138,259 @@ export default function Landing() {
         )}
       </nav>
 
-      {/* HERO */}
-      <section id="hero" style={{ minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', paddingTop:64, background:'linear-gradient(160deg,#060d1a 0%,#0c1f35 40%,#0a2e2a 75%,#071a16 100%)', position:'relative', overflow:'hidden' }}>
-        <div style={{ position:'absolute', inset:0, backgroundImage:'radial-gradient(circle,rgba(255,255,255,.055) 1px,transparent 1px)', backgroundSize:'28px 28px', pointerEvents:'none' }} />
-        <div style={{ position:'absolute', top:'-80px', right:'-80px', width:400, height:400, borderRadius:'50%', background:'radial-gradient(circle,rgba(20,184,166,.18) 0%,transparent 70%)', filter:'blur(2px)', pointerEvents:'none' }} />
-        <div style={{ position:'absolute', bottom:'-60px', left:'-60px', width:300, height:300, borderRadius:'50%', background:'radial-gradient(circle,rgba(37,99,235,.12) 0%,transparent 70%)', pointerEvents:'none' }} />
-        <div style={{ position:'relative', zIndex:1, maxWidth:900, margin:'0 auto', padding:'80px 24px', textAlign:'center' }}>
-          <div style={{ display:'inline-flex', alignItems:'center', gap:8, padding:'6px 16px', borderRadius:99, background:'rgba(20,184,166,.12)', border:'1px solid rgba(20,184,166,.25)', marginBottom:28 }}>
-            <span style={{ width:7, height:7, borderRadius:'50%', background:'#14b8a6', display:'inline-block' }} />
-            <span style={{ fontSize:12, fontWeight:600, color:'#5eead4', letterSpacing:'0.1em', textTransform:'uppercase' }}>Barangay San Vicente v4.2.1</span>
+      {/* ══════════════════════════════════════════════════════
+          HERO — Full-screen photo slideshow
+      ══════════════════════════════════════════════════════ */}
+      <section id="hero" style={{ position:'relative', minHeight:'100vh', overflow:'hidden' }}>
+
+        {/* ── Photo slides ── */}
+        {HERO_SLIDES.map((s, i) => (
+          <div
+            key={i}
+            style={{
+              position:   'absolute',
+              inset:      0,
+              backgroundImage:    `url(${s.image})`,
+              backgroundSize:     'cover',
+              backgroundPosition: s.position,
+              backgroundRepeat:   'no-repeat',
+              opacity:    i === heroSlide ? 1 : 0,
+              transition: 'opacity 1.2s cubic-bezier(.4,0,.2,1)',
+              willChange: 'opacity',
+            }}
+          />
+        ))}
+
+        {/* ── Dark gradient overlay — ensures text readability ── */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(to bottom, rgba(5,10,20,.55) 0%, rgba(5,10,20,.45) 40%, rgba(5,10,20,.72) 80%, rgba(5,10,20,.92) 100%)',
+          zIndex: 1,
+        }} />
+
+        {/* ── Dot grid texture ── */}
+        <div style={{
+          position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none',
+          backgroundImage: 'radial-gradient(circle, rgba(255,255,255,.04) 1px, transparent 1px)',
+          backgroundSize: '28px 28px',
+        }} />
+
+        {/* ── Slide tag badge ── */}
+        <div style={{
+          position: 'absolute', top: 88, left: '50%', transform: 'translateX(-50%)',
+          zIndex: 10, transition: 'opacity .6s',
+        }}>
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+            padding: '6px 16px', borderRadius: 99,
+            background: 'rgba(34,168,58,.18)',
+            border: '1px solid rgba(34,168,58,.4)',
+            backdropFilter: 'blur(8px)',
+          }}>
+            <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#22a83a', display: 'inline-block', animation: 'pulse 2s ease-in-out infinite' }} />
+            <span style={{ fontSize: 11.5, fontWeight: 700, color: '#86efac', letterSpacing: '0.1em', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
+              {HERO_SLIDES[heroSlide].tag}
+            </span>
           </div>
-          <h1 className="font-display" style={{ fontSize:'clamp(2.5rem,6vw,4rem)', fontWeight:400, color:'#fff', lineHeight:1.1, marginBottom:24 }}>
-            Smarter local<br />
-            <span style={{ background:'linear-gradient(90deg,#5eead4,#2dd4bf,#14b8a6)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', fontStyle:'italic' }}>governance</span>
-            <br />starts here.
+        </div>
+
+        {/* ── Main hero content ── */}
+        <div style={{
+          position: 'relative', zIndex: 10,
+          minHeight: '100vh',
+          display: 'flex', flexDirection: 'column',
+          alignItems: 'center', justifyContent: 'center',
+          padding: '120px 24px 80px',
+          textAlign: 'center',
+          maxWidth: 960, margin: '0 auto',
+        }}>
+
+          {/* Slide title */}
+          <h1
+            key={heroSlide}
+            className="font-display"
+            style={{
+              fontSize: 'clamp(2.4rem, 6vw, 4.2rem)',
+              fontWeight: 700,
+              color: '#fff',
+              lineHeight: 1.1,
+              marginBottom: 16,
+              textShadow: '0 2px 20px rgba(0,0,0,.4)',
+              animation: 'heroFadeUp .7s ease-out both',
+            }}
+          >
+            {HERO_SLIDES[heroSlide].title}
           </h1>
-          <p style={{ fontSize:'clamp(1rem,2vw,1.125rem)', color:'rgba(148,163,184,.85)', lineHeight:1.7, maxWidth:560, margin:'0 auto 40px' }}>
-            A unified platform connecting residents, field personnel, and administrators for real-time incident tracking and transparent community service.
+
+          {/* Slide subtitle */}
+          <p
+            key={`sub-${heroSlide}`}
+            style={{
+              fontSize: 'clamp(1rem, 2.2vw, 1.2rem)',
+              color: 'rgba(226,232,240,.9)',
+              lineHeight: 1.6,
+              marginBottom: 12,
+              textShadow: '0 1px 8px rgba(0,0,0,.3)',
+              animation: 'heroFadeUp .7s ease-out .1s both',
+            }}
+          >
+            {HERO_SLIDES[heroSlide].subtitle}
           </p>
-          <div style={{ display:'flex', gap:14, justifyContent:'center', flexWrap:'wrap', marginBottom:56 }}>
-            <button onClick={() => navigate('/login')} style={{ display:'flex', alignItems:'center', gap:10, padding:'14px 32px', borderRadius:14, border:'none', background:'linear-gradient(135deg,#1ac9b5,#14b8a6,#0d9488)', fontSize:15, fontWeight:700, color:'#fff', cursor:'pointer', fontFamily:'inherit', boxShadow:'0 4px 20px rgba(20,184,166,.45)', transition:'all .2s' }} onMouseEnter={(e) => { e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 8px 28px rgba(20,184,166,.55)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform=''; e.currentTarget.style.boxShadow='0 4px 20px rgba(20,184,166,.45)'; }}>
+
+          {/* System tagline */}
+          <p style={{
+            fontSize: 'clamp(.9rem, 1.8vw, 1.05rem)',
+            color: 'rgba(148,163,184,.8)',
+            lineHeight: 1.7,
+            maxWidth: 540,
+            margin: '0 auto 40px',
+            animation: 'heroFadeUp .7s ease-out .2s both',
+          }}>
+            A unified platform connecting residents, field personnel, and administrators
+            for real-time incident tracking and transparent community service.
+          </p>
+
+          {/* CTA buttons */}
+          <div style={{
+            display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap',
+            marginBottom: 56,
+            animation: 'heroFadeUp .7s ease-out .3s both',
+          }}>
+            <button
+              onClick={() => navigate('/login')}
+              style={{
+                display: 'flex', alignItems: 'center', gap: 10,
+                padding: '14px 32px', borderRadius: 14, border: 'none',
+                background: 'linear-gradient(135deg,#22a83a,#1a7a2e)',
+                fontSize: 15, fontWeight: 700, color: '#fff',
+                cursor: 'pointer', fontFamily: 'inherit',
+                boxShadow: '0 4px 20px rgba(34,168,58,.5)',
+                transition: 'all .2s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 8px 28px rgba(34,168,58,.6)'; }}
+              onMouseLeave={e => { e.currentTarget.style.transform=''; e.currentTarget.style.boxShadow='0 4px 20px rgba(34,168,58,.5)'; }}
+            >
               Get Started <ArrowRight size={16} strokeWidth={2.5} />
             </button>
-            <button onClick={() => setShowLearn(true)} style={{ display:'flex', alignItems:'center', gap:10, padding:'14px 28px', borderRadius:14, border:'1px solid rgba(255,255,255,.15)', background:'rgba(255,255,255,.07)', fontSize:15, fontWeight:600, color:'#fff', cursor:'pointer', fontFamily:'inherit', transition:'all .2s' }} onMouseEnter={(e) => { e.currentTarget.style.background='rgba(255,255,255,.13)'; }} onMouseLeave={(e) => { e.currentTarget.style.background='rgba(255,255,255,.07)'; }}>
+            <button
+              onClick={() => setShowLearn(true)}
+              style={{
+                display: 'flex', alignItems: 'center', gap: 10,
+                padding: '14px 28px', borderRadius: 14,
+                border: '1.5px solid rgba(255,255,255,.3)',
+                background: 'rgba(255,255,255,.1)',
+                backdropFilter: 'blur(12px)',
+                fontSize: 15, fontWeight: 600, color: '#fff',
+                cursor: 'pointer', fontFamily: 'inherit', transition: 'all .2s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background='rgba(255,255,255,.18)'; e.currentTarget.style.borderColor='rgba(255,255,255,.5)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background='rgba(255,255,255,.1)'; e.currentTarget.style.borderColor='rgba(255,255,255,.3)'; }}
+            >
               Learn More
             </button>
           </div>
-          <div className="land-stats-grid" style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:0, borderRadius:16, overflow:'hidden', border:'1px solid rgba(255,255,255,.08)', maxWidth:700, margin:'0 auto' }}>
-            {STATS.map((s,i) => (
-              <div key={s.label} style={{ padding:'18px 12px', background:'rgba(255,255,255,.05)', borderRight:i<3?'1px solid rgba(255,255,255,.07)':'none', textAlign:'center' }}>
-                <p className="font-display" style={{ fontSize:'1.5rem', fontWeight:400, color:'#14b8a6', lineHeight:1, marginBottom:4 }}>{s.value}</p>
-                <p style={{ fontSize:10, color:'rgba(148,163,184,.65)', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.07em', lineHeight:1.3 }}>{s.label}</p>
+
+          {/* Stats strip */}
+          <div
+            className="land-stats-grid"
+            style={{
+              display: 'grid', gridTemplateColumns: 'repeat(4,1fr)',
+              gap: 0, borderRadius: 16, overflow: 'hidden',
+              border: '1px solid rgba(255,255,255,.12)',
+              maxWidth: 700, margin: '0 auto',
+              background: 'rgba(0,0,0,.35)',
+              backdropFilter: 'blur(16px)',
+              animation: 'heroFadeUp .7s ease-out .4s both',
+            }}
+          >
+            {STATS.map((s, i) => (
+              <div key={s.label} style={{
+                padding: '18px 12px',
+                borderRight: i < 3 ? '1px solid rgba(255,255,255,.08)' : 'none',
+                textAlign: 'center',
+              }}>
+                <p className="font-display" style={{ fontSize: '1.5rem', fontWeight: 700, color: '#22a83a', lineHeight: 1, marginBottom: 4 }}>{s.value}</p>
+                <p style={{ fontSize: 10, color: 'rgba(148,163,184,.75)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.07em', lineHeight: 1.3 }}>{s.label}</p>
               </div>
             ))}
           </div>
+        </div>
+
+        {/* ── Slide controls — bottom center ── */}
+        <div style={{
+          position: 'absolute', bottom: 32, left: '50%', transform: 'translateX(-50%)',
+          zIndex: 20, display: 'flex', alignItems: 'center', gap: 12,
+        }}>
+          {/* Prev */}
+          <button
+            onClick={() => goHero((heroSlide - 1 + HERO_SLIDES.length) % HERO_SLIDES.length)}
+            style={{ width: 36, height: 36, borderRadius: '50%', border: '1.5px solid rgba(255,255,255,.3)', background: 'rgba(0,0,0,.3)', backdropFilter: 'blur(8px)', color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all .15s' }}
+            onMouseEnter={e => e.currentTarget.style.background='rgba(255,255,255,.2)'}
+            onMouseLeave={e => e.currentTarget.style.background='rgba(0,0,0,.3)'}
+          >
+            <ChevronLeft size={16} />
+          </button>
+
+          {/* Dot indicators */}
+          {HERO_SLIDES.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goHero(i)}
+              style={{
+                width: i === heroSlide ? 28 : 8, height: 8,
+                borderRadius: 99, border: 'none',
+                background: i === heroSlide ? '#22a83a' : 'rgba(255,255,255,.4)',
+                cursor: 'pointer', padding: 0,
+                transition: 'all .35s cubic-bezier(.4,0,.2,1)',
+                boxShadow: i === heroSlide ? '0 0 8px rgba(34,168,58,.6)' : 'none',
+              }}
+            />
+          ))}
+
+          {/* Next */}
+          <button
+            onClick={() => goHero((heroSlide + 1) % HERO_SLIDES.length)}
+            style={{ width: 36, height: 36, borderRadius: '50%', border: '1.5px solid rgba(255,255,255,.3)', background: 'rgba(0,0,0,.3)', backdropFilter: 'blur(8px)', color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all .15s' }}
+            onMouseEnter={e => e.currentTarget.style.background='rgba(255,255,255,.2)'}
+            onMouseLeave={e => e.currentTarget.style.background='rgba(0,0,0,.3)'}
+          >
+            <ChevronRight size={16} />
+          </button>
+
+          {/* Play/Pause */}
+          <button
+            onClick={() => setHeroPaused(v => !v)}
+            title={heroPaused ? 'Resume slideshow' : 'Pause slideshow'}
+            style={{ width: 36, height: 36, borderRadius: '50%', border: '1.5px solid rgba(255,255,255,.3)', background: 'rgba(0,0,0,.3)', backdropFilter: 'blur(8px)', color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all .15s', marginLeft: 4 }}
+            onMouseEnter={e => e.currentTarget.style.background='rgba(255,255,255,.2)'}
+            onMouseLeave={e => e.currentTarget.style.background='rgba(0,0,0,.3)'}
+          >
+            {heroPaused ? <Play size={14} /> : <Pause size={14} />}
+          </button>
+        </div>
+
+        {/* ── Progress bar ── */}
+        {!heroPaused && (
+          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 3, zIndex: 20, background: 'rgba(255,255,255,.1)' }}>
+            <div
+              key={heroSlide}
+              style={{
+                height: '100%', background: '#22a83a',
+                animation: 'heroProgress 6s linear forwards',
+                boxShadow: '0 0 8px rgba(34,168,58,.6)',
+              }}
+            />
+          </div>
+        )}
+
+        {/* ── Scroll indicator ── */}
+        <div style={{
+          position: 'absolute', bottom: 80, right: 28, zIndex: 20,
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
+          opacity: .6,
+        }}>
+          <span style={{ fontSize: 9, fontWeight: 700, color: '#fff', textTransform: 'uppercase', letterSpacing: '.12em', writingMode: 'vertical-rl' }}>Scroll</span>
+          <div style={{ width: 1, height: 40, background: 'linear-gradient(to bottom, #fff, transparent)' }} />
         </div>
       </section>
 
@@ -327,6 +584,20 @@ export default function Landing() {
           .land-ham { display: flex !important; }
           .land-nav-links { display: none !important; }
           .land-nav-actions { display: none !important; }
+        }
+
+        /* Hero animations */
+        @keyframes heroFadeUp {
+          from { opacity: 0; transform: translateY(22px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes heroProgress {
+          from { width: 0%; }
+          to   { width: 100%; }
+        }
+        @keyframes pulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50%       { opacity: .6; transform: scale(1.3); }
         }
       `}</style>
     </div>
