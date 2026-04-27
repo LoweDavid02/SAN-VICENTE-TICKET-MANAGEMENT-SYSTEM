@@ -6,11 +6,10 @@ import { Shield, ArrowRight, Menu, X, ChevronUp, ChevronLeft, ChevronRight, User
 // Place your photos in REACT-FRONT-END/public/ as:
 //   hero-1.jpg  → Barangay San Vicente Multi-Purpose Building
 //   hero-2.jpg  → Barangay Officials Group Photo
-// SVG placeholders are used as fallback until real photos are added.
+// Until photos are added, a dark gradient fallback is shown automatically.
 const HERO_SLIDES = [
   {
     image:    '/hero-2.jpg',
-    fallback: '/hero-2.svg',
     position: 'center 30%',
     title:    'Serving Our Community',
     subtitle: 'Barangay San Vicente, Apalit, Pampanga',
@@ -18,7 +17,6 @@ const HERO_SLIDES = [
   },
   {
     image:    '/hero-1.jpg',
-    fallback: '/hero-1.svg',
     position: 'center center',
     title:    'Your Barangay Hall',
     subtitle: 'Modern governance for a better community',
@@ -148,20 +146,21 @@ export default function Landing() {
 
         {/* ── Photo slides ── */}
         {HERO_SLIDES.map((s, i) => (
-          <div
-            key={i}
-            style={{
-              position:   'absolute',
-              inset:      0,
-              backgroundImage:    `url(${s.image}), url(${s.fallback})`,
-              backgroundSize:     'cover',
-              backgroundPosition: s.position,
-              backgroundRepeat:   'no-repeat',
-              opacity:    i === heroSlide ? 1 : 0,
-              transition: 'opacity 1.2s cubic-bezier(.4,0,.2,1)',
-              willChange: 'opacity',
-            }}
-          />
+          <div key={i} style={{ position: 'absolute', inset: 0, opacity: i === heroSlide ? 1 : 0, transition: 'opacity 1.2s cubic-bezier(.4,0,.2,1)', willChange: 'opacity' }}>
+            {/* Fallback solid dark background — always visible beneath photo */}
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg,#0a1628,#0d2218)' }} />
+            {/* Actual photo — sits on top of fallback */}
+            <div
+              style={{
+                position:           'absolute',
+                inset:              0,
+                backgroundImage:    `url(${s.image})`,
+                backgroundSize:     'cover',
+                backgroundPosition: s.position,
+                backgroundRepeat:   'no-repeat',
+              }}
+            />
+          </div>
         ))}
 
         {/* ── Dark gradient overlay — ensures text readability ── */}
