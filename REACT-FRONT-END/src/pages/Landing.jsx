@@ -54,23 +54,23 @@ export default function Landing() {
     <div style={{ fontFamily:'var(--font-sans)', background:'#f8fafc', minHeight:'100vh', overflowX:'hidden' }}>
 
       {/* TOP NAV */}
-      <nav style={{ position:'fixed', top:0, left:0, right:0, zIndex:200, background:'rgba(255,255,255,.92)', backdropFilter:'blur(16px)', borderBottom:'1px solid rgba(226,232,240,.8)', boxShadow:'0 1px 12px rgba(15,23,42,.06)' }}>
-        <div style={{ maxWidth:1200, margin:'0 auto', padding:'0 16px', height:64, display:'flex', alignItems:'center', justifyContent:'space-between', gap:12 }}>
+      <nav style={{ position:'fixed', top:0, left:0, right:0, zIndex:200, background:'rgba(4,20,28,.7)', backdropFilter:'blur(16px)', borderBottom:'1px solid rgba(255,255,255,.08)' }}>
+        <div style={{ maxWidth:1200, margin:'0 auto', padding:'0 48px', height:64, display:'flex', alignItems:'center', justifyContent:'space-between', gap:12 }}>
           {/* Logo */}
           <div style={{ display:'flex', alignItems:'center', gap:10, flexShrink:0 }}>
-            <div style={{ width:36, height:36, borderRadius:10, background:'linear-gradient(135deg,#14b8a6,#0d9488)', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 4px 12px rgba(20,184,166,.3)' }}>
-              <Shield size={18} color="#fff" strokeWidth={2.5} />
+            <div style={{ width:36, height:36, borderRadius:10, background:'rgba(20,184,166,.2)', border:'1px solid rgba(20,184,166,.35)', display:'flex', alignItems:'center', justifyContent:'center' }}>
+              <Shield size={18} color="#14b8a6" strokeWidth={2.5} />
             </div>
             <div>
-              <p style={{ fontSize:14, fontWeight:700, color:'#0f172a', lineHeight:1.1 }}>Barangay Connect</p>
-              <p style={{ fontSize:10, color:'#94a3b8', letterSpacing:'0.05em' }}>San Vicente</p>
+              <p style={{ fontSize:14, fontWeight:700, color:'#fff', lineHeight:1.1 }}>Barangay Connect</p>
+              <p style={{ fontSize:10, color:'rgba(20,184,166,.8)', letterSpacing:'0.05em' }}>v4.2.1-stable</p>
             </div>
           </div>
 
           {/* Desktop nav links — hidden on mobile via CSS */}
           <div className="land-nav-links" style={{ display:'flex', alignItems:'center', gap:4, flex:1, justifyContent:'center' }}>
             {NAV.map((l) => (
-              <button key={l.label} onClick={() => scrollTo(l.href)} style={{ padding:'7px 14px', borderRadius:8, border:'none', background:'none', cursor:'pointer', fontSize:14, fontWeight:500, color:'#475569', fontFamily:'inherit', transition:'all .15s', whiteSpace:'nowrap' }} onMouseEnter={(e) => { e.currentTarget.style.background='#f1f5f9'; e.currentTarget.style.color='#0f172a'; }} onMouseLeave={(e) => { e.currentTarget.style.background='none'; e.currentTarget.style.color='#475569'; }}>
+              <button key={l.label} onClick={() => scrollTo(l.href)} style={{ padding:'7px 14px', borderRadius:8, border:'none', background:'none', cursor:'pointer', fontSize:14, fontWeight:500, color:'rgba(203,213,225,.8)', fontFamily:'inherit', transition:'all .15s', whiteSpace:'nowrap' }} onMouseEnter={(e) => { e.currentTarget.style.color='#fff'; e.currentTarget.style.background='rgba(255,255,255,.08)'; }} onMouseLeave={(e) => { e.currentTarget.style.color='rgba(203,213,225,.8)'; e.currentTarget.style.background='none'; }}>
                 {l.label}
               </button>
             ))}
@@ -78,101 +78,120 @@ export default function Landing() {
 
           {/* Desktop actions — hidden on mobile via CSS */}
           <div className="land-nav-actions" style={{ display:'flex', alignItems:'center', gap:8, flexShrink:0 }}>
-            <button onClick={() => navigate('/login')} style={{ height:36, padding:'0 16px', borderRadius:20, border:'1.5px solid #e2e8f0', background:'#fff', fontSize:13, fontWeight:600, color:'#334155', cursor:'pointer', fontFamily:'inherit', transition:'all .15s', whiteSpace:'nowrap' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor='#14b8a6'; e.currentTarget.style.color='#0d9488'; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor='#e2e8f0'; e.currentTarget.style.color='#334155'; }}>Sign In</button>
-            <button onClick={() => navigate('/login')} style={{ height:36, padding:'0 18px', borderRadius:20, border:'none', background:'linear-gradient(135deg,#14b8a6,#0d9488)', fontSize:13, fontWeight:700, color:'#fff', cursor:'pointer', fontFamily:'inherit', boxShadow:'0 4px 12px rgba(20,184,166,.35)', transition:'all .15s', whiteSpace:'nowrap' }} onMouseEnter={(e) => { e.currentTarget.style.transform='translateY(-1px)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform=''; }}>Register</button>
+            <button onClick={() => navigate('/login')} style={{ height:36, padding:'0 16px', borderRadius:20, border:'1.5px solid rgba(255,255,255,.2)', background:'transparent', fontSize:13, fontWeight:600, color:'rgba(226,232,240,.9)', cursor:'pointer', fontFamily:'inherit', transition:'all .15s', whiteSpace:'nowrap' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor='#14b8a6'; e.currentTarget.style.color='#14b8a6'; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor='rgba(255,255,255,.2)'; e.currentTarget.style.color='rgba(226,232,240,.9)'; }}>Sign In</button>
+            <button onClick={() => navigate('/login')} style={{ height:36, padding:'0 18px', borderRadius:20, border:'none', background:'#14b8a6', fontSize:13, fontWeight:700, color:'#fff', cursor:'pointer', fontFamily:'inherit', boxShadow:'0 4px 12px rgba(20,184,166,.35)', transition:'all .15s', whiteSpace:'nowrap' }} onMouseEnter={(e) => { e.currentTarget.style.background='#0d9488'; e.currentTarget.style.transform='translateY(-1px)'; }} onMouseLeave={(e) => { e.currentTarget.style.background='#14b8a6'; e.currentTarget.style.transform=''; }}>Register</button>
           </div>
 
           {/* Burger button — shown on mobile via CSS */}
-          <button onClick={() => setMenuOpen((v) => !v)} className="land-ham" style={{ width:44, height:44, borderRadius:8, border:'1px solid #e2e8f0', background:'#fff', cursor:'pointer', display:'none', alignItems:'center', justifyContent:'center', flexShrink:0 }} aria-label={menuOpen ? 'Close menu' : 'Open menu'}>
-            {menuOpen ? <X size={20} color="#475569" /> : <Menu size={20} color="#475569" />}
+          <button onClick={() => setMenuOpen((v) => !v)} className="land-ham" style={{ width:44, height:44, borderRadius:8, border:'1px solid rgba(255,255,255,.15)', background:'rgba(255,255,255,.08)', cursor:'pointer', display:'none', alignItems:'center', justifyContent:'center', flexShrink:0 }} aria-label={menuOpen ? 'Close menu' : 'Open menu'}>
+            {menuOpen ? <X size={20} color="rgba(226,232,240,.9)" /> : <Menu size={20} color="rgba(226,232,240,.9)" />}
           </button>
         </div>
 
         {/* Mobile menu drawer */}
         {menuOpen && (
-          <div style={{ borderTop:'1px solid #f1f5f9', background:'#fff', padding:'12px 16px 20px' }}>
-            {NAV.map((l) => (<button key={l.label} onClick={() => scrollTo(l.href)} style={{ display:'block', width:'100%', textAlign:'left', padding:'12px 8px', border:'none', background:'none', fontSize:15, fontWeight:500, color:'#334155', cursor:'pointer', fontFamily:'inherit', borderBottom:'1px solid #f8fafc', minHeight:44 }}>{l.label}</button>))}
+          <div style={{ borderTop:'1px solid rgba(255,255,255,.08)', background:'rgba(4,20,28,.95)', backdropFilter:'blur(16px)', padding:'12px 16px 20px' }}>
+            {NAV.map((l) => (<button key={l.label} onClick={() => scrollTo(l.href)} style={{ display:'block', width:'100%', textAlign:'left', padding:'12px 8px', border:'none', background:'none', fontSize:15, fontWeight:500, color:'rgba(203,213,225,.85)', cursor:'pointer', fontFamily:'inherit', borderBottom:'1px solid rgba(255,255,255,.06)', minHeight:44 }}>{l.label}</button>))}
             <div style={{ display:'flex', gap:10, marginTop:14 }}>
-              <button onClick={() => navigate('/login')} style={{ flex:1, height:44, borderRadius:10, border:'1.5px solid #e2e8f0', background:'#fff', fontSize:14, fontWeight:600, color:'#334155', cursor:'pointer', fontFamily:'inherit' }}>Sign In</button>
-              <button onClick={() => navigate('/login')} style={{ flex:1, height:44, borderRadius:10, border:'none', background:'linear-gradient(135deg,#14b8a6,#0d9488)', fontSize:14, fontWeight:700, color:'#fff', cursor:'pointer', fontFamily:'inherit' }}>Register</button>
+              <button onClick={() => navigate('/login')} style={{ flex:1, height:44, borderRadius:10, border:'1.5px solid rgba(255,255,255,.2)', background:'transparent', fontSize:14, fontWeight:600, color:'rgba(226,232,240,.9)', cursor:'pointer', fontFamily:'inherit' }}>Sign In</button>
+              <button onClick={() => navigate('/login')} style={{ flex:1, height:44, borderRadius:10, border:'none', background:'#14b8a6', fontSize:14, fontWeight:700, color:'#fff', cursor:'pointer', fontFamily:'inherit' }}>Register</button>
             </div>
           </div>
         )}
       </nav>
 
       {/* ══════════════════════════════════════════════════════
-          HERO — Clean animated gradient
+          HERO — Building photo background, left-aligned layout
       ══════════════════════════════════════════════════════ */}
-      <section id="hero" style={{ position:'relative', minHeight:'100vh', overflow:'hidden', background:'linear-gradient(145deg,#060d1a 0%,#0c1f35 40%,#0a2e2a 75%,#071a16 100%)' }}>
+      <section id="hero" style={{ position:'relative', minHeight:'100vh', overflow:'hidden' }}>
 
-        {/* Dot grid texture */}
-        <div style={{ position:'absolute', inset:0, pointerEvents:'none', backgroundImage:'radial-gradient(circle, rgba(255,255,255,.045) 1px, transparent 1px)', backgroundSize:'28px 28px' }} />
+        {/* ── Background: building photo with dark overlay ── */}
+        <div style={{
+          position:'absolute', inset:0,
+          backgroundImage:'url(/hero-bg.jpg)',
+          backgroundSize:'cover',
+          backgroundPosition:'center 30%',
+          backgroundRepeat:'no-repeat',
+        }} />
 
-        {/* Ambient glow blobs */}
-        <div style={{ position:'absolute', top:'-10%', left:'50%', transform:'translateX(-50%)', width:700, height:700, borderRadius:'50%', background:'radial-gradient(circle, rgba(34,168,58,.12) 0%, transparent 65%)', pointerEvents:'none', filter:'blur(2px)' }} />
-        <div style={{ position:'absolute', bottom:'-5%', right:'-5%', width:500, height:500, borderRadius:'50%', background:'radial-gradient(circle, rgba(20,184,166,.08) 0%, transparent 65%)', pointerEvents:'none' }} />
+        {/* Dark overlay — deep teal-navy gradient matching reference */}
+        <div style={{
+          position:'absolute', inset:0,
+          background:'linear-gradient(135deg, rgba(4,20,28,.88) 0%, rgba(5,30,28,.82) 40%, rgba(4,18,24,.75) 70%, rgba(3,14,20,.65) 100%)',
+        }} />
 
-        {/* Live badge */}
-        <div style={{ position:'absolute', top:88, left:'50%', transform:'translateX(-50%)', zIndex:10 }}>
-          <div style={{ display:'inline-flex', alignItems:'center', gap:8, padding:'6px 16px', borderRadius:99, background:'rgba(34,168,58,.15)', border:'1px solid rgba(34,168,58,.35)', backdropFilter:'blur(8px)' }}>
-            <span style={{ width:7, height:7, borderRadius:'50%', background:'#22a83a', display:'inline-block', animation:'pulse 2s ease-in-out infinite' }} />
-            <span style={{ fontSize:11.5, fontWeight:700, color:'#86efac', letterSpacing:'0.1em', textTransform:'uppercase', whiteSpace:'nowrap' }}>
-              Barangay San Vicente · Apalit, Pampanga
-            </span>
+        {/* Subtle noise/grain texture */}
+        <div style={{
+          position:'absolute', inset:0, pointerEvents:'none', opacity:.35,
+          backgroundImage:'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\' opacity=\'0.4\'/%3E%3C/svg%3E")',
+          backgroundSize:'200px 200px',
+        }} />
+
+        {/* ── Main content — left-aligned ── */}
+        <div style={{
+          position:'relative', zIndex:10,
+          minHeight:'100vh',
+          display:'flex', flexDirection:'column',
+          justifyContent:'center',
+          padding:'100px 48px 100px',
+          maxWidth:1200, margin:'0 auto',
+        }}>
+          <div style={{ maxWidth:560 }}>
+
+            {/* Badge */}
+            <div style={{ display:'inline-flex', alignItems:'center', gap:8, padding:'5px 14px', borderRadius:99, background:'rgba(20,184,166,.15)', border:'1px solid rgba(20,184,166,.3)', marginBottom:28 }}>
+              <span style={{ width:7, height:7, borderRadius:'50%', background:'#14b8a6', display:'inline-block' }} />
+              <span style={{ fontSize:11, fontWeight:700, color:'#5eead4', letterSpacing:'0.12em', textTransform:'uppercase' }}>
+                Barangay San Vicente
+              </span>
+            </div>
+
+            {/* Headline — large serif, matches reference */}
+            <h1 style={{ fontSize:'clamp(2.8rem,6vw,4.5rem)', fontWeight:700, color:'#fff', lineHeight:1.08, marginBottom:20, letterSpacing:'-0.02em' }}>
+              Smarter local{' '}
+              <span className="font-display" style={{ color:'#14b8a6', fontStyle:'italic', fontWeight:400 }}>governance</span>
+              {' '}starts here.
+            </h1>
+
+            {/* Subtext */}
+            <p style={{ fontSize:'clamp(.95rem,1.8vw,1.1rem)', color:'rgba(203,213,225,.8)', lineHeight:1.7, marginBottom:40, maxWidth:440 }}>
+              A unified platform for real-time incident tracking, department workload management, and citizen service requests.
+            </p>
+
+            {/* CTA buttons */}
+            <div style={{ display:'flex', gap:12, flexWrap:'wrap' }}>
+              <button
+                onClick={() => navigate('/login')}
+                style={{ display:'flex', alignItems:'center', gap:9, padding:'13px 28px', borderRadius:12, border:'none', background:'#14b8a6', fontSize:14, fontWeight:700, color:'#fff', cursor:'pointer', fontFamily:'inherit', boxShadow:'0 4px 20px rgba(20,184,166,.45)', transition:'all .2s' }}
+                onMouseEnter={e => { e.currentTarget.style.background='#0d9488'; e.currentTarget.style.transform='translateY(-2px)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background='#14b8a6'; e.currentTarget.style.transform=''; }}
+              >
+                Get Started <ArrowRight size={15} strokeWidth={2.5} />
+              </button>
+              <button
+                onClick={() => setShowLearn(true)}
+                style={{ display:'flex', alignItems:'center', gap:9, padding:'13px 24px', borderRadius:12, border:'1.5px solid rgba(255,255,255,.25)', background:'rgba(255,255,255,.08)', backdropFilter:'blur(12px)', fontSize:14, fontWeight:600, color:'rgba(226,232,240,.9)', cursor:'pointer', fontFamily:'inherit', transition:'all .2s' }}
+                onMouseEnter={e => { e.currentTarget.style.background='rgba(255,255,255,.15)'; e.currentTarget.style.borderColor='rgba(255,255,255,.45)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background='rgba(255,255,255,.08)'; e.currentTarget.style.borderColor='rgba(255,255,255,.25)'; }}
+              >
+                Learn More
+              </button>
+            </div>
           </div>
-        </div>
 
-        {/* Main content */}
-        <div style={{ position:'relative', zIndex:10, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:'120px 24px 80px', textAlign:'center', maxWidth:960, margin:'0 auto' }}>
-
-          <h1 className="font-display" style={{ fontSize:'clamp(2.4rem,6vw,4.2rem)', fontWeight:700, color:'#fff', lineHeight:1.1, marginBottom:16, textShadow:'0 2px 20px rgba(0,0,0,.4)', animation:'heroFadeUp .7s ease-out both' }}>
-            Serving Our Community
-          </h1>
-
-          <p style={{ fontSize:'clamp(1rem,2.2vw,1.2rem)', color:'rgba(226,232,240,.9)', lineHeight:1.6, marginBottom:12, textShadow:'0 1px 8px rgba(0,0,0,.3)', animation:'heroFadeUp .7s ease-out .1s both' }}>
-            Barangay San Vicente, Apalit, Pampanga
-          </p>
-
-          <p style={{ fontSize:'clamp(.9rem,1.8vw,1.05rem)', color:'rgba(148,163,184,.8)', lineHeight:1.7, maxWidth:540, margin:'0 auto 40px', animation:'heroFadeUp .7s ease-out .2s both' }}>
-            A unified platform connecting residents, field personnel, and administrators
-            for real-time incident tracking and transparent community service.
-          </p>
-
-          {/* CTA buttons */}
-          <div style={{ display:'flex', gap:14, justifyContent:'center', flexWrap:'wrap', marginBottom:56, animation:'heroFadeUp .7s ease-out .3s both' }}>
-            <button
-              onClick={() => navigate('/login')}
-              style={{ display:'flex', alignItems:'center', gap:10, padding:'14px 32px', borderRadius:14, border:'none', background:'linear-gradient(135deg,#22a83a,#1a7a2e)', fontSize:15, fontWeight:700, color:'#fff', cursor:'pointer', fontFamily:'inherit', boxShadow:'0 4px 20px rgba(34,168,58,.5)', transition:'all .2s' }}
-              onMouseEnter={e => { e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 8px 28px rgba(34,168,58,.6)'; }}
-              onMouseLeave={e => { e.currentTarget.style.transform=''; e.currentTarget.style.boxShadow='0 4px 20px rgba(34,168,58,.5)'; }}
-            >
-              Get Started <ArrowRight size={16} strokeWidth={2.5} />
-            </button>
-            <button
-              onClick={() => setShowLearn(true)}
-              style={{ display:'flex', alignItems:'center', gap:10, padding:'14px 28px', borderRadius:14, border:'1.5px solid rgba(255,255,255,.3)', background:'rgba(255,255,255,.1)', backdropFilter:'blur(12px)', fontSize:15, fontWeight:600, color:'#fff', cursor:'pointer', fontFamily:'inherit', transition:'all .2s' }}
-              onMouseEnter={e => { e.currentTarget.style.background='rgba(255,255,255,.18)'; e.currentTarget.style.borderColor='rgba(255,255,255,.5)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background='rgba(255,255,255,.1)'; e.currentTarget.style.borderColor='rgba(255,255,255,.3)'; }}
-            >
-              Learn More
-            </button>
-          </div>
-
-          {/* Stats strip */}
-          <div className="land-stats-grid" style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:0, borderRadius:16, overflow:'hidden', border:'1px solid rgba(255,255,255,.12)', maxWidth:700, margin:'0 auto', background:'rgba(0,0,0,.35)', backdropFilter:'blur(16px)', animation:'heroFadeUp .7s ease-out .4s both' }}>
-            {STATS.map((s, i) => (
-              <div key={s.label} style={{ padding:'18px 12px', borderRight:i < 3 ? '1px solid rgba(255,255,255,.08)' : 'none', textAlign:'center' }}>
-                <p className="font-display" style={{ fontSize:'1.5rem', fontWeight:700, color:'#22a83a', lineHeight:1, marginBottom:4 }}>{s.value}</p>
-                <p style={{ fontSize:10, color:'rgba(148,163,184,.75)', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.07em', lineHeight:1.3 }}>{s.label}</p>
+          {/* ── Stat cards — bottom, frosted glass ── */}
+          <div className="hero-stats" style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:16, marginTop:80, maxWidth:680 }}>
+            {[
+              { value:'1,284', label:'Tickets resolved' },
+              { value:'14.2h', label:'Avg resolution'   },
+              { value:'98%',   label:'System uptime'    },
+            ].map((s) => (
+              <div key={s.label} style={{ padding:'22px 24px', borderRadius:16, background:'rgba(255,255,255,.07)', border:'1px solid rgba(255,255,255,.1)', backdropFilter:'blur(16px)', WebkitBackdropFilter:'blur(16px)' }}>
+                <p style={{ fontSize:'clamp(1.6rem,3vw,2rem)', fontWeight:700, color:'#fff', lineHeight:1, marginBottom:6, letterSpacing:'-0.02em' }}>{s.value}</p>
+                <p style={{ fontSize:12, color:'rgba(148,163,184,.75)', fontWeight:500, textTransform:'lowercase' }}>{s.label}</p>
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div style={{ position:'absolute', bottom:32, right:28, zIndex:20, display:'flex', flexDirection:'column', alignItems:'center', gap:6, opacity:.5 }}>
-          <span style={{ fontSize:9, fontWeight:700, color:'#fff', textTransform:'uppercase', letterSpacing:'.12em', writingMode:'vertical-rl' }}>Scroll</span>
-          <div style={{ width:1, height:40, background:'linear-gradient(to bottom, #fff, transparent)' }} />
         </div>
       </section>
 
@@ -349,23 +368,14 @@ export default function Landing() {
           .land-ham { display: flex !important; }
           .land-nav-links { display: none !important; }
           .land-nav-actions { display: none !important; }
-          .land-stats-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-            max-width: 100% !important;
-          }
-          .land-stats-grid > div {
-            border-right: none !important;
-            border-bottom: 1px solid rgba(255,255,255,.07);
-          }
-          .land-stats-grid > div:nth-child(odd) {
-            border-right: 1px solid rgba(255,255,255,.07) !important;
-          }
+          .hero-stats { grid-template-columns: 1fr !important; max-width: 100% !important; }
         }
         /* Tablet: show burger, hide nav links + actions */
         @media (min-width: 768px) and (max-width: 1023px) {
           .land-ham { display: flex !important; }
           .land-nav-links { display: none !important; }
           .land-nav-actions { display: none !important; }
+          .hero-stats { grid-template-columns: repeat(3,1fr) !important; }
         }
 
         /* Hero animations */
