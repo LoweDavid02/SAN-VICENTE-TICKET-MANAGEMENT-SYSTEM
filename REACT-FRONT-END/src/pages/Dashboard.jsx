@@ -86,11 +86,24 @@ function LiveComplaintMap() {
       // Fit the view exactly to the barangay bounds on load
       map.fitBounds(BRGY_BOUNDS, { padding: [8, 8] });
 
-      // OSM street tiles — shows all roads, landmarks, labels
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-        maxZoom: 19,
-      }).addTo(map);
+      // ── Layer 1: Esri World Imagery (satellite) ──
+      L.tileLayer(
+        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        {
+          attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN',
+          maxZoom: 19,
+        }
+      ).addTo(map);
+
+      // ── Layer 2: OSM labels on top of satellite (roads, street names, landmarks) ──
+      L.tileLayer(
+        'https://stamen-tiles.a.ssl.fastly.net/toner-hybrid/{z}/{x}/{y}.png',
+        {
+          attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>',
+          maxZoom: 19,
+          opacity: 0.55,
+        }
+      ).addTo(map);
 
       // Barangay boundary polygon
       L.geoJSON({
@@ -174,16 +187,16 @@ function LiveComplaintMap() {
   }, []);
 
   return (
-    <div style={{ position: 'relative', height: '100%', width: '100%', minHeight: 320 }}>
-      <div ref={mapRef} style={{ position: 'absolute', inset: 0 }} />
+    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+      <div ref={mapRef} style={{ width: '100%', height: '100%' }} />
       {!ready && (
         <div style={{
           position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
-          background: 'linear-gradient(135deg,#e8f4f8,#c8e0ec)', borderRadius: 10,
+          background: 'linear-gradient(135deg,#0f2027,#203a43,#2c5364)',
         }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-            <div style={{ width: 24, height: 24, borderRadius: '50%', border: '2.5px solid #e2e8f0', borderTopColor: '#14b8a6', animation: 'spin .65s linear infinite' }} />
-            <span style={{ fontSize: 11, color: '#64748b' }}>Loading map…</span>
+            <div style={{ width: 24, height: 24, borderRadius: '50%', border: '2.5px solid rgba(255,255,255,.2)', borderTopColor: '#14b8a6', animation: 'spin .65s linear infinite' }} />
+            <span style={{ fontSize: 11, color: 'rgba(255,255,255,.6)' }}>Loading satellite view…</span>
           </div>
         </div>
       )}
@@ -251,12 +264,12 @@ export default function Dashboard() {
       <div className="dash-two-col" style={{ display: 'grid', gridTemplateColumns: '1.45fr 1fr', gap: 20, marginBottom: 24 }}>
 
         {/* Live Complaint Map card */}
-        <div className="card animate-fade-up" style={{ padding: 0, animationDelay: '100ms', overflow: 'hidden' }}>
+        <div className="card animate-fade-up" style={{ padding: 0, animationDelay: '100ms', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
           {/* Card header */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', borderBottom: '1px solid var(--border)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 20px', borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
             <div>
               <h2 style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-1)' }}>Complaint Map</h2>
-              <p style={{ fontSize: 12, color: 'var(--text-4)', marginTop: 2 }}>Barangay San Vicente, Apalit, Pampanga</p>
+              <p style={{ fontSize: 12, color: 'var(--text-4)', marginTop: 2 }}>Barangay San Vicente, Apalit, Pampanga · Satellite View</p>
             </div>
             <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
               {[['#EF4444','Pending'],['#F59E0B','In Progress'],['#10B981','Resolved']].map(([c,l]) => (
@@ -267,8 +280,8 @@ export default function Dashboard() {
               ))}
             </div>
           </div>
-          {/* Real map */}
-          <div style={{ height: 320, position: 'relative' }}>
+          {/* Real map — flex: 1 fills remaining card height */}
+          <div style={{ flex: 1, minHeight: 340, position: 'relative' }}>
             <LiveComplaintMap />
           </div>
         </div>
