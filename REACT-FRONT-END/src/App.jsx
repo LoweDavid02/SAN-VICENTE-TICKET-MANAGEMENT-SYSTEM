@@ -17,6 +17,7 @@ import { AppProvider } from './context/AppContext';
 import { ROUTES } from './constants/routes';
 import AppShell from './components/AppShell';
 import Preloader from './components/Preloader';
+import ErrorBoundary from './components/ErrorBoundary';
 import useAuthStore from './stores/authStore';
 
 /**
@@ -95,11 +96,13 @@ function PageLoader() {
 
 export default function App() {
   return (
-    <AppProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
-    </AppProvider>
+    <ErrorBoundary>
+      <AppProvider>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </AppProvider>
+    </ErrorBoundary>
   );
 }
 

@@ -1,10 +1,32 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { VitePWA } from 'vite-plugin-pwa';
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
+    VitePWA({
+      strategies: 'injectManifest',
+      srcDir: 'src',
+      filename: 'sw.js',
+      registerType: 'autoUpdate',
+      injectRegister: false,
+      manifest: false, // Using public/manifest.json
+      devOptions: {
+        enabled: true,
+        type: 'module',
+      },
+      injectManifest: {
+        injectionPoint: undefined,
+        rollupFormat: 'iife',
+      },
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp,woff,woff2}'],
+        maximumFileSizeToCacheInBytes: 3 * 1024 * 1024, // 3MB
+        cleanupOutdatedCaches: true,
+      },
+    }),
   ],
 
   // Dev server proxy — routes /api requests to Laravel (local only)

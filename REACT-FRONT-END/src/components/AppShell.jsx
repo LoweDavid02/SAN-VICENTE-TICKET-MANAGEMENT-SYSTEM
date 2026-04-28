@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Topbar from './Topbar';
 import ModalRoot from './Modal';
+import SyncStatusBar from './SyncStatusBar';
 import { useApp } from '../context/AppContext';
 
 export default function AppShell({ portalType }) {
@@ -56,6 +57,7 @@ export default function AppShell({ portalType }) {
       </main>
 
       <ModalRoot />
+      <SyncStatusBar />
     </div>
   );
 }

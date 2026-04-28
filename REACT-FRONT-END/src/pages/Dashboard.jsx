@@ -21,13 +21,13 @@ const SEV_BG = {
 };
 
 // Barangay San Vicente — precise center and tight bounds
-const BRGY_CENTER = [14.9456, 120.7558];
-const BRGY_ZOOM   = 16;   // zoom 16 = street-level, fills the card with just the barangay
+const BRGY_CENTER = [14.9467, 120.7548];
+const BRGY_ZOOM   = 15;   // zoom 15 = shows full barangay with street names visible
 
 // Tight bounds — only Barangay San Vicente, no surrounding municipalities
 const BRGY_BOUNDS = [
-  [14.932, 120.742],   // SW corner
-  [14.960, 120.770],   // NE corner
+  [14.938, 120.747],   // SW corner
+  [14.956, 120.763],   // NE corner
 ];
 
 const MARKER_COLOR = {
@@ -72,7 +72,7 @@ function LiveComplaintMap() {
       const map = L.map(mapRef.current, {
         center:             BRGY_CENTER,
         zoom:               BRGY_ZOOM,
-        minZoom:            15,          // can't zoom out past street level
+        minZoom:            13,          // allow fitBounds to zoom out slightly if needed
         maxZoom:            19,
         zoomControl:        true,
         scrollWheelZoom:    false,       // prevent accidental zoom while scrolling dashboard
@@ -80,28 +80,18 @@ function LiveComplaintMap() {
         attributionControl: true,
         // Hard lock — user cannot pan outside Barangay San Vicente
         maxBounds:          BRGY_BOUNDS,
-        maxBoundsViscosity: 1.0,         // 1.0 = hard wall, cannot drag outside at all
+        maxBoundsViscosity: 0.8,         // 0.8 = soft wall, slight pan for context allowed
       });
 
       // Fit the view exactly to the barangay bounds on load
-      map.fitBounds(BRGY_BOUNDS, { padding: [8, 8] });
+      map.fitBounds(BRGY_BOUNDS, { padding: [20, 20] });
 
-      // ── Layer 1: Esri World Imagery (satellite) ──
+      // ── OpenStreetMap (free, up-to-date, sharp at all zoom levels) ──
       L.tileLayer(
-        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         {
-          attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN',
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
           maxZoom: 19,
-        }
-      ).addTo(map);
-
-      // ── Layer 2: OSM labels on top of satellite (roads, street names, landmarks) ──
-      L.tileLayer(
-        'https://stamen-tiles.a.ssl.fastly.net/toner-hybrid/{z}/{x}/{y}.png',
-        {
-          attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>',
-          maxZoom: 19,
-          opacity: 0.55,
         }
       ).addTo(map);
 
@@ -114,14 +104,13 @@ function LiveComplaintMap() {
           geometry: {
             type: 'Polygon',
             coordinates: [[
-              [120.7480, 14.9380],[120.7510, 14.9370],[120.7545, 14.9375],
-              [120.7580, 14.9385],[120.7615, 14.9400],[120.7640, 14.9420],
-              [120.7650, 14.9445],[120.7645, 14.9475],[120.7635, 14.9510],
-              [120.7620, 14.9540],[120.7600, 14.9560],[120.7575, 14.9570],
-              [120.7545, 14.9568],[120.7515, 14.9560],[120.7490, 14.9545],
-              [120.7468, 14.9525],[120.7455, 14.9500],[120.7448, 14.9470],
-              [120.7450, 14.9440],[120.7458, 14.9415],[120.7468, 14.9398],
-              [120.7480, 14.9380],
+              [120.7470, 14.9390],[120.7500, 14.9375],[120.7535, 14.9378],
+              [120.7565, 14.9388],[120.7595, 14.9402],[120.7620, 14.9422],
+              [120.7632, 14.9448],[120.7628, 14.9478],[120.7618, 14.9508],
+              [120.7602, 14.9535],[120.7580, 14.9552],[120.7555, 14.9560],
+              [120.7528, 14.9558],[120.7500, 14.9550],[120.7476, 14.9535],
+              [120.7458, 14.9515],[120.7448, 14.9488],[120.7445, 14.9458],
+              [120.7450, 14.9428],[120.7458, 14.9408],[120.7470, 14.9390],
             ]],
           },
         }],
@@ -148,15 +137,17 @@ function LiveComplaintMap() {
     markers.forEach((ticket) => {
       if (ticket.latitude == null || ticket.longitude == null) return;
       const color = MARKER_COLOR[ticket.status] || '#EF4444';
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="38" viewBox="0 0 32 43">
-        <path d="M16 0C7.163 0 0 7.163 0 16c0 11.2 16 27 16 27S32 27.2 32 16C32 7.163 24.837 0 16 0z"
-              fill="${color}" stroke="white" stroke-width="2.5"/>
-        <circle cx="16" cy="16" r="6" fill="white" opacity="0.95"/>
-        <circle cx="16" cy="16" r="3.5" fill="${color}"/>
-      </svg>`;
+      const dot = `<div style="
+        width:14px;height:14px;border-radius:50%;
+        background:${color};
+        border:2.5px solid white;
+        box-shadow:0 0 0 2px ${color}55, 0 2px 6px rgba(0,0,0,.35);
+        cursor:pointer;
+        transition:transform .15s;
+      " onmouseover="this.style.transform='scale(1.5)'" onmouseout="this.style.transform='scale(1)'"></div>`;
       const icon = L.divIcon({
-        html: svg, className: '',
-        iconSize: [28, 38], iconAnchor: [14, 38], popupAnchor: [0, -38],
+        html: dot, className: '',
+        iconSize: [14, 14], iconAnchor: [7, 7], popupAnchor: [0, -10],
       });
       const statusColor = MARKER_COLOR[ticket.status] || '#64748b';
       const m = L.marker([Number(ticket.latitude), Number(ticket.longitude)], { icon })
@@ -196,7 +187,7 @@ function LiveComplaintMap() {
         }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
             <div style={{ width: 24, height: 24, borderRadius: '50%', border: '2.5px solid rgba(255,255,255,.2)', borderTopColor: '#14b8a6', animation: 'spin .65s linear infinite' }} />
-            <span style={{ fontSize: 11, color: 'rgba(255,255,255,.6)' }}>Loading satellite view…</span>
+            <span style={{ fontSize: 11, color: 'rgba(255,255,255,.6)' }}>Loading map…</span>
           </div>
         </div>
       )}
@@ -223,7 +214,7 @@ export default function Dashboard() {
   ];
 
   // Use real tickets as incidents, fall back to mock
-  const incidents = tickets.slice(0, 6).map(tk => ({
+  const incidents = tickets.map(tk => ({
     id:         tk.tracking_id,
     title:      tk.title,
     time:       tk.updated,
@@ -266,18 +257,20 @@ export default function Dashboard() {
         {/* Live Complaint Map card */}
         <div className="card animate-fade-up" style={{ padding: 0, animationDelay: '100ms', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
           {/* Card header */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 20px', borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
-            <div>
-              <h2 style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-1)' }}>Complaint Map</h2>
-              <p style={{ fontSize: 12, color: 'var(--text-4)', marginTop: 2 }}>Barangay San Vicente, Apalit, Pampanga · Satellite View</p>
-            </div>
-            <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-              {[['#EF4444','Pending'],['#F59E0B','In Progress'],['#10B981','Resolved']].map(([c,l]) => (
-                <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: c }} />
-                  <span style={{ fontSize: 11, color: 'var(--text-4)' }}>{l}</span>
-                </div>
-              ))}
+          <div style={{ padding: '14px 20px', borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
+              <div>
+                <h2 style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-1)' }}>Complaint Map</h2>
+                <p style={{ fontSize: 12, color: 'var(--text-4)', marginTop: 2 }}>Barangay San Vicente, Apalit, Pampanga · Street Map</p>
+              </div>
+              <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap', flexShrink: 0, minWidth: 0 }}>
+                {[['#EF4444','Pending'],['#F59E0B','In Progress'],['#10B981','Resolved']].map(([c,l]) => (
+                  <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 5, flexShrink: 0 }}>
+                    <div style={{ width: 8, height: 8, borderRadius: '50%', background: c, flexShrink: 0 }} />
+                    <span style={{ fontSize: 11, color: 'var(--text-4)', whiteSpace: 'nowrap' }}>{l}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
           {/* Real map — flex: 1 fills remaining card height */}
@@ -307,13 +300,15 @@ export default function Dashboard() {
           action={t('export')}
           onAction={() => {}}
         />
-        {incidents.length === 0 ? (
-          <p style={{ textAlign: 'center', color: 'var(--text-4)', padding: '24px 0', fontSize: 13 }}>{t('noTickets')} Residents can submit requests from their portal.</p>
-        ) : (
-          incidents.map((inc) => (
-            <IncidentRow key={inc.id} incident={inc} onClick={() => setIncident(inc)} />
-          ))
-        )}
+        <div style={{ height: 420, overflowY: 'scroll', marginRight: -8, paddingRight: 8 }}>
+          {incidents.length === 0 ? (
+            <p style={{ textAlign: 'center', color: 'var(--text-4)', padding: '24px 0', fontSize: 13 }}>{t('noTickets')} Residents can submit requests from their portal.</p>
+          ) : (
+            incidents.map((inc) => (
+              <IncidentRow key={inc.id} incident={inc} onClick={() => setIncident(inc)} />
+            ))
+          )}
+        </div>
       </div>
 
       {/* Incident Detail Modal */}
