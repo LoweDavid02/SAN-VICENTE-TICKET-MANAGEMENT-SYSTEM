@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Shield, ArrowRight, Menu, X, ChevronUp, ChevronLeft, ChevronRight, Users, FileText, CheckCircle, Zap, MapPin, Phone, Mail } from 'lucide-react';
-import heroBg from '../assets/0lpgp.png';
 
 const SLIDES = [
   { id:1, title:'Community-First Governance', desc:'Barangay San Vicente serves over 12,000 residents with transparent, responsive, technology-driven public service.', stat:'12,000+', statLabel:'Residents Served' },
@@ -107,7 +106,7 @@ export default function Landing() {
       <section id="hero" style={{ position:'relative', minHeight:'100vh', overflow:'hidden' }}>
 
         {/* Building photo */}
-        <div style={{ position:'absolute', inset:0, backgroundImage:`url(${heroBg})`, backgroundSize:'cover', backgroundPosition:'center 30%', backgroundRepeat:'no-repeat' }} />
+        <div style={{ position:'absolute', inset:0, backgroundImage:`url(/hero-bg.png)`, backgroundSize:'cover', backgroundPosition:'center 30%', backgroundRepeat:'no-repeat' }} />
 
         {/* Dark overlay */}
         <div style={{ position:'absolute', inset:0, background:'linear-gradient(135deg, rgba(4,20,28,.88) 0%, rgba(5,30,28,.82) 40%, rgba(4,18,24,.75) 70%, rgba(3,14,20,.65) 100%)' }} />
