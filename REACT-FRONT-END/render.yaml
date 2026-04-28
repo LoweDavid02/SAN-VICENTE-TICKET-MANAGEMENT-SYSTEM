@@ -1,0 +1,55 @@
+# Render.com Configuration for Barangay San Vicente PWA
+
+services:
+  # Frontend - React PWA Static Site
+  - type: web
+    name: bsv-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    pullRequestPreviewsEnabled: true
+    
+    # Environment Variables
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+      - key: VITE_API_URL
+        value: https://your-backend-url.onrender.com/api/v1
+      - key: VITE_WS_URL
+        value: wss://your-backend-url.onrender.com/ws
+    
+    # Headers for PWA and Security
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - path: /*
+        name: Permissions-Policy
+        value: geolocation=(), microphone=(), camera=()
+      
+      # Cache static assets
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      
+      # Cache Service Worker (short TTL for updates)
+      - path: /sw.js
+        name: Cache-Control
+        value: public, max-age=0, must-revalidate
+      
+      # Cache manifest
+      - path: /manifest.json
+        name: Cache-Control
+        value: public, max-age=86400
+    
+    # Routes - SPA fallback to index.html
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

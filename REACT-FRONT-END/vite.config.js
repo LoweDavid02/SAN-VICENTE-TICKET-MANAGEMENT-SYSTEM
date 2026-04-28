@@ -40,6 +40,9 @@ export default defineConfig({
     },
   },
 
+  // Base URL for production deployment
+  base: '/',
+
   build: {
     // Target modern browsers — smaller output
     target: 'es2020',
@@ -47,11 +50,11 @@ export default defineConfig({
     // CSS code splitting — each chunk gets its own CSS
     cssCodeSplit: true,
 
-    // Source maps disabled for production (enable if you have error tracking)
-    sourcemap: false,
+    // Source maps enabled for debugging production issues
+    sourcemap: true,
 
-    // Raise warning limit — we handle chunking manually
-    chunkSizeWarningLimit: 600,
+    // Raise chunk size warning limit to 1000 KB (we have optimized chunking)
+    chunkSizeWarningLimit: 1000,
 
     rollupOptions: {
       output: {
