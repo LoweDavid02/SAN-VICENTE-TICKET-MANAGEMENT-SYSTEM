@@ -5,6 +5,7 @@ import {
   Mail, Lock, ArrowRight, Home, ChevronDown,
 } from 'lucide-react';
 import useAuthStore from '../stores/authStore';
+import heroBg from '../assets/0lpgp.png';
 
 const STATS = [
   { value: '1,284', label: 'Tickets resolved' },
@@ -104,7 +105,7 @@ export default function Login() {
         {/* Building photo background */}
         <div style={{
           position: 'absolute', inset: 0,
-          backgroundImage: 'url(/hero-bg.jpg)',
+          backgroundImage: `url(${heroBg})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center 30%',
           backgroundRepeat: 'no-repeat',
