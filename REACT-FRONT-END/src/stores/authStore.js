@@ -53,10 +53,10 @@ const useAuthStore = create((set) => ({
         // Server returned an error message (e.g., "Invalid credentials")
         message = err.response.data.message;
       } else if (err.code === 'ECONNABORTED' || err.message?.includes('timeout')) {
-        message = 'Request timed out. Please check your connection and try again.';
+        message = 'Server is taking too long to respond. Please try again — it may be waking up.';
       } else if (!err.response) {
         // Network error - server not reachable
-        message = 'Cannot connect to server. Please check if the backend is running.';
+        message = 'Cannot connect to server. Please check your internet connection.';
       }
       
       set({ isLoading: false, error: message });

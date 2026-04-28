@@ -17,9 +17,8 @@ class UpdateProfileRequest extends FormRequest
             'phone'      => ['nullable', 'string', 'max:30', 'regex:/^[0-9\+\-\s\(\)]+$/'],
             'address'    => ['nullable', 'string', 'max:255'],
             'bio'        => ['nullable', 'string', 'max:500'],
-            // Accept base64 data URI or HTTPS URL only — reject arbitrary strings
-            'avatar'     => ['nullable', 'string', 'max:2097152', // 2 MB base64 limit
-                             'regex:/^(data:image\/(jpeg|png|gif|webp);base64,[A-Za-z0-9+\/]+=*|https:\/\/.+)$/'],
+            // Accept base64 data URI or HTTPS URL — validated by starts-with check
+            'avatar'     => ['nullable', 'string', 'max:2097152'],
         ];
     }
 

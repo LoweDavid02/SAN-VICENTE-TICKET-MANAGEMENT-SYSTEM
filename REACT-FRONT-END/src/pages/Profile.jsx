@@ -78,11 +78,11 @@ export default function Profile() {
     name:       user?.full_name || user?.name || '',
     first_name: user?.first_name || '',
     last_name:  user?.last_name  || '',
-    email:      user?.email || '',
-    role:       user?.portal || 'Resident',
-    phone:      user?.phone   || '+63 912 345 6789',
-    address:    user?.address || 'Purok 3, Barangay San Vicente',
-    bio:        user?.bio     || 'Resident actively participating in community improvement programs.',
+    email:      user?.email   || '',
+    role:       user?.portal  || 'Resident',
+    phone:      user?.phone   || '',
+    address:    user?.address || '',
+    bio:        user?.bio     || '',
   });
   const [savedForm, setSavedForm] = useState({ ...form });
   const [avatar, setAvatar]   = useState(user?.avatar || null);
@@ -123,11 +123,25 @@ export default function Profile() {
 
           // response.data.data is the updated user from the API
           const updatedUser = response?.data?.data;
-          if (updatedUser?.avatar) {
-            setAvatar(updatedUser.avatar);
+          if (updatedUser) {
+            // Sync avatar from API response
+            if (updatedUser.avatar) setAvatar(updatedUser.avatar);
+            // Sync form from API response so display reflects saved data
+            const newForm = {
+              name:       updatedUser.full_name || '',
+              first_name: updatedUser.first_name || '',
+              last_name:  updatedUser.last_name  || '',
+              email:      updatedUser.email   || '',
+              role:       updatedUser.portal  || portal,
+              phone:      updatedUser.phone   || '',
+              address:    updatedUser.address || '',
+              bio:        updatedUser.bio     || '',
+            };
+            setForm(newForm);
+            setSavedForm(newForm);
+          } else {
+            setSavedForm({ ...form });
           }
-
-          setSavedForm({ ...form });
           setEditing(false);
           openModal('success', {
             title:   'Profile updated',

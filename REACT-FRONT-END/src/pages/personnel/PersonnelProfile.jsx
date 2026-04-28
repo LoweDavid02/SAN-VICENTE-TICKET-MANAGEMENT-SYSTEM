@@ -71,11 +71,19 @@ export default function PersonnelProfile() {
 
           // Sync avatar from API response so it persists on reload
           const updatedUser = response?.data?.data;
-          if (updatedUser?.avatar) {
-            setAvatar(updatedUser.avatar);
+          if (updatedUser) {
+            if (updatedUser.avatar) setAvatar(updatedUser.avatar);
+            const newForm = {
+              name:  updatedUser.full_name || '',
+              email: updatedUser.email     || '',
+              phone: updatedUser.phone     || '',
+              bio:   updatedUser.bio       || '',
+            };
+            setForm(newForm);
+            setSavedForm(newForm);
+          } else {
+            setSavedForm({ ...form });
           }
-
-          setSavedForm({ ...form });
           setEditing(false);
           openModal('success', { title: 'Profile updated', message: 'Your profile information has been saved.' });
         } catch (err) {

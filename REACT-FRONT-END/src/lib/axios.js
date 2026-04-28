@@ -9,7 +9,7 @@ import axios from 'axios';
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   withCredentials: false,
-  timeout: 15000,
+  timeout: 30000,  // 30s — Laravel cold start on first request can be slow
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',

@@ -18,20 +18,6 @@ const PORTALS = [
   { value: 'personnel', label: 'Personnel Portal', sub: 'Field operations & task management' },
 ];
 
-function FloatOrb({ size, top, left, delay, color = 'rgba(20,184,166,.18)' }) {
-  return (
-    <div
-      className="absolute rounded-full pointer-events-none"
-      style={{
-        width: size, height: size, top, left,
-        background: `radial-gradient(circle at 35% 35%, ${color}, transparent 70%)`,
-        filter: 'blur(32px)',
-        animationDelay: `${delay}s`,
-      }}
-    />
-  );
-}
-
 export default function Login() {
   const navigate = useNavigate();
   const { login, isLoading, error, clearError } = useAuthStore();
@@ -112,14 +98,28 @@ export default function Login() {
         className="hidden lg:flex lg:w-[52%] relative overflow-hidden flex-col justify-between"
         style={{
           padding: '52px 56px',
-          background: 'linear-gradient(160deg, #060d1a 0%, #0c1f35 35%, #0a2e2a 70%, #071a16 100%)',
+          background: '#060d1a',
         }}
       >
-        <div className="absolute inset-0 pointer-events-none"
-             style={{ backgroundImage: 'radial-gradient(circle, rgba(255,255,255,.06) 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
-        <FloatOrb size={480} top="-120px" left="-120px" delay={0}   color="rgba(20,184,166,.2)"  />
-        <FloatOrb size={300} top="35%"    left="55%"    delay={3}   color="rgba(20,184,166,.15)" />
-        <FloatOrb size={200} top="72%"    left="5%"     delay={1.5} color="rgba(45,212,191,.12)" />
+        {/* Building photo background */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          backgroundImage: 'url(/hero-bg.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 30%',
+          backgroundRepeat: 'no-repeat',
+        }} />
+        {/* Dark overlay for text readability */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(160deg, rgba(4,18,28,.88) 0%, rgba(5,28,26,.82) 40%, rgba(4,16,22,.78) 70%, rgba(3,12,18,.72) 100%)',
+        }} />
+        {/* Subtle noise texture */}
+        <div style={{
+          position: 'absolute', inset: 0, pointerEvents: 'none', opacity: .25,
+          backgroundImage: 'radial-gradient(circle, rgba(255,255,255,.06) 1px, transparent 1px)',
+          backgroundSize: '32px 32px',
+        }} />
 
         {/* Logo */}
         <div className="relative z-10 flex items-center gap-3">
@@ -235,7 +235,18 @@ export default function Login() {
                   borderLeft: '3px solid #ef4444', borderRadius: 10,
                 }}>
                   <AlertCircle size={15} style={{ color: '#ef4444', flexShrink: 0, marginTop: 1 }} />
-                  <p style={{ fontSize: '0.8125rem', color: '#b91c1c', lineHeight: 1.5 }}>{error}</p>
+                  <div style={{ flex: 1 }}>
+                    <p style={{ fontSize: '0.8125rem', color: '#b91c1c', lineHeight: 1.5 }}>{error}</p>
+                    {(error.includes('taking too long') || error.includes('connect')) && (
+                      <button
+                        type="button"
+                        onClick={() => { clearError(); }}
+                        style={{ marginTop: 6, fontSize: 11.5, fontWeight: 600, color: '#dc2626', background: 'none', border: 'none', cursor: 'pointer', padding: 0, textDecoration: 'underline', fontFamily: 'inherit' }}
+                      >
+                        Dismiss and try again
+                      </button>
+                    )}
+                  </div>
                 </div>
               )}
 
