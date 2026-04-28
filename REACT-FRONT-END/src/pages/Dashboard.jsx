@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { Lightbulb, X, MapPin, Clock, User, Tag, RefreshCw, ExternalLink } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Lightbulb, X, MapPin, Clock, User, Tag, RefreshCw } from 'lucide-react';
 import { StatCard, WorkloadBar, IncidentRow, SectionHeader } from '../components/ui/Components';
 import { StatusBadge, SeverityBadge } from '../components/ui/Components';
-import { useAdminDashboard } from '../hooks/useTicketApi';
+import { useAdminDashboard, useMapTickets } from '../hooks/useTicketApi';
 import { kpiData, departments } from '../data/mockData';
 import { useT } from '../stores/langStore';
 import Portal from '../components/Portal';
@@ -19,6 +19,168 @@ const SEV_BG = {
   Medium: 'rgba(245,158,11,.1)',
   Low:    'rgba(16,185,129,.1)',
 };
+
+// Barangay San Vicente center coordinates
+const BRGY_CENTER = [14.9456, 120.7558];
+const BRGY_ZOOM   = 15;
+
+const MARKER_COLOR = {
+  'Pending':      '#EF4444',
+  'Under Review': '#F59E0B',
+  'In Progress':  '#F59E0B',
+  'Completed':    '#10B981',
+  'Rejected':     '#6B7280',
+};
+
+/**
+ * LiveComplaintMap — real Leaflet map embedded in the dashboard card.
+ * Lazy-loads Leaflet only when this component mounts.
+ */
+function LiveComplaintMap() {
+  const mapRef      = useRef(null);
+  const leafletRef  = useRef(null);
+  const mapObjRef   = useRef(null);
+  const markersRef  = useRef([]);
+  const [ready, setReady] = useState(false);
+
+  const { data } = useMapTickets({});
+  const markers = data?.markers || [];
+
+  // Bootstrap Leaflet once
+  useEffect(() => {
+    let cancelled = false;
+    import('leaflet').then((L) => {
+      import('leaflet/dist/leaflet.css');
+      if (cancelled || !mapRef.current || mapObjRef.current) return;
+
+      // Fix broken default icons in Vite
+      delete L.Icon.Default.prototype._getIconUrl;
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+        iconUrl:       'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+        shadowUrl:     'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+      });
+
+      leafletRef.current = L;
+
+      const map = L.map(mapRef.current, {
+        center:           BRGY_CENTER,
+        zoom:             BRGY_ZOOM,
+        zoomControl:      true,
+        scrollWheelZoom:  false,   // disable scroll zoom inside dashboard card
+        attributionControl: true,
+        // Restrict panning to Barangay San Vicente area
+        maxBounds: [
+          [14.920, 120.730],
+          [14.970, 120.780],
+        ],
+        maxBoundsViscosity: 0.85,
+      });
+
+      // OSM street tiles — shows all roads, landmarks, labels
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        maxZoom: 19,
+      }).addTo(map);
+
+      // Barangay boundary polygon
+      L.geoJSON({
+        type: 'FeatureCollection',
+        features: [{
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'Polygon',
+            coordinates: [[
+              [120.7480, 14.9380],[120.7510, 14.9370],[120.7545, 14.9375],
+              [120.7580, 14.9385],[120.7615, 14.9400],[120.7640, 14.9420],
+              [120.7650, 14.9445],[120.7645, 14.9475],[120.7635, 14.9510],
+              [120.7620, 14.9540],[120.7600, 14.9560],[120.7575, 14.9570],
+              [120.7545, 14.9568],[120.7515, 14.9560],[120.7490, 14.9545],
+              [120.7468, 14.9525],[120.7455, 14.9500],[120.7448, 14.9470],
+              [120.7450, 14.9440],[120.7458, 14.9415],[120.7468, 14.9398],
+              [120.7480, 14.9380],
+            ]],
+          },
+        }],
+      }, {
+        style: { color: '#22a83a', weight: 2.5, opacity: 0.8, fillColor: '#22a83a', fillOpacity: 0.05, dashArray: '6 4' },
+      }).addTo(map);
+
+      mapObjRef.current = map;
+      if (!cancelled) setReady(true);
+    });
+    return () => { cancelled = true; };
+  }, []);
+
+  // Add/update markers when data arrives
+  useEffect(() => {
+    const L = leafletRef.current;
+    const map = mapObjRef.current;
+    if (!L || !map || !ready) return;
+
+    // Clear old markers
+    markersRef.current.forEach(m => m.remove());
+    markersRef.current = [];
+
+    markers.forEach((ticket) => {
+      if (ticket.latitude == null || ticket.longitude == null) return;
+      const color = MARKER_COLOR[ticket.status] || '#EF4444';
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="38" viewBox="0 0 32 43">
+        <path d="M16 0C7.163 0 0 7.163 0 16c0 11.2 16 27 16 27S32 27.2 32 16C32 7.163 24.837 0 16 0z"
+              fill="${color}" stroke="white" stroke-width="2.5"/>
+        <circle cx="16" cy="16" r="6" fill="white" opacity="0.95"/>
+        <circle cx="16" cy="16" r="3.5" fill="${color}"/>
+      </svg>`;
+      const icon = L.divIcon({
+        html: svg, className: '',
+        iconSize: [28, 38], iconAnchor: [14, 38], popupAnchor: [0, -38],
+      });
+      const statusColor = MARKER_COLOR[ticket.status] || '#64748b';
+      const m = L.marker([Number(ticket.latitude), Number(ticket.longitude)], { icon })
+        .bindPopup(`
+          <div style="font-family:system-ui,sans-serif;min-width:200px;padding:2px">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+              <span style="font-family:monospace;font-size:11px;font-weight:700;color:#22a83a">${ticket.tracking_id}</span>
+              <span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:99px;background:${statusColor}22;color:${statusColor};border:1px solid ${statusColor}44">${ticket.status}</span>
+            </div>
+            <p style="font-size:13px;font-weight:700;color:#0f172a;margin:0 0 6px;line-height:1.3">${ticket.title}</p>
+            <p style="font-size:11px;color:#64748b;margin:0 0 3px">📍 ${ticket.location || '—'}</p>
+            <p style="font-size:11px;color:#64748b;margin:0">👤 ${ticket.resident_name || '—'}</p>
+          </div>
+        `, { maxWidth: 260 })
+        .addTo(map);
+      markersRef.current.push(m);
+    });
+  }, [markers, ready]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (mapObjRef.current) {
+        mapObjRef.current.remove();
+        mapObjRef.current = null;
+      }
+    };
+  }, []);
+
+  return (
+    <div style={{ position: 'relative', height: '100%', width: '100%' }}>
+      <div ref={mapRef} style={{ height: '100%', width: '100%' }} />
+      {!ready && (
+        <div style={{
+          position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
+          background: 'linear-gradient(135deg,#e8f4f8,#c8e0ec)', borderRadius: 10,
+        }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+            <div style={{ width: 24, height: 24, borderRadius: '50%', border: '2.5px solid #e2e8f0', borderTopColor: '#14b8a6', animation: 'spin .65s linear infinite' }} />
+            <span style={{ fontSize: 11, color: '#64748b' }}>Loading map…</span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function Dashboard() {
   const [incident, setIncident] = useState(null);
@@ -76,77 +238,29 @@ export default function Dashboard() {
         ))}
       </div>
 
-      {/* Map Preview + Workload */}
+      {/* Map + Workload */}
       <div className="dash-two-col" style={{ display: 'grid', gridTemplateColumns: '1.45fr 1fr', gap: 20, marginBottom: 24 }}>
-        {/* Map preview card */}
-        <div className="card animate-fade-up" style={{ padding: 24, animationDelay: '100ms', cursor: 'pointer', transition: 'box-shadow .2s' }}
-          onClick={() => navigate('/admin/map')}
-          onMouseEnter={e => e.currentTarget.style.boxShadow = 'var(--shadow-lg)'}
-          onMouseLeave={e => e.currentTarget.style.boxShadow = ''}
-        >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 14 }}>
+
+        {/* Live Complaint Map card */}
+        <div className="card animate-fade-up" style={{ padding: 0, animationDelay: '100ms', overflow: 'hidden' }}>
+          {/* Card header */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', borderBottom: '1px solid var(--border)' }}>
             <div>
-              <h2 style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-1)' }}>{t('issueHeatmap')}</h2>
-              <p style={{ fontSize: 12, color: 'var(--text-4)', marginTop: 3 }}>Geographical distribution of reported incidents</p>
+              <h2 style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-1)' }}>Complaint Map</h2>
+              <p style={{ fontSize: 12, color: 'var(--text-4)', marginTop: 2 }}>Barangay San Vicente, Apalit, Pampanga</p>
             </div>
-            <button
-              onClick={e => { e.stopPropagation(); navigate('/admin/map'); }}
-              className="btn btn-outline"
-              style={{ fontSize: 11, gap: 5, padding: '5px 10px' }}
-            >
-              <ExternalLink size={12} /> Open Map
-            </button>
-          </div>
-
-          {/* Static map preview */}
-          <div style={{
-            height: 200, borderRadius: 10, overflow: 'hidden', position: 'relative',
-            background: 'linear-gradient(135deg, #e8f4f8 0%, #c8e0ec 100%)',
-            border: '1px solid var(--border)',
-          }}>
-            {/* Grid overlay */}
-            <div style={{
-              position: 'absolute', inset: 0, opacity: 0.12,
-              backgroundImage: 'linear-gradient(#64748b 1px, transparent 1px), linear-gradient(90deg, #64748b 1px, transparent 1px)',
-              backgroundSize: '30px 30px',
-            }} />
-            {/* Scatter markers */}
-            {[
-              { top: '25%', left: '30%', color: '#EF4444' },
-              { top: '45%', left: '55%', color: '#F59E0B' },
-              { top: '60%', left: '25%', color: '#EF4444' },
-              { top: '30%', left: '70%', color: '#10B981' },
-              { top: '70%', left: '60%', color: '#F59E0B' },
-              { top: '50%', left: '40%', color: '#EF4444' },
-              { top: '20%', left: '50%', color: '#10B981' },
-            ].map((m, i) => (
-              <div key={i} style={{
-                position: 'absolute', top: m.top, left: m.left,
-                width: 12, height: 12, borderRadius: '50% 50% 50% 0',
-                transform: 'rotate(-45deg)',
-                background: m.color, border: '2px solid white',
-                boxShadow: '0 2px 6px rgba(0,0,0,.25)',
-              }} />
-            ))}
-            {/* Center label */}
-            <div style={{
-              position: 'absolute', bottom: 10, left: '50%', transform: 'translateX(-50%)',
-              background: 'rgba(255,255,255,.9)', borderRadius: 6, padding: '4px 10px',
-              fontSize: 10, fontWeight: 700, color: '#334155', whiteSpace: 'nowrap',
-              boxShadow: '0 1px 4px rgba(0,0,0,.1)',
-            }}>
-              📍 Brgy. San Vicente, Apalit, Pampanga
+            <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+              {[['#EF4444','Pending'],['#F59E0B','In Progress'],['#10B981','Resolved']].map(([c,l]) => (
+                <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: c }} />
+                  <span style={{ fontSize: 11, color: 'var(--text-4)' }}>{l}</span>
+                </div>
+              ))}
             </div>
           </div>
-
-          {/* Legend */}
-          <div style={{ display: 'flex', gap: 16, marginTop: 12 }}>
-            {[['#EF4444','Pending'],['#F59E0B','In Progress'],['#10B981','Resolved']].map(([c,l]) => (
-              <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-                <div style={{ width: 8, height: 8, borderRadius: '50%', background: c }} />
-                <span style={{ fontSize: 11, color: 'var(--text-4)' }}>{l}</span>
-              </div>
-            ))}
+          {/* Real map */}
+          <div style={{ height: 280 }}>
+            <LiveComplaintMap />
           </div>
         </div>
 

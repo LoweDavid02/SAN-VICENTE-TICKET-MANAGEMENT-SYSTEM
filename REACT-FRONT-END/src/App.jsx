@@ -60,9 +60,6 @@ const Requests       = lazy(() => import('./pages/Requests'));
 const AnalyticsDashboard = lazy(() =>
   import('./features/admin/AnalyticsDashboard/AnalyticsDashboard')
 );
-const ComplaintMap = lazy(() =>
-  import('./features/admin/ComplaintMap/ComplaintMap')
-);
 
 /* ── Resident portal ── */
 const ResidentDashboard = lazy(() => import('./pages/ResidentDashboard'));
@@ -146,7 +143,6 @@ function AppRoutes() {
             <Route index                element={<Navigate to="dashboard" replace />} />
             <Route path="dashboard"     element={<Dashboard />} />
             <Route path="analytics"     element={<AnalyticsDashboard />} />
-            <Route path="map"           element={<ComplaintMap />} />
             <Route path="personnel"     element={<Personnel />} />
             <Route path="tasks"         element={<PersonnelTasks />} />
             <Route path="tickets"       element={<Requests />} />
