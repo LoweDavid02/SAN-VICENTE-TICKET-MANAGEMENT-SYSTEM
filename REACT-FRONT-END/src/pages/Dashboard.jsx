@@ -20,9 +20,15 @@ const SEV_BG = {
   Low:    'rgba(16,185,129,.1)',
 };
 
-// Barangay San Vicente center coordinates
+// Barangay San Vicente — precise center and tight bounds
 const BRGY_CENTER = [14.9456, 120.7558];
-const BRGY_ZOOM   = 15;
+const BRGY_ZOOM   = 16;   // zoom 16 = street-level, fills the card with just the barangay
+
+// Tight bounds — only Barangay San Vicente, no surrounding municipalities
+const BRGY_BOUNDS = [
+  [14.932, 120.742],   // SW corner
+  [14.960, 120.770],   // NE corner
+];
 
 const MARKER_COLOR = {
   'Pending':      '#EF4444',
@@ -64,18 +70,21 @@ function LiveComplaintMap() {
       leafletRef.current = L;
 
       const map = L.map(mapRef.current, {
-        center:           BRGY_CENTER,
-        zoom:             BRGY_ZOOM,
-        zoomControl:      true,
-        scrollWheelZoom:  false,   // disable scroll zoom inside dashboard card
+        center:             BRGY_CENTER,
+        zoom:               BRGY_ZOOM,
+        minZoom:            15,          // can't zoom out past street level
+        maxZoom:            19,
+        zoomControl:        true,
+        scrollWheelZoom:    false,       // prevent accidental zoom while scrolling dashboard
+        doubleClickZoom:    true,
         attributionControl: true,
-        // Restrict panning to Barangay San Vicente area
-        maxBounds: [
-          [14.920, 120.730],
-          [14.970, 120.780],
-        ],
-        maxBoundsViscosity: 0.85,
+        // Hard lock — user cannot pan outside Barangay San Vicente
+        maxBounds:          BRGY_BOUNDS,
+        maxBoundsViscosity: 1.0,         // 1.0 = hard wall, cannot drag outside at all
       });
+
+      // Fit the view exactly to the barangay bounds on load
+      map.fitBounds(BRGY_BOUNDS, { padding: [8, 8] });
 
       // OSM street tiles — shows all roads, landmarks, labels
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -165,8 +174,8 @@ function LiveComplaintMap() {
   }, []);
 
   return (
-    <div style={{ position: 'relative', height: '100%', width: '100%' }}>
-      <div ref={mapRef} style={{ height: '100%', width: '100%' }} />
+    <div style={{ position: 'relative', height: '100%', width: '100%', minHeight: 320 }}>
+      <div ref={mapRef} style={{ position: 'absolute', inset: 0 }} />
       {!ready && (
         <div style={{
           position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -259,7 +268,7 @@ export default function Dashboard() {
             </div>
           </div>
           {/* Real map */}
-          <div style={{ height: 280 }}>
+          <div style={{ height: 320, position: 'relative' }}>
             <LiveComplaintMap />
           </div>
         </div>
