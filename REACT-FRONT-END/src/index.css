@@ -112,43 +112,71 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   LIGHT MODE THEME
+   LIGHT MODE THEME - MAXIMUM VISIBILITY
    ═══════════════════════════════════════════════════════════════════════════ */
 .light-mode {
   /* ── Core Backgrounds ──────────────────────────────────────────────────── */
-  --bg:        #FFFFFF;   /* page background */
-  --surface:   #F8FAFC;   /* cards, panels, sidebars */
-  --raised:    #F1F5F9;   /* elevated elements, hover states */
+  --bg:        #F5F5F5;   /* page background - light gray */
+  --surface:   #FFFFFF;   /* cards, panels, sidebars - pure white */
+  --raised:    #FAFAFA;   /* elevated elements, hover states */
   
   /* ── Borders ───────────────────────────────────────────────────────────── */
-  --border:    #E2E8F0;   /* default border */
-  --border2:   #CBD5E1;   /* stronger border, focus */
+  --border:    #D0D0D0;   /* default border - darker for visibility */
+  --border2:   #A0A0A0;   /* stronger border, focus - much darker */
   
-  /* ── Text ──────────────────────────────────────────────────────────────── */
-  --txt:       #0F172A;   /* primary text */
-  --muted:     #64748B;   /* secondary text, labels */
-  --dim:       #94A3B8;   /* placeholder, disabled */
+  /* ── Text - MAXIMUM CONTRAST ───────────────────────────────────────────── */
+  --txt:       #000000;   /* primary text - pure black for maximum visibility */
+  --muted:     #333333;   /* secondary text, labels - very dark gray */
+  --dim:       #666666;   /* placeholder, disabled - medium dark gray */
   
   /* ── Accent (Single Brand Color) ───────────────────────────────────────── */
-  --accent:    #7B6CF6;   /* purple-indigo accent */
-  --accent-bg: rgba(123, 108, 246, 0.10); /* accent fill for active items */
-  --accent2:   #6B5CE6;   /* darker accent for hover */
+  --accent:    #6B5CE6;   /* purple-indigo accent - slightly darker */
+  --accent-bg: rgba(107, 92, 230, 0.15); /* accent fill - more visible */
+  --accent2:   #5A4BD5;   /* darker accent for hover */
   
-  /* ── Semantic Colors ───────────────────────────────────────────────────── */
-  --green:     #059669;   /* success */
-  --amber:     #D97706;   /* warning */
-  --red:       #DC2626;   /* error */
+  /* ── Semantic Colors - DARKER FOR VISIBILITY ───────────────────────────── */
+  --green:     #047857;   /* success - darker green */
+  --amber:     #B45309;   /* warning - darker amber */
+  --red:       #B91C1C;   /* error - darker red */
   
   /* ── Surface Variants ──────────────────────────────────────────────────── */
-  --surface-2:     #FFFFFF;
-  --surface-3:     #F1F5F9;
-  --surface-4:     #E8EDF2;
+  --surface-2:     #FAFAFA;
+  --surface-3:     #F0F0F0;
+  --surface-4:     #E5E5E5;
   
-  /* ── Text Variants ─────────────────────────────────────────────────────── */
-  --text-1:        #0F172A;
-  --text-2:        #334155;
-  --text-3:        #64748B;
-  --text-4:        #94A3B8;
+  /* ── Text Variants - ALL DARKER ────────────────────────────────────────── */
+  --text-1:        #000000;   /* pure black */
+  --text-2:        #1A1A1A;   /* almost black */
+  --text-3:        #333333;   /* very dark gray */
+  --text-4:        #666666;   /* medium dark gray */
+  
+  /* ── Legacy Compatibility (mapped to new system) ───────────────────────── */
+  --brand:          var(--accent);
+  --brand-dark:     var(--accent2);
+  --brand-light:    var(--accent-bg);
+  --brand-muted:    var(--accent-bg);
+  --navy:           var(--surface);
+  --sidebar-bg:     var(--surface);
+  --sidebar-border: var(--border);
+  --sidebar-hover:  var(--raised);
+  --sidebar-active: var(--accent-bg);
+  
+  /* ── Tailwind Color Compatibility - LIGHT MODE ─────────────────────────── */
+  --color-navy-900: #1A1A1A;
+  --color-teal-500: var(--accent);
+  --color-teal-600: var(--accent2);
+  --color-slate-400: #666666;
+  --color-slate-500: #555555;
+  --color-slate-600: #444444;
+  --color-slate-700: #333333;
+  --color-slate-800: #222222;
+  --color-slate-900: #1A1A1A;
+  --color-red-500: var(--red);
+  --color-red-600: #991B1B;
+  --color-amber-500: var(--amber);
+  --color-emerald-500: var(--green);
+  --color-blue-500: var(--accent);
+  --color-blue-600: var(--accent2);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -169,6 +197,88 @@ body {
   overflow-x: hidden;
 }
 #root { min-height:100vh }
+
+/* ── Light Mode Specific Overrides for Maximum Visibility ─── */
+.light-mode body {
+  color: #000000;
+}
+
+.light-mode h1,
+.light-mode h2,
+.light-mode h3,
+.light-mode h4,
+.light-mode h5,
+.light-mode h6 {
+  color: #000000 !important;
+}
+
+.light-mode p,
+.light-mode span,
+.light-mode div,
+.light-mode label,
+.light-mode a {
+  color: inherit;
+}
+
+.light-mode .nav-item {
+  color: #333333;
+}
+
+.light-mode .nav-item:hover {
+  color: #000000;
+}
+
+.light-mode .nav-item.active {
+  color: #6B5CE6;
+  font-weight: 600;
+}
+
+.light-mode .section-label {
+  color: #666666;
+}
+
+.light-mode .badge {
+  font-weight: 600;
+}
+
+.light-mode .badge-slate {
+  background: #E5E5E5;
+  color: #333333;
+}
+
+.light-mode .stat-value {
+  color: #000000;
+}
+
+.light-mode .data-table th {
+  color: #000000;
+}
+
+.light-mode .data-table td {
+  color: #1A1A1A;
+}
+
+.light-mode .btn-ghost {
+  color: #333333;
+}
+
+.light-mode .btn-ghost:hover {
+  color: #000000;
+}
+
+.light-mode .btn-outline {
+  color: #000000;
+  border-color: #A0A0A0;
+}
+
+.light-mode .input {
+  color: #000000;
+  border-color: #D0D0D0;
+}
+
+.light-mode .input::placeholder {
+  color: #666666;
+}
 
 /* ── Scrollbar ───────────────────────────────────────────── */
 ::-webkit-scrollbar { width:5px; height:5px }
