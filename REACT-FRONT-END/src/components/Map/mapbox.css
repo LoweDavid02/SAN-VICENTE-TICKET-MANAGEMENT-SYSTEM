@@ -1,0 +1,167 @@
+/* Mapbox Map Styles */
+
+/* Custom popup styling */
+.mapboxgl-popup {
+  max-width: 280px !important;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.mapboxgl-popup-content {
+  padding: 12px 14px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05) !important;
+}
+
+.mapboxgl-popup-close-button {
+  width: 24px;
+  height: 24px;
+  font-size: 18px;
+  color: #64748b;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.15s;
+}
+
+.mapboxgl-popup-close-button:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+  border-top-color: white !important;
+}
+
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+  border-bottom-color: white !important;
+}
+
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+  border-right-color: white !important;
+}
+
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+  border-left-color: white !important;
+}
+
+/* Control button styling */
+.mapboxgl-ctrl-group {
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+  overflow: hidden;
+}
+
+.mapboxgl-ctrl-group button {
+  width: 40px !important;
+  height: 40px !important;
+  transition: all 0.15s;
+}
+
+.mapboxgl-ctrl-group button:hover {
+  background: #f8fafc !important;
+}
+
+.mapboxgl-ctrl-group button + button {
+  border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Geolocate control styling */
+.mapboxgl-ctrl-geolocate {
+  background-color: white !important;
+}
+
+.mapboxgl-ctrl-geolocate .mapboxgl-ctrl-icon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2314b8a6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E") !important;
+}
+
+.mapboxgl-ctrl-geolocate.mapboxgl-ctrl-geolocate-active .mapboxgl-ctrl-icon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2314b8a6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E") !important;
+}
+
+/* Attribution styling */
+.mapboxgl-ctrl-attrib {
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(8px);
+  font-size: 10px !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+}
+
+.mapboxgl-ctrl-attrib a {
+  color: #64748b !important;
+  text-decoration: none;
+}
+
+.mapboxgl-ctrl-attrib a:hover {
+  color: #14b8a6 !important;
+}
+
+/* Loading animation */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* Marker hover effect */
+.mapboxgl-marker {
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .mapboxgl-popup {
+    max-width: 240px !important;
+  }
+  
+  .mapboxgl-popup-content {
+    padding: 10px 12px !important;
+  }
+  
+  .mapboxgl-ctrl-group button {
+    width: 36px !important;
+    height: 36px !important;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .mapboxgl-popup-content {
+    background: #1e293b !important;
+    color: #f1f5f9 !important;
+  }
+  
+  .mapboxgl-popup-close-button {
+    color: #94a3b8;
+  }
+  
+  .mapboxgl-popup-close-button:hover {
+    background: #334155;
+    color: #f1f5f9;
+  }
+  
+  .mapboxgl-ctrl-group {
+    background: #1e293b !important;
+  }
+  
+  .mapboxgl-ctrl-group button {
+    background: #1e293b !important;
+    color: #f1f5f9 !important;
+  }
+  
+  .mapboxgl-ctrl-group button:hover {
+    background: #334155 !important;
+  }
+  
+  .mapboxgl-ctrl-attrib {
+    background: rgba(30, 41, 59, 0.8) !important;
+  }
+}

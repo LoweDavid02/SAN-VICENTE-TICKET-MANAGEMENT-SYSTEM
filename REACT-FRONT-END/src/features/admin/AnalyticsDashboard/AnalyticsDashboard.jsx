@@ -128,12 +128,33 @@ export default function AnalyticsDashboard() {
       </div>
 
       {/* Period tabs */}
-      <div style={{ display: 'flex', gap: 6 }}>
-        {['weekly', 'monthly', 'quarterly'].map((p) => (
-          <button key={p} onClick={() => setPeriod(p)} className="btn" style={{ padding: '6px 16px', fontSize: 12, background: period === p ? 'var(--navy)' : 'var(--surface-3)', color: period === p ? '#fff' : 'var(--text-3)', border: period === p ? 'none' : '1px solid var(--border)' }}>
-            {p.charAt(0).toUpperCase() + p.slice(1)}
-          </button>
-        ))}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+        <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-3)' }}>Time Period:</span>
+        <div style={{ display: 'flex', gap: 6 }}>
+          {['weekly', 'monthly', 'quarterly'].map((p) => (
+            <button 
+              key={p} 
+              onClick={() => setPeriod(p)} 
+              className="btn" 
+              style={{ 
+                padding: '8px 18px', 
+                fontSize: 13, 
+                fontWeight: 600,
+                background: period === p ? 'var(--navy)' : 'var(--surface-3)', 
+                color: period === p ? '#fff' : 'var(--text-3)', 
+                border: period === p ? 'none' : '1px solid var(--border)',
+                boxShadow: period === p ? '0 2px 8px rgba(20,184,166,.25)' : 'none',
+                transform: period === p ? 'translateY(-1px)' : 'none',
+                transition: 'all .2s',
+              }}
+            >
+              {p.charAt(0).toUpperCase() + p.slice(1)}
+            </button>
+          ))}
+        </div>
+        <span style={{ fontSize: 12, color: 'var(--text-4)', marginLeft: 'auto' }}>
+          Showing data for the last {period === 'weekly' ? '7 days' : period === 'monthly' ? '30 days' : '90 days'}
+        </span>
       </div>
 
       {/* Chart row 1 */}

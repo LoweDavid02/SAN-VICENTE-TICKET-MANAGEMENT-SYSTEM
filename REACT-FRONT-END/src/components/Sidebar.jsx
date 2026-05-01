@@ -103,10 +103,25 @@ export default function Sidebar({ portalType }) {
     <NavLink
       key={to}
       to={to}
-      onClick={onClick}
+      onClick={(e) => {
+        // Allow navigation but prevent sidebar toggle
+        e.stopPropagation();
+        if (onClick) onClick(e);
+      }}
       title={collapsed ? label : undefined}
       className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
-      style={collapsed ? { justifyContent: 'center', padding: '11px' } : { padding: '10px 12px' }}
+      style={collapsed ? { 
+        justifyContent: 'center', 
+        padding: '11px', 
+        position: 'relative', 
+        zIndex: 3,
+        pointerEvents: 'auto', // Re-enable clicks for nav items
+      } : { 
+        padding: '10px 12px', 
+        position: 'relative', 
+        zIndex: 3,
+        pointerEvents: 'auto', // Re-enable clicks for nav items
+      }}
     >
       <NavIcon size={16} strokeWidth={1.8} style={{ flexShrink: 0 }} />
       {!collapsed && <span className="sidebar-label" style={{ fontSize: 13 }}>{label}</span>}
@@ -134,14 +149,35 @@ export default function Sidebar({ portalType }) {
           ...activeStyle,
         }}
       >
+        {/* Clickable overlay for toggling - covers entire sidebar */}
+        <div
+          onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 1,
+            cursor: 'pointer',
+            // Subtle visual feedback on hover
+            transition: 'background-color 0.2s',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.02)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'transparent';
+          }}
+          title={sidebarCollapsed ? 'Click to expand sidebar' : 'Click to collapse sidebar'}
+          aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+        />
+
         {/* Brand */}
-        <div style={{ padding: '16px 12px 14px', borderBottom: '1px solid var(--sidebar-border)', flexShrink: 0 }}>
+        <div style={{ padding: '16px 12px 14px', borderBottom: '1px solid var(--sidebar-border)', flexShrink: 0, position: 'relative', zIndex: 2 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <div style={{ flexShrink: 0, lineHeight: 0 }}>
+            <div style={{ flexShrink: 0, lineHeight: 0, pointerEvents: 'none' }}>
               <SanVicenteLogo size={sidebarCollapsed ? 36 : 38} />
             </div>
             {!sidebarCollapsed && (
-              <div className="sidebar-label">
+              <div className="sidebar-label" style={{ flex: 1, minWidth: 0, pointerEvents: 'none' }}>
                 <p style={{ fontSize: 12.5, fontWeight: 700, color: '#fff', lineHeight: 1.2 }}>{portalLabel}</p>
                 <p style={{ fontSize: 10, color: 'rgba(255,255,255,.35)', marginTop: 1 }}>{portalSub}</p>
               </div>
@@ -151,7 +187,7 @@ export default function Sidebar({ portalType }) {
 
         {/* Nav section label */}
         {!sidebarCollapsed && (
-          <div style={{ padding: '16px 18px 6px' }}>
+          <div style={{ padding: '16px 18px 6px', position: 'relative', zIndex: 2, pointerEvents: 'none' }}>
             <p className="section-label" style={{ color: 'rgba(255,255,255,.22)' }}>{navSectionLabel}</p>
           </div>
         )}
@@ -160,7 +196,17 @@ export default function Sidebar({ portalType }) {
         <nav
           role="navigation"
           aria-label="Main navigation"
-          style={{ flex: 1, padding: '6px 8px 8px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 2 }}
+          style={{ 
+            flex: 1, 
+            padding: '6px 8px 8px', 
+            overflowY: 'auto', 
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: 2, 
+            position: 'relative', 
+            zIndex: 2,
+            pointerEvents: 'none', // Allow clicks to pass through empty areas
+          }}
         >
           {nav.map(({ to, label, icon: NavIcon }) => (
             <NavItem key={to} to={to} label={label} icon={NavIcon} collapsed={sidebarCollapsed} />
@@ -169,21 +215,27 @@ export default function Sidebar({ portalType }) {
 
         {/* New Report (admin only) */}
         {isAdmin && (
-          <div style={{ padding: '0 8px 12px', flexShrink: 0 }}>
+          <div style={{ padding: '0 8px 12px', flexShrink: 0, position: 'relative', zIndex: 2, pointerEvents: 'none' }}>
             {sidebarCollapsed ? (
               <button
-                onClick={() => navigate('/admin/tickets')}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate('/admin/tickets');
+                }}
                 title={t('newReport')}
                 className="btn btn-brand"
-                style={{ width: '100%', justifyContent: 'center', padding: '10px 0' }}
+                style={{ width: '100%', justifyContent: 'center', padding: '10px 0', position: 'relative', zIndex: 3, pointerEvents: 'auto' }}
               >
                 <Plus size={15} strokeWidth={2.5} />
               </button>
             ) : (
               <button
-                onClick={() => navigate('/admin/tickets')}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate('/admin/tickets');
+                }}
                 className="btn btn-brand"
-                style={{ width: '100%', justifyContent: 'center', padding: '10px 0', fontSize: 13 }}
+                style={{ width: '100%', justifyContent: 'center', padding: '10px 0', fontSize: 13, position: 'relative', zIndex: 3, pointerEvents: 'auto' }}
               >
                 <Plus size={15} strokeWidth={2.5} /> {t('newReport')}
               </button>
@@ -201,6 +253,9 @@ export default function Sidebar({ portalType }) {
           flexShrink: 0,
           justifyContent: sidebarCollapsed ? 'center' : 'flex-start',
           marginTop: 'auto',
+          position: 'relative',
+          zIndex: 2,
+          pointerEvents: 'none', // Allow clicks to pass through
         }}>
           <div style={{
             width: 32, height: 32, borderRadius: '50%',
@@ -219,25 +274,7 @@ export default function Sidebar({ portalType }) {
                 <p style={{ fontSize: 12, fontWeight: 600, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{displayName}</p>
                 <p style={{ fontSize: 10.5, color: 'rgba(255,255,255,.3)' }}>{roleLabel}</p>
               </div>
-              <button
-                onClick={() => setSidebarCollapsed(true)}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'rgba(255,255,255,.25)', flexShrink: 0 }}
-                title="Collapse sidebar"
-                aria-label="Collapse sidebar"
-              >
-                <ChevronLeft size={14} />
-              </button>
             </>
-          )}
-          {sidebarCollapsed && (
-            <button
-              onClick={() => setSidebarCollapsed(false)}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, color: 'rgba(255,255,255,.25)' }}
-              title="Expand sidebar"
-              aria-label="Expand sidebar"
-            >
-              <ChevronRight size={14} />
-            </button>
           )}
         </div>
       </aside>

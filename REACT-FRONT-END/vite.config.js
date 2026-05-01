@@ -65,9 +65,17 @@ export default defineConfig({
             if (id.includes('recharts') || id.includes('d3-') || id.includes('victory')) {
               return 'vendor-charts';
             }
-            // Map — Leaflet + react-leaflet
+            // Mapbox — heavy map library with GL rendering
+            if (id.includes('mapbox-gl') || id.includes('react-map-gl')) {
+              return 'vendor-mapbox';
+            }
+            // Geospatial utilities
+            if (id.includes('@turf/')) {
+              return 'vendor-geo';
+            }
+            // Map — Leaflet + react-leaflet (legacy, can be removed later)
             if (id.includes('leaflet') || id.includes('react-leaflet')) {
-              return 'vendor-map';
+              return 'vendor-leaflet';
             }
             // PDF generation — only loaded when user clicks Download
             if (id.includes('jspdf') || id.includes('jspdf-autotable')) {
@@ -117,7 +125,15 @@ export default defineConfig({
       'zustand',
       'lucide-react',
       'leaflet',
-      'react-leaflet',
+      'fast-deep-equal',
     ],
+  },
+
+  // Resolve configuration to fix module import issues
+  resolve: {
+    alias: {
+      // Fix for fast-deep-equal module resolution issue
+      'fast-deep-equal': 'fast-deep-equal/index.js',
+    },
   },
 });
