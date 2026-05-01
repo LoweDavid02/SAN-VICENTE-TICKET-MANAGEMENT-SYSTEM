@@ -221,6 +221,30 @@ body {
   color: #24292F !important;
 }
 
+/* ✅ EXCEPTION: Landing page hero section must keep white text on dark background */
+.light-mode #hero h1,
+.light-mode #hero h2,
+.light-mode #hero h3,
+.light-mode #hero p,
+.light-mode #hero span,
+.light-mode #hero div,
+.light-mode #hero button {
+  color: inherit !important;
+}
+
+/* ✅ Ensure hero text remains white/light colored */
+.light-mode #hero .font-display {
+  color: #fff !important;
+}
+
+.light-mode #hero [style*="color: #fff"],
+.light-mode #hero [style*="color: rgba(226,232,240"],
+.light-mode #hero [style*="color: rgba(148,163,184"],
+.light-mode #hero [style*="color: #22a83a"],
+.light-mode #hero [style*="color: #86efac"] {
+  color: inherit !important;
+}
+
 .light-mode .nav-item {
   color: #57606A !important;
 }
