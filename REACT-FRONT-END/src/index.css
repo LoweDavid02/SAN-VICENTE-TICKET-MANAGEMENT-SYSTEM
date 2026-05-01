@@ -201,7 +201,7 @@ body {
 
 /* ── Light Mode Specific Overrides for Modern Professional Look ─── */
 .light-mode body {
-  color: #24292F;
+  color: #24292F !important;
 }
 
 .light-mode h1,
@@ -210,26 +210,34 @@ body {
 .light-mode h4,
 .light-mode h5,
 .light-mode h6 {
-  color: #24292F;
+  color: #24292F !important;
+}
+
+.light-mode p,
+.light-mode span:not(.badge):not([class*="icon"]),
+.light-mode div:not([class*="badge"]):not([class*="icon"]),
+.light-mode label,
+.light-mode a {
+  color: #24292F !important;
 }
 
 .light-mode .nav-item {
-  color: #57606A;
+  color: #57606A !important;
 }
 
 .light-mode .nav-item:hover {
-  color: #24292F;
+  color: #24292F !important;
   background: #F6F8FA;
 }
 
 .light-mode .nav-item.active {
-  color: #7C3AED;
+  color: #7C3AED !important;
   background: rgba(124, 58, 237, 0.10);
   font-weight: 500;
 }
 
 .light-mode .section-label {
-  color: #6E7781;
+  color: #6E7781 !important;
   font-weight: 600;
 }
 
@@ -238,40 +246,40 @@ body {
 }
 
 .light-mode .badge-slate {
-  background: #F6F8FA;
-  color: #57606A;
+  background: #F6F8FA !important;
+  color: #57606A !important;
   border: 1px solid #E1E4E8;
 }
 
 .light-mode .badge-success,
 .light-mode .badge-green {
-  background: rgba(16, 185, 129, 0.10);
-  color: #059669;
+  background: rgba(16, 185, 129, 0.10) !important;
+  color: #059669 !important;
 }
 
 .light-mode .badge-warning,
 .light-mode .badge-amber {
-  background: rgba(245, 158, 11, 0.10);
-  color: #D97706;
+  background: rgba(245, 158, 11, 0.10) !important;
+  color: #D97706 !important;
 }
 
 .light-mode .badge-error,
 .light-mode .badge-red {
-  background: rgba(239, 68, 68, 0.10);
-  color: #DC2626;
+  background: rgba(239, 68, 68, 0.10) !important;
+  color: #DC2626 !important;
 }
 
 .light-mode .stat-value {
-  color: #24292F;
+  color: #24292F !important;
 }
 
 .light-mode .data-table th {
-  color: #24292F;
+  color: #24292F !important;
   background: #F6F8FA;
 }
 
 .light-mode .data-table td {
-  color: #57606A;
+  color: #57606A !important;
 }
 
 .light-mode .data-table tbody tr:hover {
@@ -279,16 +287,16 @@ body {
 }
 
 .light-mode .btn-ghost {
-  color: #57606A;
+  color: #57606A !important;
 }
 
 .light-mode .btn-ghost:hover {
-  color: #24292F;
+  color: #24292F !important;
   background: #F6F8FA;
 }
 
 .light-mode .btn-outline {
-  color: #24292F;
+  color: #24292F !important;
   border-color: #D1D5DB;
   background: transparent;
 }
@@ -299,20 +307,20 @@ body {
 }
 
 .light-mode .btn-brand {
-  background: #7C3AED;
-  color: #FFFFFF;
+  background: #7C3AED !important;
+  color: #FFFFFF !important;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
 .light-mode .btn-brand:hover {
-  background: #6D28D9;
+  background: #6D28D9 !important;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 .light-mode .input {
-  color: #24292F;
+  color: #24292F !important;
   border-color: #D1D5DB;
-  background: #FFFFFF;
+  background: #FFFFFF !important;
 }
 
 .light-mode .input:focus {
@@ -321,11 +329,11 @@ body {
 }
 
 .light-mode .input::placeholder {
-  color: #8B949E;
+  color: #8B949E !important;
 }
 
 .light-mode .card {
-  background: #FFFFFF;
+  background: #FFFFFF !important;
   border-color: #E1E4E8;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
@@ -335,13 +343,19 @@ body {
 }
 
 .light-mode .topbar {
-  background: #FFFFFF;
+  background: #FFFFFF !important;
   border-bottom-color: #E1E4E8;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
+.light-mode .topbar h1,
+.light-mode .topbar p,
+.light-mode .topbar span {
+  color: #24292F !important;
+}
+
 .light-mode .sidebar {
-  background: #FFFFFF;
+  background: #FFFFFF !important;
   border-right-color: #E1E4E8;
 }
 
@@ -350,9 +364,60 @@ body {
 }
 
 .light-mode .modal-box {
-  background: #FFFFFF;
+  background: #FFFFFF !important;
   border-color: #E1E4E8;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Additional overrides for specific text elements */
+.light-mode [style*="color: var(--text-1)"],
+.light-mode [style*="color: var(--text-2)"],
+.light-mode [style*="color: var(--text-3)"],
+.light-mode [style*="color: var(--text-4)"],
+.light-mode [style*="color: var(--txt)"],
+.light-mode [style*="color: var(--muted)"] {
+  color: #24292F !important;
+}
+
+/* Ensure all text in light mode is visible */
+.light-mode * {
+  color: inherit;
+}
+
+.light-mode button,
+.light-mode .btn {
+  color: #24292F;
+}
+
+.light-mode .btn-brand,
+.light-mode .btn-brand * {
+  color: #FFFFFF !important;
+}
+
+/* Mobile drawer */
+.light-mode .mobile-drawer {
+  background: #FFFFFF !important;
+}
+
+.light-mode .mobile-drawer__action {
+  color: #57606A !important;
+}
+
+.light-mode .mobile-drawer__action:hover {
+  color: #24292F !important;
+  background: #F6F8FA;
+}
+
+/* Notification dropdown */
+.light-mode .notif-dropdown {
+  background: #FFFFFF !important;
+  border-color: #E1E4E8;
+}
+
+/* User dropdown */
+.light-mode [class*="dropdown"] {
+  background: #FFFFFF !important;
+  color: #24292F !important;
 }
 
 /* ── Scrollbar ───────────────────────────────────────────── */
