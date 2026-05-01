@@ -112,43 +112,44 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   LIGHT MODE THEME - MAXIMUM VISIBILITY
+   LIGHT MODE THEME - MODERN & PROFESSIONAL
+   Inspired by: GitHub, Linear, Notion, Stripe
    ═══════════════════════════════════════════════════════════════════════════ */
 .light-mode {
   /* ── Core Backgrounds ──────────────────────────────────────────────────── */
-  --bg:        #F5F5F5;   /* page background - light gray */
+  --bg:        #FAFBFC;   /* page background - soft off-white */
   --surface:   #FFFFFF;   /* cards, panels, sidebars - pure white */
-  --raised:    #FAFAFA;   /* elevated elements, hover states */
+  --raised:    #F6F8FA;   /* elevated elements, hover states */
   
   /* ── Borders ───────────────────────────────────────────────────────────── */
-  --border:    #D0D0D0;   /* default border - darker for visibility */
-  --border2:   #A0A0A0;   /* stronger border, focus - much darker */
+  --border:    #E1E4E8;   /* default border - soft gray */
+  --border2:   #D1D5DB;   /* stronger border, focus */
   
-  /* ── Text - MAXIMUM CONTRAST ───────────────────────────────────────────── */
-  --txt:       #000000;   /* primary text - pure black for maximum visibility */
-  --muted:     #333333;   /* secondary text, labels - very dark gray */
-  --dim:       #666666;   /* placeholder, disabled - medium dark gray */
+  /* ── Text - MODERN PROFESSIONAL PALETTE ────────────────────────────────── */
+  --txt:       #24292F;   /* primary text - soft black (GitHub style) */
+  --muted:     #57606A;   /* secondary text, labels - medium gray */
+  --dim:       #8B949E;   /* placeholder, disabled - light gray */
   
   /* ── Accent (Single Brand Color) ───────────────────────────────────────── */
-  --accent:    #6B5CE6;   /* purple-indigo accent - slightly darker */
-  --accent-bg: rgba(107, 92, 230, 0.15); /* accent fill - more visible */
-  --accent2:   #5A4BD5;   /* darker accent for hover */
+  --accent:    #7C3AED;   /* vibrant purple (modern) */
+  --accent-bg: rgba(124, 58, 237, 0.10); /* accent fill */
+  --accent2:   #6D28D9;   /* darker accent for hover */
   
-  /* ── Semantic Colors - DARKER FOR VISIBILITY ───────────────────────────── */
-  --green:     #047857;   /* success - darker green */
-  --amber:     #B45309;   /* warning - darker amber */
-  --red:       #B91C1C;   /* error - darker red */
+  /* ── Semantic Colors - MODERN PALETTE ──────────────────────────────────── */
+  --green:     #10B981;   /* success - emerald green */
+  --amber:     #F59E0B;   /* warning - warm amber */
+  --red:       #EF4444;   /* error - coral red */
   
   /* ── Surface Variants ──────────────────────────────────────────────────── */
-  --surface-2:     #FAFAFA;
-  --surface-3:     #F0F0F0;
-  --surface-4:     #E5E5E5;
+  --surface-2:     #F6F8FA;
+  --surface-3:     #EFF1F3;
+  --surface-4:     #E8EAED;
   
-  /* ── Text Variants - ALL DARKER ────────────────────────────────────────── */
-  --text-1:        #000000;   /* pure black */
-  --text-2:        #1A1A1A;   /* almost black */
-  --text-3:        #333333;   /* very dark gray */
-  --text-4:        #666666;   /* medium dark gray */
+  /* ── Text Variants ─────────────────────────────────────────────────────── */
+  --text-1:        #24292F;   /* primary - soft black */
+  --text-2:        #57606A;   /* secondary - medium gray */
+  --text-3:        #6E7781;   /* tertiary - lighter gray */
+  --text-4:        #8B949E;   /* quaternary - muted gray */
   
   /* ── Legacy Compatibility (mapped to new system) ───────────────────────── */
   --brand:          var(--accent);
@@ -162,17 +163,17 @@
   --sidebar-active: var(--accent-bg);
   
   /* ── Tailwind Color Compatibility - LIGHT MODE ─────────────────────────── */
-  --color-navy-900: #1A1A1A;
+  --color-navy-900: #24292F;
   --color-teal-500: var(--accent);
   --color-teal-600: var(--accent2);
-  --color-slate-400: #666666;
-  --color-slate-500: #555555;
-  --color-slate-600: #444444;
-  --color-slate-700: #333333;
-  --color-slate-800: #222222;
-  --color-slate-900: #1A1A1A;
+  --color-slate-400: #8B949E;
+  --color-slate-500: #6E7781;
+  --color-slate-600: #57606A;
+  --color-slate-700: #424A53;
+  --color-slate-800: #32383F;
+  --color-slate-900: #24292F;
   --color-red-500: var(--red);
-  --color-red-600: #991B1B;
+  --color-red-600: #DC2626;
   --color-amber-500: var(--amber);
   --color-emerald-500: var(--green);
   --color-blue-500: var(--accent);
@@ -198,9 +199,9 @@ body {
 }
 #root { min-height:100vh }
 
-/* ── Light Mode Specific Overrides for Maximum Visibility ─── */
+/* ── Light Mode Specific Overrides for Modern Professional Look ─── */
 .light-mode body {
-  color: #000000;
+  color: #24292F;
 }
 
 .light-mode h1,
@@ -209,75 +210,149 @@ body {
 .light-mode h4,
 .light-mode h5,
 .light-mode h6 {
-  color: #000000 !important;
-}
-
-.light-mode p,
-.light-mode span,
-.light-mode div,
-.light-mode label,
-.light-mode a {
-  color: inherit;
+  color: #24292F;
 }
 
 .light-mode .nav-item {
-  color: #333333;
+  color: #57606A;
 }
 
 .light-mode .nav-item:hover {
-  color: #000000;
+  color: #24292F;
+  background: #F6F8FA;
 }
 
 .light-mode .nav-item.active {
-  color: #6B5CE6;
-  font-weight: 600;
+  color: #7C3AED;
+  background: rgba(124, 58, 237, 0.10);
+  font-weight: 500;
 }
 
 .light-mode .section-label {
-  color: #666666;
-}
-
-.light-mode .badge {
+  color: #6E7781;
   font-weight: 600;
 }
 
+.light-mode .badge {
+  font-weight: 500;
+}
+
 .light-mode .badge-slate {
-  background: #E5E5E5;
-  color: #333333;
+  background: #F6F8FA;
+  color: #57606A;
+  border: 1px solid #E1E4E8;
+}
+
+.light-mode .badge-success,
+.light-mode .badge-green {
+  background: rgba(16, 185, 129, 0.10);
+  color: #059669;
+}
+
+.light-mode .badge-warning,
+.light-mode .badge-amber {
+  background: rgba(245, 158, 11, 0.10);
+  color: #D97706;
+}
+
+.light-mode .badge-error,
+.light-mode .badge-red {
+  background: rgba(239, 68, 68, 0.10);
+  color: #DC2626;
 }
 
 .light-mode .stat-value {
-  color: #000000;
+  color: #24292F;
 }
 
 .light-mode .data-table th {
-  color: #000000;
+  color: #24292F;
+  background: #F6F8FA;
 }
 
 .light-mode .data-table td {
-  color: #1A1A1A;
+  color: #57606A;
+}
+
+.light-mode .data-table tbody tr:hover {
+  background: #F6F8FA;
 }
 
 .light-mode .btn-ghost {
-  color: #333333;
+  color: #57606A;
 }
 
 .light-mode .btn-ghost:hover {
-  color: #000000;
+  color: #24292F;
+  background: #F6F8FA;
 }
 
 .light-mode .btn-outline {
-  color: #000000;
-  border-color: #A0A0A0;
+  color: #24292F;
+  border-color: #D1D5DB;
+  background: transparent;
+}
+
+.light-mode .btn-outline:hover {
+  background: #F6F8FA;
+  border-color: #9CA3AF;
+}
+
+.light-mode .btn-brand {
+  background: #7C3AED;
+  color: #FFFFFF;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.light-mode .btn-brand:hover {
+  background: #6D28D9;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 .light-mode .input {
-  color: #000000;
-  border-color: #D0D0D0;
+  color: #24292F;
+  border-color: #D1D5DB;
+  background: #FFFFFF;
+}
+
+.light-mode .input:focus {
+  border-color: #7C3AED;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.10);
 }
 
 .light-mode .input::placeholder {
-  color: #666666;
+  color: #8B949E;
+}
+
+.light-mode .card {
+  background: #FFFFFF;
+  border-color: #E1E4E8;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.light-mode .card:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.light-mode .topbar {
+  background: #FFFFFF;
+  border-bottom-color: #E1E4E8;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.light-mode .sidebar {
+  background: #FFFFFF;
+  border-right-color: #E1E4E8;
+}
+
+.light-mode .modal-backdrop {
+  background: rgba(17, 24, 39, 0.5);
+}
+
+.light-mode .modal-box {
+  background: #FFFFFF;
+  border-color: #E1E4E8;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 /* ── Scrollbar ───────────────────────────────────────────── */
