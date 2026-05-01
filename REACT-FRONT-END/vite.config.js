@@ -7,25 +7,66 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      strategies: 'injectManifest',
-      srcDir: 'src',
-      filename: 'sw.js',
       registerType: 'autoUpdate',
-      injectRegister: false,
-      manifest: false, // Using public/manifest.json
-      devOptions: {
-        enabled: true,
-        type: 'module',
-      },
-      injectManifest: {
-        injectionPoint: undefined,
-        rollupFormat: 'iife',
+      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
+      manifest: {
+        name: 'San Vicente Barangay System',
+        short_name: 'San Vicente',
+        description: 'Barangay San Vicente Ticket Management System',
+        theme_color: '#7B6CF6',
+        background_color: '#0D0D10',
+        display: 'standalone',
+        scope: '/',
+        start_url: '/',
+        icons: [
+          {
+            src: '/pwa-64x64.png',
+            sizes: '64x64',
+            type: 'image/png'
+          },
+          {
+            src: '/pwa-192x192.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
+            src: '/pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: '/maskable-icon-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable'
+          }
+        ]
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp,woff,woff2}'],
-        maximumFileSizeToCacheInBytes: 3 * 1024 * 1024, // 3MB
+        maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
         cleanupOutdatedCaches: true,
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-fonts-cache',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
+          }
+        ]
       },
+      devOptions: {
+        enabled: false // Disable PWA in development to avoid conflicts
+      }
     }),
   ],
 
@@ -65,15 +106,11 @@ export default defineConfig({
             if (id.includes('recharts') || id.includes('d3-') || id.includes('victory')) {
               return 'vendor-charts';
             }
-            // Mapbox — heavy map library with GL rendering
-            if (id.includes('mapbox-gl') || id.includes('react-map-gl')) {
-              return 'vendor-mapbox';
-            }
             // Geospatial utilities
             if (id.includes('@turf/')) {
               return 'vendor-geo';
             }
-            // Map — Leaflet + react-leaflet (legacy, can be removed later)
+            // Map — Leaflet + react-leaflet
             if (id.includes('leaflet') || id.includes('react-leaflet')) {
               return 'vendor-leaflet';
             }
@@ -85,15 +122,18 @@ export default defineConfig({
             if (id.includes('framer-motion') || id.includes('motion-')) {
               return 'vendor-motion';
             }
-            // React core
-            if (id.includes('react-dom') || id.includes('react/')) {
+            // ✅ React core + shim + router must all be in the same chunk
+            // so use-sync-external-store-shim always finds React initialized
+            if (
+              id.includes('react-dom') ||
+              id.includes('react/') ||
+              id.includes('react-router') ||
+              id.includes('use-sync-external-store') ||
+              id.includes('scheduler')
+            ) {
               return 'vendor-react';
             }
-            // Router
-            if (id.includes('react-router')) {
-              return 'vendor-router';
-            }
-            // Data fetching
+            // Data fetching + state
             if (id.includes('@tanstack') || id.includes('axios') || id.includes('zustand')) {
               return 'vendor-query';
             }
@@ -135,5 +175,7 @@ export default defineConfig({
       // Fix for fast-deep-equal module resolution issue
       'fast-deep-equal': 'fast-deep-equal/index.js',
     },
+    // ✅ Force a single copy of React and the shim across all chunks
+    dedupe: ['react', 'react-dom', 'use-sync-external-store'],
   },
 });

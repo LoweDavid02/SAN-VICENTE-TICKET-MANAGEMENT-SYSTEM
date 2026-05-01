@@ -1,130 +1,20 @@
 {
-  "name": "Barangay San Vicente - Complaint Management System",
-  "short_name": "BSV CMS",
-  "description": "Progressive Web App for managing barangay complaints, tickets, and service requests in San Vicente, Apalit, Pampanga",
+  "name": "Barangay San Vicente - Ticket Management System",
+  "short_name": "San Vicente",
+  "description": "Progressive Web App for managing barangay tickets and service requests in San Vicente, Apalit, Pampanga",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "display_override": ["window-controls-overlay", "standalone"],
-  "theme_color": "#14b8a6",
-  "background_color": "#0f172a",
+  "theme_color": "#7B6CF6",
+  "background_color": "#0D0D10",
   "orientation": "any",
   "categories": ["government", "productivity", "utilities"],
   "icons": [
     {
-      "src": "/icons/icon-72.png",
-      "sizes": "72x72",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-96.png",
-      "sizes": "96x96",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-128.png",
-      "sizes": "128x128",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-144.png",
-      "sizes": "144x144",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-152.png",
-      "sizes": "152x152",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-192-maskable.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "/icons/icon-384.png",
-      "sizes": "384x384",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-512-maskable.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
-  ],
-  "screenshots": [
-    {
-      "src": "/screenshots/desktop-dashboard.png",
-      "sizes": "1920x1080",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "Dashboard with live complaint map"
-    },
-    {
-      "src": "/screenshots/mobile-tickets.png",
-      "sizes": "390x844",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Ticket management on mobile"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Dashboard",
-      "short_name": "Dashboard",
-      "description": "View dashboard and analytics",
-      "url": "/admin/dashboard",
-      "icons": [{ "src": "/icons/shortcut-dashboard.png", "sizes": "96x96" }]
-    },
-    {
-      "name": "New Ticket",
-      "short_name": "New Ticket",
-      "description": "Submit a new complaint",
-      "url": "/resident/submit",
-      "icons": [{ "src": "/icons/shortcut-new.png", "sizes": "96x96" }]
-    },
-    {
-      "name": "My Tickets",
-      "short_name": "Tickets",
-      "description": "View my submitted tickets",
-      "url": "/resident/tickets",
-      "icons": [{ "src": "/icons/shortcut-tickets.png", "sizes": "96x96" }]
-    }
-  ],
-  "share_target": {
-    "action": "/share",
-    "method": "POST",
-    "enctype": "multipart/form-data",
-    "params": {
-      "title": "title",
-      "text": "text",
-      "url": "url",
-      "files": [
-        {
-          "name": "media",
-          "accept": ["image/*", "video/*"]
-        }
-      ]
-    }
-  }
+  ]
 }
