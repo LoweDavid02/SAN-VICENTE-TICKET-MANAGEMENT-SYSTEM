@@ -20,10 +20,10 @@ const FEATURES = [
 ];
 
 const STATS = [
-  { value:'12,000+', label:'Residents Served', icon:'👥' },
-  { value:'14.2h',   label:'Avg Resolution',   icon:'⚡' },
-  { value:'98%',     label:'Satisfaction Rate', icon:'⭐' },
-  { value:'24/7',    label:'System Available',  icon:'🔄' },
+  { value:'1,284', label:'Tickets Resolved' },
+  { value:'14.2h', label:'Avg Resolution'   },
+  { value:'98%',   label:'System Uptime'    },
+  { value:'86',    label:'Active Personnel' },
 ];
 
 export default function Landing() {
@@ -128,16 +128,16 @@ export default function Landing() {
         <div style={{ position:'relative', zIndex:10, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:'120px 24px 80px', textAlign:'center', maxWidth:960, margin:'0 auto' }}>
 
           <h1 className="font-display" style={{ fontSize:'clamp(2.4rem,6vw,4.2rem)', fontWeight:700, color:'#fff', lineHeight:1.1, marginBottom:16, textShadow:'0 2px 20px rgba(0,0,0,.4)', animation:'heroFadeUp .7s ease-out both' }}>
-            Responsive 311 CRM Software for Government
+            Serving Our Community
           </h1>
 
           <p style={{ fontSize:'clamp(1rem,2.2vw,1.2rem)', color:'rgba(226,232,240,.9)', lineHeight:1.6, marginBottom:12, textShadow:'0 1px 8px rgba(0,0,0,.3)', animation:'heroFadeUp .7s ease-out .1s both' }}>
             Barangay San Vicente, Apalit, Pampanga
           </p>
 
-          <p style={{ fontSize:'clamp(.9rem,1.8vw,1.05rem)', color:'rgba(148,163,184,.8)', lineHeight:1.7, maxWidth:640, margin:'0 auto 40px', animation:'heroFadeUp .7s ease-out .2s both' }}>
-            A one-stop government CRM solution to receive, track, and respond to resident service requests. 
-            Connecting residents, field personnel, and administrators for transparent community service.
+          <p style={{ fontSize:'clamp(.9rem,1.8vw,1.05rem)', color:'rgba(148,163,184,.8)', lineHeight:1.7, maxWidth:540, margin:'0 auto 40px', animation:'heroFadeUp .7s ease-out .2s both' }}>
+            A unified platform connecting residents, field personnel, and administrators
+            for real-time incident tracking and transparent community service.
           </p>
 
           {/* CTA buttons */}
@@ -160,11 +160,10 @@ export default function Landing() {
             </button>
           </div>
 
-          {/* Stats strip with icons */}
+          {/* Stats strip */}
           <div className="land-stats-grid" style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:0, borderRadius:16, overflow:'hidden', border:'1px solid rgba(255,255,255,.12)', maxWidth:700, margin:'0 auto', background:'rgba(0,0,0,.35)', backdropFilter:'blur(16px)', animation:'heroFadeUp .7s ease-out .4s both' }}>
             {STATS.map((s, i) => (
               <div key={s.label} style={{ padding:'18px 12px', borderRight:i < 3 ? '1px solid rgba(255,255,255,.08)' : 'none', textAlign:'center' }}>
-                <div style={{ fontSize:'1.5rem', marginBottom:4 }}>{s.icon}</div>
                 <p className="font-display" style={{ fontSize:'1.5rem', fontWeight:700, color:'#22a83a', lineHeight:1, marginBottom:4 }}>{s.value}</p>
                 <p style={{ fontSize:10, color:'rgba(148,163,184,.75)', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.07em', lineHeight:1.3 }}>{s.label}</p>
               </div>
