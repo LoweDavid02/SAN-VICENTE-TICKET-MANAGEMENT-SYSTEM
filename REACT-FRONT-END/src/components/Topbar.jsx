@@ -104,15 +104,15 @@ export default function Topbar({ sidebarWidth }) {
       </button>
 
       {/* Notifications */}
-      <div style={{ position: 'relative' }} ref={notifRef}>
-        <button onClick={() => { setNotifOpen((s) => !s); setUserOpen(false); }} className="btn btn-ghost" style={{ width: 36, height: 36, padding: 0, justifyContent: 'center', borderRadius: 'var(--radius)', position: 'relative' }}>
+      <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }} ref={notifRef}>
+        <button onClick={() => { setNotifOpen((s) => !s); setUserOpen(false); }} className="btn btn-ghost" style={{ width: 36, height: 36, padding: 0, justifyContent: 'center', borderRadius: 'var(--radius)', position: 'relative' }} aria-label="Notifications">
           <Bell size={15} />
           {unreadCount > 0 && <span style={{ position: 'absolute', top: 7, right: 7, width: 8, height: 8, borderRadius: '50%', background: '#ef4444', border: '2px solid var(--surface)' }} />}
         </button>
 
         {notifOpen && (
           <div className="notif-dropdown">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 16px', borderBottom: '1px solid var(--border)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 16px', borderBottom: '1px solid var(--border)', position: 'sticky', top: 0, background: 'var(--surface)', zIndex: 10 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-1)' }}>{t('notifications')}</span>
                 {unreadCount > 0 && <span className="badge badge-red">{unreadCount} new</span>}
@@ -122,38 +122,40 @@ export default function Topbar({ sidebarWidth }) {
                 <button onClick={() => setNotifOpen(false)} className="btn btn-ghost" style={{ width: 28, height: 28, padding: 0, justifyContent: 'center' }}><X size={13} /></button>
               </div>
             </div>
-            {notifications.map((n) => {
-              const cfg  = NOTIF_ICON[n.type] || NOTIF_ICON.info;
-              const Icon = cfg.icon;
-              return (
-                <div
-                  key={n.id}
-                  onClick={() => {
-                    markRead(n.id);
-                    if (n.link) {
-                      setNotifOpen(false);
-                      navigate(n.link);
-                    }
-                  }}
-                  style={{ display: 'flex', gap: 12, padding: '13px 16px', borderBottom: '1px solid var(--border)', background: n.read ? 'transparent' : 'var(--surface-2)', cursor: n.link ? 'pointer' : 'default', transition: 'background .12s' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-3)'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = n.read ? 'transparent' : 'var(--surface-2)'; }}
-                >
-                  <div style={{ width: 34, height: 34, borderRadius: 8, background: cfg.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <Icon size={15} color={cfg.color} />
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8 }}>
-                      <p style={{ fontSize: 13, fontWeight: n.read ? 500 : 600, color: 'var(--text-1)', lineHeight: 1.4 }}>{n.title}</p>
-                      {!n.read && <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--brand)', flexShrink: 0, marginTop: 4 }} />}
+            <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
+              {notifications.map((n) => {
+                const cfg  = NOTIF_ICON[n.type] || NOTIF_ICON.info;
+                const Icon = cfg.icon;
+                return (
+                  <div
+                    key={n.id}
+                    onClick={() => {
+                      markRead(n.id);
+                      if (n.link) {
+                        setNotifOpen(false);
+                        navigate(n.link);
+                      }
+                    }}
+                    style={{ display: 'flex', gap: 12, padding: '13px 16px', borderBottom: '1px solid var(--border)', background: n.read ? 'transparent' : 'var(--surface-2)', cursor: n.link ? 'pointer' : 'default', transition: 'background .12s' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-3)'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = n.read ? 'transparent' : 'var(--surface-2)'; }}
+                  >
+                    <div style={{ width: 34, height: 34, borderRadius: 8, background: cfg.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <Icon size={15} color={cfg.color} />
                     </div>
-                    <p style={{ fontSize: 12, color: 'var(--text-4)', marginTop: 2 }}>{n.body}</p>
-                    <p style={{ fontSize: 11, color: 'var(--text-4)', marginTop: 3 }}>{n.time}</p>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8 }}>
+                        <p style={{ fontSize: 13, fontWeight: n.read ? 500 : 600, color: 'var(--text-1)', lineHeight: 1.4 }}>{n.title}</p>
+                        {!n.read && <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--brand)', flexShrink: 0, marginTop: 4 }} />}
+                      </div>
+                      <p style={{ fontSize: 12, color: 'var(--text-4)', marginTop: 2 }}>{n.body}</p>
+                      <p style={{ fontSize: 11, color: 'var(--text-4)', marginTop: 3 }}>{n.time}</p>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-            <div style={{ padding: '10px 16px', textAlign: 'center' }}>
+                );
+              })}
+            </div>
+            <div style={{ padding: '10px 16px', textAlign: 'center', borderTop: '1px solid var(--border)', position: 'sticky', bottom: 0, background: 'var(--surface)', zIndex: 10 }}>
               <span
                 onClick={() => {
                   setNotifOpen(false);

@@ -721,12 +721,35 @@ body {
   top: calc(100% + 8px); 
   right: 0;
   width: 360px;
+  max-height: 480px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   z-index: 50;
   animation: slideDown .2s ease-out;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  /* Prevent layout shift */
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.notif-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.notif-dropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.notif-dropdown::-webkit-scrollbar-thumb {
+  background: var(--border2);
+  border-radius: 99px;
+}
+
+.notif-dropdown::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
 }
 
 /* ── Empty states ────────────────────────────────────────── */
