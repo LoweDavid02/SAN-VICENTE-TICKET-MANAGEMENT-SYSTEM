@@ -24,29 +24,46 @@ console.log('[App] Environment:', {
 
 // Register Service Worker (only in production)
 if ('serviceWorker' in navigator && import.meta.env.PROD) {
+  // Flag to prevent multiple update prompts
+  let updatePromptShown = false;
+  
   window.addEventListener('load', () => {
     navigator.serviceWorker
       .register('/sw.js', { type: 'module' })
       .then((registration) => {
         console.log('[PWA] Service Worker registered:', registration.scope);
 
-        // Check for updates every 60 seconds
+        // ✅ Check for updates every 1 hour (not 60 seconds!)
+        // This prevents aggressive update checks that cause infinite loops
         setInterval(() => {
           registration.update();
-        }, 60000);
+        }, 60 * 60 * 1000); // 1 hour
 
         // Listen for new SW waiting
         registration.addEventListener('updatefound', () => {
           const newWorker = registration.installing;
           newWorker?.addEventListener('statechange', () => {
             if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              // New SW is waiting, notify user
-              const shouldUpdate = confirm(
-                'A new version is available! Click OK to update.'
-              );
-              if (shouldUpdate) {
-                newWorker.postMessage({ type: 'SKIP_WAITING' });
-                window.location.reload();
+              // ✅ Only show update prompt once per session
+              if (!updatePromptShown) {
+                updatePromptShown = true;
+                
+                // ✅ Auto-update silently after 3 seconds (better UX)
+                // User can continue working, update happens in background
+                console.log('[PWA] New version available, updating in 3 seconds...');
+                
+                setTimeout(() => {
+                  newWorker.postMessage({ type: 'SKIP_WAITING' });
+                  
+                  // ✅ Listen for controlling SW change, then reload
+                  navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    // Only reload if this is a real update, not initial load
+                    if (navigator.serviceWorker.controller) {
+                      console.log('[PWA] New version activated, reloading...');
+                      window.location.reload();
+                    }
+                  });
+                }, 3000);
               }
             }
           });
