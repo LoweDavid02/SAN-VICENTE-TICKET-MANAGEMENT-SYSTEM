@@ -112,6 +112,46 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT MODE THEME
+   ═══════════════════════════════════════════════════════════════════════════ */
+.light-mode {
+  /* ── Core Backgrounds ──────────────────────────────────────────────────── */
+  --bg:        #FFFFFF;   /* page background */
+  --surface:   #F8FAFC;   /* cards, panels, sidebars */
+  --raised:    #F1F5F9;   /* elevated elements, hover states */
+  
+  /* ── Borders ───────────────────────────────────────────────────────────── */
+  --border:    #E2E8F0;   /* default border */
+  --border2:   #CBD5E1;   /* stronger border, focus */
+  
+  /* ── Text ──────────────────────────────────────────────────────────────── */
+  --txt:       #0F172A;   /* primary text */
+  --muted:     #64748B;   /* secondary text, labels */
+  --dim:       #94A3B8;   /* placeholder, disabled */
+  
+  /* ── Accent (Single Brand Color) ───────────────────────────────────────── */
+  --accent:    #7B6CF6;   /* purple-indigo accent */
+  --accent-bg: rgba(123, 108, 246, 0.10); /* accent fill for active items */
+  --accent2:   #6B5CE6;   /* darker accent for hover */
+  
+  /* ── Semantic Colors ───────────────────────────────────────────────────── */
+  --green:     #059669;   /* success */
+  --amber:     #D97706;   /* warning */
+  --red:       #DC2626;   /* error */
+  
+  /* ── Surface Variants ──────────────────────────────────────────────────── */
+  --surface-2:     #FFFFFF;
+  --surface-3:     #F1F5F9;
+  --surface-4:     #E8EDF2;
+  
+  /* ── Text Variants ─────────────────────────────────────────────────────── */
+  --text-1:        #0F172A;
+  --text-2:        #334155;
+  --text-3:        #64748B;
+  --text-4:        #94A3B8;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    BASE STYLES — Agent-Native Minimalist
    ═══════════════════════════════════════════════════════════════════════════ */
 

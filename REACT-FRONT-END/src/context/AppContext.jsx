@@ -6,7 +6,7 @@
  * status updates from Personnel propagate here and appear in all topbars.
  */
 
-import { createContext, useContext, useState, useCallback, useMemo } from 'react';
+import { createContext, useContext, useState, useCallback, useMemo, useEffect } from 'react';
 import { TicketProvider } from '../store/TicketStore';
 import useAuthStore from '../stores/authStore';
 
@@ -21,9 +21,13 @@ const INITIAL_NOTIFICATIONS = [
 ];
 
 export function AppProvider({ children }) {
+  // Initialize dark mode from localStorage, default to true (dark mode)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
-  const [darkMode,         setDarkMode]         = useState(false);
+  const [darkMode,         setDarkModeState]    = useState(() => {
+    const saved = localStorage.getItem('theme');
+    return saved ? saved === 'dark' : true; // default to dark mode
+  });
   const [notifications,    setNotifications]    = useState(INITIAL_NOTIFICATIONS);
   const [modal,            setModal]            = useState(null);
 
@@ -32,6 +36,23 @@ export function AppProvider({ children }) {
    * The auth store persists to localStorage so it survives page refresh.
    */
   const { user, logout } = useAuthStore();
+
+  // Apply theme class to document root and persist to localStorage
+  useEffect(() => {
+    const root = document.documentElement;
+    if (darkMode) {
+      root.classList.remove('light-mode');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      root.classList.add('light-mode');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [darkMode]);
+
+  // Wrapper function to update dark mode state
+  const setDarkMode = useCallback((value) => {
+    setDarkModeState(typeof value === 'function' ? value : () => value);
+  }, []);
 
   const unreadCount = notifications.filter((n) => !n.read).length;
 
