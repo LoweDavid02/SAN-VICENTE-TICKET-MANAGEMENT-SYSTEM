@@ -126,9 +126,10 @@ const bgSyncPlugin = new BackgroundSyncPlugin('api-mutations-queue', {
     while ((entry = await queue.shiftRequest())) {
       try {
         await fetch(entry.request.clone());
-        console.log('[SW] Replayed queued request:', entry.request.url);
       } catch (error) {
-        console.error('[SW] Replay failed:', entry.request.url, error);
+        if (import.meta.env.DEV) {
+          console.error('[SW] Replay failed:', entry.request.url, error);
+        }
         await queue.unshiftRequest(entry);
         throw error;
       }
@@ -207,11 +208,9 @@ self.addEventListener('message', (event) => {
 
 // ── Activation ─────────────────────────────────────────────────────────────
 self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    clients.claim().then(() => {
-      console.log(`[SW ${SW_VERSION}] Activated and claimed all clients`);
-    })
-  );
+  event.waitUntil(clients.claim());
 });
 
-console.log(`[SW ${SW_VERSION}] Loaded`);
+if (import.meta.env.DEV) {
+  console.log(`[SW ${SW_VERSION}] Loaded`);
+}

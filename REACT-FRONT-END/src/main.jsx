@@ -7,18 +7,15 @@ import App from './App.jsx';
 
 // Global error handler for debugging white screen issues
 window.addEventListener('error', (event) => {
-  console.error('[Global Error]', event.error);
+  if (import.meta.env.DEV) {
+    console.error('[Global Error]', event.error);
+  }
 });
 
 window.addEventListener('unhandledrejection', (event) => {
-  console.error('[Unhandled Promise Rejection]', event.reason);
-});
-
-// Log environment info for debugging
-console.log('[App] Environment:', {
-  mode: import.meta.env.MODE,
-  apiUrl: import.meta.env.VITE_API_URL,
-  base: import.meta.env.BASE_URL,
+  if (import.meta.env.DEV) {
+    console.error('[Unhandled Promise Rejection]', event.reason);
+  }
 });
 
 // ✅ FIXED: Disable PWA service worker to prevent infinite update loop
@@ -28,7 +25,6 @@ if ('serviceWorker' in navigator && import.meta.env.PROD) {
   navigator.serviceWorker.getRegistrations().then((registrations) => {
     registrations.forEach((registration) => {
       registration.unregister();
-      console.log('[PWA] Service Worker unregistered to fix update loop');
     });
   });
 }
@@ -47,9 +43,10 @@ try {
       </QueryClientProvider>
     </StrictMode>,
   );
-  console.log('[App] React app mounted successfully');
 } catch (error) {
-  console.error('[App] Failed to mount React app:', error);
+  if (import.meta.env.DEV) {
+    console.error('[App] Failed to mount React app:', error);
+  }
   rootElement.innerHTML = `
     <div style="padding: 20px; font-family: system-ui; max-width: 600px; margin: 50px auto;">
       <h1 style="color: #dc2626;">Application Error</h1>

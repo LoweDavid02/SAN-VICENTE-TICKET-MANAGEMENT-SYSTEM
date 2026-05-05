@@ -84,7 +84,9 @@ class SyncManager {
 
     const token = localStorage.getItem('auth_token');
     if (!token) {
-      console.warn('[SyncManager] No auth token, skipping WebSocket connection');
+      if (import.meta.env.DEV) {
+        console.warn('[SyncManager] No auth token, skipping WebSocket connection');
+      }
       return;
     }
 
@@ -95,7 +97,9 @@ class SyncManager {
       this.ws = new WebSocket(url);
 
       this.ws.onopen = () => {
-        console.log('[SyncManager] WebSocket connected');
+        if (import.meta.env.DEV) {
+          console.log('[SyncManager] WebSocket connected');
+        }
         this.reconnectAttempts = 0;
         this.startPing();
         this.notify();
@@ -107,18 +111,24 @@ class SyncManager {
       };
 
       this.ws.onerror = (error) => {
-        console.error('[SyncManager] WebSocket error:', error);
+        if (import.meta.env.DEV) {
+          console.error('[SyncManager] WebSocket error:', error);
+        }
         this.notify();
       };
 
       this.ws.onclose = () => {
-        console.log('[SyncManager] WebSocket closed');
+        if (import.meta.env.DEV) {
+          console.log('[SyncManager] WebSocket closed');
+        }
         this.stopPing();
         this.scheduleReconnect();
         this.notify();
       };
     } catch (error) {
-      console.error('[SyncManager] Failed to create WebSocket:', error);
+      if (import.meta.env.DEV) {
+        console.error('[SyncManager] Failed to create WebSocket:', error);
+      }
       this.scheduleReconnect();
     }
   }
@@ -149,7 +159,9 @@ class SyncManager {
       this.maxReconnectDelay
     );
 
-    console.log(`[SyncManager] Reconnecting in ${delay}ms (attempt ${this.reconnectAttempts + 1})`);
+    if (import.meta.env.DEV) {
+      console.log(`[SyncManager] Reconnecting in ${delay}ms (attempt ${this.reconnectAttempts + 1})`);
+    }
 
     this.reconnectTimer = setTimeout(() => {
       this.reconnectTimer = null;
@@ -202,12 +214,16 @@ class SyncManager {
         break;
 
       case 'auth_error':
-        console.error('[SyncManager] Auth error, disconnecting');
+        if (import.meta.env.DEV) {
+          console.error('[SyncManager] Auth error, disconnecting');
+        }
         this.disconnect();
         break;
 
       default:
-        console.warn('[SyncManager] Unknown message type:', type);
+        if (import.meta.env.DEV) {
+          console.warn('[SyncManager] Unknown message type:', type);
+        }
     }
   }
 
@@ -215,7 +231,9 @@ class SyncManager {
    * Handle bulk sync on initial connection
    */
   async handleBulkSync(entities) {
-    console.log(`[SyncManager] Bulk sync: ${entities.length} entities`);
+    if (import.meta.env.DEV) {
+      console.log(`[SyncManager] Bulk sync: ${entities.length} entities`);
+    }
     for (const entity of entities) {
       await saveEntity(
         entity.entityType,
@@ -241,7 +259,7 @@ class SyncManager {
     if (!local || version >= (local.version || 0)) {
       await saveEntity(entityType, entityId, data, version, false);
       this.dispatchEntityEvent('entity_updated', { entityType, entityId, data, version });
-    } else {
+    } else if (import.meta.env.DEV) {
       console.log(`[SyncManager] Ignoring stale update for ${entityType}:${entityId}`);
     }
   }
@@ -262,7 +280,9 @@ class SyncManager {
     const operations = await getPendingOperations();
     if (operations.length === 0) return;
 
-    console.log(`[SyncManager] Replaying ${operations.length} queued operations`);
+    if (import.meta.env.DEV) {
+      console.log(`[SyncManager] Replaying ${operations.length} queued operations`);
+    }
     this.isSyncing = true;
     this.syncProgress = 0;
     this.notify();
@@ -285,9 +305,13 @@ class SyncManager {
 
         // Success — delete from queue
         await deleteOperation(op.id);
-        console.log(`[SyncManager] Replayed: ${op.method} ${op.url}`);
+        if (import.meta.env.DEV) {
+          console.log(`[SyncManager] Replayed: ${op.method} ${op.url}`);
+        }
       } catch (error) {
-        console.error(`[SyncManager] Replay failed: ${op.method} ${op.url}`, error);
+        if (import.meta.env.DEV) {
+          console.error(`[SyncManager] Replay failed: ${op.method} ${op.url}`, error);
+        }
         await incrementRetryCount(op.id);
         await updateOperationStatus(op.id, OperationStatus.FAILED);
       }
@@ -296,14 +320,18 @@ class SyncManager {
     this.isSyncing = false;
     this.syncProgress = 0;
     this.notify();
-    console.log('[SyncManager] Queue replay complete');
+    if (import.meta.env.DEV) {
+      console.log('[SyncManager] Queue replay complete');
+    }
   }
 
   /**
    * Handle online event
    */
   handleOnline() {
-    console.log('[SyncManager] Device is online');
+    if (import.meta.env.DEV) {
+      console.log('[SyncManager] Device is online');
+    }
     this.isOnline = true;
     this.notify();
     this.connect();
@@ -313,7 +341,9 @@ class SyncManager {
    * Handle offline event
    */
   handleOffline() {
-    console.log('[SyncManager] Device is offline');
+    if (import.meta.env.DEV) {
+      console.log('[SyncManager] Device is offline');
+    }
     this.isOnline = false;
     this.notify();
   }

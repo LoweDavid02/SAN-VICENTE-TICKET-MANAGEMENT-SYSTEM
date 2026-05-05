@@ -41,8 +41,13 @@ export default function TrackRequest() {
     setTicket(null);
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
-      const response = await axios.get(`${apiUrl}/api/v1/guest/tickets/${trackingCode.trim()}`);
+      const response = await axios.get(`/api/v1/guest/tickets/${trackingCode.trim()}`, {
+        baseURL: import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      });
 
       if (response.data.success) {
         setTicket(response.data.ticket);
@@ -50,7 +55,9 @@ export default function TrackRequest() {
         setError(response.data.message || 'Ticket not found');
       }
     } catch (err) {
-      console.error('Tracking error:', err);
+      if (import.meta.env.DEV) {
+        console.error('Tracking error:', err);
+      }
       setError(
         err.response?.data?.message || 
         'Ticket not found. Please check your tracking code.'

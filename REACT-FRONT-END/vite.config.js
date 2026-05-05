@@ -91,8 +91,8 @@ export default defineConfig({
     // CSS code splitting — each chunk gets its own CSS
     cssCodeSplit: true,
 
-    // Source maps enabled for debugging production issues
-    sourcemap: true,
+    // ✅ FIX: Only generate source maps in development
+    sourcemap: process.env.NODE_ENV === 'development',
 
     // Raise chunk size warning limit to 1000 KB (we have optimized chunking)
     chunkSizeWarningLimit: 1000,

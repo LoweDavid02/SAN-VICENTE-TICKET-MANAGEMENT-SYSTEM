@@ -24,11 +24,11 @@ const QUERY_OPTS = {
   placeholderData: keepPreviousData,
 };
 
-// ── Polling intervals — longer in production to reduce server load ────────
+// ── Polling intervals — staggered using prime numbers to prevent thundering herd ────────
 const POLL = {
-  dashboard: 60_000,  // 60s
-  tickets:   45_000,  // 45s
-  tasks:     50_000,  // 50s
+  dashboard: 61_000,  // 61s (prime)
+  tickets:   47_000,  // 47s (prime)
+  tasks:     53_000,  // 53s (prime)
 };
 
 // ── Query keys ────────────────────────────────────────────────────────────
@@ -125,7 +125,7 @@ export function usePersonnelTasks(filters = {}) {
       const { data } = await api.get('/personnel/tasks', { params: filters });
       return data.data;
     },
-    refetchInterval: 25000, // 25s — staggered from dashboard
+    refetchInterval: POLL.tasks,
   });
 }
 

@@ -145,7 +145,12 @@ export default function Requests() {
     if (sel?.id === id) setSel((prev) => ({ ...prev, status: newStatus }));
     try {
       await updateStatus({ id, status: newStatus, field_note: note });
-    } catch { refetch(); }
+    } catch (err) {
+      if (import.meta.env.DEV) {
+        console.error('Status update failed:', err);
+      }
+      refetch();
+    }
   };
 
   const handleReassign = async (id, personnelId, note) => {
@@ -154,7 +159,9 @@ export default function Requests() {
       if (sel?.id === id) setSel(data.data);
       refetch();
     } catch (err) {
-      console.error('Assign failed:', err);
+      if (import.meta.env.DEV) {
+        console.error('Assign failed:', err);
+      }
     }
   };
 

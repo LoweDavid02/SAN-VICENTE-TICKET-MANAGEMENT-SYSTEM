@@ -20,7 +20,10 @@ class AdminController extends Controller
     /** Admin dashboard summary */
     public function dashboard(Request $request): JsonResponse
     {
-        $tickets = Ticket::with(['resident', 'assignedPersonnel'])->orderByDesc('created_at')->get();
+        // ✅ FIX: Add eager loading to prevent N+1 queries
+        $tickets = Ticket::with(['resident', 'assignedPersonnel', 'timeline.updatedBy'])
+            ->orderByDesc('created_at')
+            ->get();
 
         $stats = [
             'total_users'      => User::count(),
@@ -90,23 +93,36 @@ class AdminController extends Controller
             'field_note' => ['nullable', 'string', 'max:1000'],
         ]);
 
-        $ticket = Ticket::findOrFail($id);
-        $ticket->update([
-            'status'     => $request->status,
-            'progress'   => Ticket::$statusProgress[$request->status] ?? $ticket->progress,
-            'field_note' => $request->field_note ? strip_tags($request->field_note) : null,
-        ]);
+        // ✅ FIX: Wrap in database transaction for data consistency
+        \DB::beginTransaction();
+        try {
+            $ticket = Ticket::findOrFail($id);
+            $ticket->update([
+                'status'     => $request->status,
+                'progress'   => Ticket::$statusProgress[$request->status] ?? $ticket->progress,
+                'field_note' => $request->field_note ? strip_tags($request->field_note) : null,
+            ]);
 
-        TicketTimeline::create([
-            'ticket_id'  => $ticket->id,
-            'status'     => $request->status,
-            'note'       => $request->field_note ? strip_tags($request->field_note) : null,
-            'updated_by' => $request->user()->id,
-        ]);
+            TicketTimeline::create([
+                'ticket_id'  => $ticket->id,
+                'status'     => $request->status,
+                'note'       => $request->field_note ? strip_tags($request->field_note) : null,
+                'updated_by' => $request->user()->id,
+            ]);
 
-        $ticket->load(['resident', 'assignedPersonnel', 'timeline.updatedBy']);
+            \DB::commit();
 
-        return ApiResponse::success($ticket->toApiArray(), 'Ticket status updated.');
+            $ticket->load(['resident', 'assignedPersonnel', 'timeline.updatedBy']);
+
+            return ApiResponse::success($ticket->toApiArray(), 'Ticket status updated.');
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            \Log::error('Failed to update ticket status', [
+                'ticket_id' => $id,
+                'error' => $e->getMessage(),
+            ]);
+            return ApiResponse::error('Failed to update ticket status.', 500);
+        }
     }
 
     /** Assign ticket to personnel */

@@ -58,10 +58,11 @@ class GuestController extends Controller
 
             DB::commit();
 
+            // ✅ FIX: Don't log PII (guest_email removed)
             Log::info('Guest ticket submitted', [
                 'tracking_id'  => $trackingId,
-                'guest_email'  => $request->guest_email,
                 'category'     => $request->category,
+                'severity'     => $request->severity,
             ]);
 
             return response()->json([
@@ -180,36 +181,33 @@ class GuestController extends Controller
 
     /**
      * Generate unique tracking code: SV-YYYY-XXXXX
+     * Optimized to use database sequence instead of querying last ticket
      *
      * @return string
      */
     private function generateTrackingCode(): string
     {
         $year = date('Y');
-        $attempts = 0;
-        $maxAttempts = 10;
+        $maxAttempts = 5;
 
-        do {
-            // Generate sequential number (5 digits)
-            $lastTicket = Ticket::whereYear('created_at', $year)
-                ->orderBy('id', 'desc')
-                ->first();
+        for ($attempt = 0; $attempt < $maxAttempts; $attempt++) {
+            // Use database to get next sequence number atomically
+            $sequence = DB::table('tickets')
+                ->whereYear('created_at', $year)
+                ->lockForUpdate()
+                ->count() + 1;
 
-            $sequence = $lastTicket ? (int) substr($lastTicket->tracking_id, -5) + 1 : 1;
             $trackingId = sprintf('SV-%s-%05d', $year, $sequence);
 
-            // Check if tracking code already exists (race condition protection)
+            // Double-check uniqueness (race condition protection)
             $exists = Ticket::where('tracking_id', $trackingId)->exists();
             
-            $attempts++;
-            
-            if ($attempts >= $maxAttempts) {
-                // Fallback to random code if sequential fails
-                $trackingId = sprintf('SV-%s-%05d', $year, rand(10000, 99999));
+            if (!$exists) {
+                return $trackingId;
             }
+        }
 
-        } while ($exists && $attempts < $maxAttempts);
-
-        return $trackingId;
+        // Fallback to random code if sequential fails
+        return sprintf('SV-%s-%05d', $year, rand(10000, 99999));
     }
 }

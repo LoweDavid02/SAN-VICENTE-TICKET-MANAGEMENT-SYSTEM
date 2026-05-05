@@ -121,8 +121,13 @@ export default function GuestSubmission() {
     setError(null);
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
-      const response = await axios.post(`${apiUrl}/api/v1/guest/tickets`, formData);
+      const response = await axios.post('/api/v1/guest/tickets', formData, {
+        baseURL: import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      });
 
       if (response.data.success) {
         setTrackingCode(response.data.tracking_id);
@@ -131,7 +136,9 @@ export default function GuestSubmission() {
         setError(response.data.message || 'Failed to submit request');
       }
     } catch (err) {
-      console.error('Submission error:', err);
+      if (import.meta.env.DEV) {
+        console.error('Submission error:', err);
+      }
       setError(
         err.response?.data?.message || 
         'Failed to submit your request. Please try again.'
