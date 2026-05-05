@@ -261,7 +261,9 @@ export default function Requests() {
                   <td><span style={{ fontFamily: 'monospace', fontSize: 11.5, color: 'var(--brand)', fontWeight: 600 }}>{r.tracking_id}</span></td>
                   <td>
                     <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-1)' }}>{r.title}</p>
-                    <p style={{ fontSize: 11, color: 'var(--text-4)', marginTop: 2 }}>{r.resident?.full_name}</p>
+                    <p style={{ fontSize: 11, color: 'var(--text-4)', marginTop: 2 }}>
+                      {r.guest_name || r.resident?.full_name || 'Guest'}
+                    </p>
                   </td>
                   <td><SeverityBadge severity={r.severity} /></td>
                   <td><StatusBadge status={r.status} /></td>
@@ -290,7 +292,7 @@ export default function Requests() {
               <StatusBadge status={sel.status} />
             </div>
             {[
-              { label: 'Reported by', val: sel.resident?.full_name || '—' },
+              { label: 'Reported by', val: sel.guest_name || sel.resident?.full_name || 'Guest' },
               { label: 'Category',    val: sel.category  },
               { label: 'Location',    val: sel.location  },
               { label: 'Assigned to', val: sel.assigned_to?.full_name || 'Unassigned' },

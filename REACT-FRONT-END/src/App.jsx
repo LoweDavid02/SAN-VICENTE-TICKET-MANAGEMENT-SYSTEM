@@ -46,6 +46,10 @@ function ProtectedRoute({ portalType, children }) {
 import Landing  from './pages/Landing';
 import Login    from './pages/Login';
 
+/* ── Guest pages (public, no authentication) ── */
+import GuestSubmission from './pages/GuestSubmission';
+import TrackRequest    from './pages/TrackRequest';
+
 /* ── Lazy-loaded pages — only downloaded when navigated to ── */
 const PortalSelector = lazy(() => import('./pages/PortalSelector'));
 const FAQ            = lazy(() => import('./pages/FAQ'));
@@ -60,13 +64,6 @@ const PersonnelTasks = lazy(() => import('./pages/PersonnelTasks'));
 const Requests       = lazy(() => import('./pages/Requests'));
 const AnalyticsDashboard = lazy(() =>
   import('./features/admin/AnalyticsDashboard/AnalyticsDashboard')
-);
-
-/* ── Resident portal ── */
-const ResidentDashboard = lazy(() => import('./pages/ResidentDashboard'));
-const ResidentHistory   = lazy(() => import('./pages/ResidentHistory'));
-const SubmitRequest     = lazy(() =>
-  import('./features/resident/SubmitRequest/SubmitRequest')
 );
 
 /* ── Personnel portal ── */
@@ -134,6 +131,11 @@ function AppRoutes() {
           <Route path="/home"         element={<Landing />} />
           <Route path={ROUTES.LOGIN}  element={<Login />} />
           <Route path={ROUTES.PORTAL} element={<PortalSelector />} />
+          
+          {/* ── Guest Ticket Submission (Public, No Auth) ── */}
+          <Route path="/submit"       element={<GuestSubmission />} />
+          <Route path="/track"        element={<TrackRequest />} />
+          <Route path="/track/:code"  element={<TrackRequest />} />
 
           {/* ════════════════════════════════════
               ADMIN PORTAL
@@ -150,24 +152,6 @@ function AppRoutes() {
             <Route path="tasks"         element={<PersonnelTasks />} />
             <Route path="tickets"       element={<Requests />} />
             <Route path="settings"      element={<Settings />} />
-            <Route path="profile"       element={<Profile />} />
-            <Route path="faq"           element={<FAQ />} />
-            <Route path="notifications" element={<Notifications />} />
-            <Route path="*"             element={<Navigate to="dashboard" replace />} />
-          </Route>
-
-          {/* ════════════════════════════════════
-              RESIDENT PORTAL
-          ════════════════════════════════════ */}
-          <Route path="/resident" element={
-            <ProtectedRoute portalType="resident">
-              <AppShell portalType="resident" />
-            </ProtectedRoute>
-          }>
-            <Route index                element={<Navigate to="dashboard" replace />} />
-            <Route path="dashboard"     element={<ResidentDashboard />} />
-            <Route path="request"       element={<SubmitRequest />} />
-            <Route path="history"       element={<ResidentHistory />} />
             <Route path="profile"       element={<Profile />} />
             <Route path="faq"           element={<FAQ />} />
             <Route path="notifications" element={<Notifications />} />
@@ -192,6 +176,9 @@ function AppRoutes() {
             <Route path="analytics"     element={<Navigate to="/personnel/dashboard" replace />} />
             <Route path="*"             element={<Navigate to="dashboard" replace />} />
           </Route>
+
+          {/* ── Redirect old resident routes to guest submission ── */}
+          <Route path="/resident/*"   element={<Navigate to="/submit" replace />} />
 
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

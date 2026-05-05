@@ -5,7 +5,6 @@
 
 export const ROLES = {
   ADMIN:     'admin',
-  RESIDENT:  'resident',
   PERSONNEL: 'personnel',
 };
 
@@ -27,20 +26,14 @@ export const PERMISSIONS = {
   VIEW_ASSIGNED_TASKS:   [ROLES.PERSONNEL],
   TASK_HISTORY:          [ROLES.PERSONNEL],
 
-  // Resident features
-  SUBMIT_REQUEST:        [ROLES.RESIDENT],
-  VIEW_OWN_TICKETS:      [ROLES.RESIDENT],
-  TRACK_REQUEST:         [ROLES.RESIDENT],
-
   // Shared
-  VIEW_PROFILE:          [ROLES.ADMIN, ROLES.RESIDENT, ROLES.PERSONNEL],
-  VIEW_NOTIFICATIONS:    [ROLES.ADMIN, ROLES.RESIDENT, ROLES.PERSONNEL],
+  VIEW_PROFILE:          [ROLES.ADMIN, ROLES.PERSONNEL],
+  VIEW_NOTIFICATIONS:    [ROLES.ADMIN, ROLES.PERSONNEL],
 };
 
 /** Portal home routes per role */
 export const ROLE_HOME = {
   [ROLES.ADMIN]:     '/admin/dashboard',
-  [ROLES.RESIDENT]:  '/resident/dashboard',
   [ROLES.PERSONNEL]: '/personnel/dashboard',
 };
 
@@ -53,14 +46,6 @@ export const DEMO_USERS = [
     name: 'San Vicente Admin',
     dept: 'Administration',
     avatar: 'SA',
-  },
-  {
-    email: 'resident@sv.gov',
-    password: 'resident',
-    role: ROLES.RESIDENT,
-    name: 'Maria Santos',
-    dept: null,
-    avatar: 'MS',
   },
   {
     email: 'personnel@barangay.gov',

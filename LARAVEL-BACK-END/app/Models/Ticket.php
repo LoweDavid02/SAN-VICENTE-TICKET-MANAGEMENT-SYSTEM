@@ -25,6 +25,10 @@ class Ticket extends Model
         'status',
         'progress',
         'resident_id',
+        'guest_name',
+        'guest_email',
+        'guest_phone',
+        'guest_address',
         'assigned_to',
         'field_note',
         'images',
@@ -78,11 +82,19 @@ class Ticket extends Model
             'severity'         => $this->severity,
             'status'           => $this->status,
             'progress'         => $this->progress,
+            // Resident info (for authenticated submissions)
             'resident'         => $this->resident ? [
                 'id'        => $this->resident->id,
                 'full_name' => $this->resident->full_name,
                 'email'     => $this->resident->email,
             ] : null,
+            // Guest info (for guest submissions)
+            'guest_name'       => $this->guest_name,
+            'guest_email'      => $this->guest_email,
+            'guest_phone'      => $this->guest_phone,
+            'guest_address'    => $this->guest_address,
+            // Submitter name (guest or resident)
+            'resident_name'    => $this->guest_name ?? $this->resident?->full_name ?? 'Unknown',
             'assigned_to'  => $this->assignedPersonnel ? [
                 'id'        => $this->assignedPersonnel->id,
                 'full_name' => $this->assignedPersonnel->full_name,

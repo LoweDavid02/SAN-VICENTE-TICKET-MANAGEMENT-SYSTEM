@@ -14,7 +14,6 @@ const STATS = [
 
 const PORTALS = [
   { value: 'admin',     label: 'Admin Portal',     sub: 'System administration & oversight'  },
-  { value: 'resident',  label: 'Resident Portal',  sub: 'Citizen services & requests'        },
   { value: 'personnel', label: 'Personnel Portal', sub: 'Field operations & task management' },
 ];
 

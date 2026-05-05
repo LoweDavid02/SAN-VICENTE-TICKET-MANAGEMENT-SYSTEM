@@ -1,0 +1,9 @@
+{
+  "workspaceId": "",
+  "collectionId": "",
+  "environments": {
+    "local": "",
+    "production": ""
+  },
+  "note": "Fill in IDs after creating workspace, collection, and environments in Postman"
+}

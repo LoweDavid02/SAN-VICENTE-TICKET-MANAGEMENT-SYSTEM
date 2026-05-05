@@ -14,15 +14,15 @@ const PORTALS = [
     accentBg: 'rgba(20,184,166,.12)',
   },
   {
-    role: 'resident',
-    path: '/resident/dashboard',
+    role: 'personnel',
+    path: '/personnel/dashboard',
     icon: Users,
-    title: 'Citizen Portal',
-    sub: 'For residents',
-    desc: 'Report community issues, track your service requests, and stay informed about local updates.',
-    features: ['Submit requests in 4 steps', 'Real-time ticket tracking', 'Status notifications'],
-    accent: '#3b82f6',
-    accentBg: 'rgba(59,130,246,.12)',
+    title: 'Field Operations',
+    sub: 'For field personnel',
+    desc: 'Receive assigned tasks, update ticket statuses from the field, and document completed work.',
+    features: ['Task management', 'Field status updates', 'Work documentation'],
+    accent: '#f59e0b',
+    accentBg: 'rgba(245,158,11,.12)',
   },
 ];
 

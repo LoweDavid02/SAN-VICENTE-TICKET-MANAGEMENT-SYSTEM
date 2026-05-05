@@ -143,20 +143,28 @@ export default function Landing() {
           {/* CTA buttons */}
           <div style={{ display:'flex', gap:14, justifyContent:'center', flexWrap:'wrap', marginBottom:56, animation:'heroFadeUp .7s ease-out .3s both' }}>
             <button
-              onClick={() => navigate('/login')}
+              onClick={() => navigate('/submit')}
               style={{ display:'flex', alignItems:'center', gap:10, padding:'14px 32px', borderRadius:14, border:'none', background:'linear-gradient(135deg,#22a83a,#1a7a2e)', fontSize:15, fontWeight:700, color:'#fff', cursor:'pointer', fontFamily:'inherit', boxShadow:'0 4px 20px rgba(34,168,58,.5)', transition:'all .2s' }}
               onMouseEnter={e => { e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 8px 28px rgba(34,168,58,.6)'; }}
               onMouseLeave={e => { e.currentTarget.style.transform=''; e.currentTarget.style.boxShadow='0 4px 20px rgba(34,168,58,.5)'; }}
             >
-              Get Started <ArrowRight size={16} strokeWidth={2.5} />
+              Submit a Request <ArrowRight size={16} strokeWidth={2.5} />
             </button>
             <button
-              onClick={() => setShowLearn(true)}
+              onClick={() => navigate('/track')}
               style={{ display:'flex', alignItems:'center', gap:10, padding:'14px 28px', borderRadius:14, border:'1.5px solid rgba(255,255,255,.3)', background:'rgba(255,255,255,.1)', backdropFilter:'blur(12px)', fontSize:15, fontWeight:600, color:'#fff', cursor:'pointer', fontFamily:'inherit', transition:'all .2s' }}
               onMouseEnter={e => { e.currentTarget.style.background='rgba(255,255,255,.18)'; e.currentTarget.style.borderColor='rgba(255,255,255,.5)'; }}
               onMouseLeave={e => { e.currentTarget.style.background='rgba(255,255,255,.1)'; e.currentTarget.style.borderColor='rgba(255,255,255,.3)'; }}
             >
-              Learn More
+              Track Request
+            </button>
+            <button
+              onClick={() => navigate('/login')}
+              style={{ display:'flex', alignItems:'center', gap:10, padding:'14px 28px', borderRadius:14, border:'1.5px solid rgba(255,255,255,.3)', background:'rgba(255,255,255,.05)', backdropFilter:'blur(12px)', fontSize:14, fontWeight:500, color:'rgba(255,255,255,.9)', cursor:'pointer', fontFamily:'inherit', transition:'all .2s' }}
+              onMouseEnter={e => { e.currentTarget.style.background='rgba(255,255,255,.12)'; e.currentTarget.style.borderColor='rgba(255,255,255,.4)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background='rgba(255,255,255,.05)'; e.currentTarget.style.borderColor='rgba(255,255,255,.3)'; }}
+            >
+              Staff Login
             </button>
           </div>
 
@@ -188,7 +196,7 @@ export default function Landing() {
           </div>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:20 }}>
             {[
-              { color:'#2563eb', bg:'#eff6ff', border:'#bfdbfe', title:'Resident Portal', desc:'Submit service requests, track progress in real time, and stay informed about community updates. Report issues with photos and location in minutes.' },
+              { color:'#2563eb', bg:'#eff6ff', border:'#bfdbfe', title:'Guest Submission', desc:'Submit service requests without creating an account. Track your request status anytime using your unique tracking code. Quick, easy, and secure.' },
               { color:'#f59e0b', bg:'#fffbeb', border:'#fde68a', title:'Personnel Portal', desc:'Field staff receive assigned tasks, update ticket statuses from the field, and document completed work from a mobile-friendly interface.' },
               { color:'#14b8a6', bg:'#f0fdfa', border:'#99f6e4', title:'Admin Portal', desc:'Administrators oversee all operations, manage personnel, view analytics dashboards, and ensure no request falls through the cracks.' },
             ].map((p) => (
@@ -266,10 +274,10 @@ export default function Landing() {
               <p style={{ fontSize:13, lineHeight:1.7 }}>Centralized Intelligence Platform for Barangay San Vicente. v4.2.1-stable.</p>
             </div>
             <div>
-              <p style={{ fontSize:12, fontWeight:700, color:'#fff', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:14 }}>Portals</p>
-              {['Resident Portal','Personnel Portal','Admin Portal'].map((l) => (
-                <button key={l} onClick={() => navigate('/login')} style={{ display:'block', background:'none', border:'none', cursor:'pointer', fontSize:13, color:'rgba(148,163,184,.8)', fontFamily:'inherit', padding:'4px 0', transition:'color .15s' }} onMouseEnter={(e) => { e.currentTarget.style.color='#14b8a6'; }} onMouseLeave={(e) => { e.currentTarget.style.color='rgba(148,163,184,.8)'; }}>{l}</button>
-              ))}
+              <p style={{ fontSize:12, fontWeight:700, color:'#fff', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:14 }}>Quick Links</p>
+              <button onClick={() => navigate('/submit')} style={{ display:'block', background:'none', border:'none', cursor:'pointer', fontSize:13, color:'rgba(148,163,184,.8)', fontFamily:'inherit', padding:'4px 0', transition:'color .15s' }} onMouseEnter={(e) => { e.currentTarget.style.color='#14b8a6'; }} onMouseLeave={(e) => { e.currentTarget.style.color='rgba(148,163,184,.8)'; }}>Submit Request</button>
+              <button onClick={() => navigate('/track')} style={{ display:'block', background:'none', border:'none', cursor:'pointer', fontSize:13, color:'rgba(148,163,184,.8)', fontFamily:'inherit', padding:'4px 0', transition:'color .15s' }} onMouseEnter={(e) => { e.currentTarget.style.color='#14b8a6'; }} onMouseLeave={(e) => { e.currentTarget.style.color='rgba(148,163,184,.8)'; }}>Track Request</button>
+              <button onClick={() => navigate('/login')} style={{ display:'block', background:'none', border:'none', cursor:'pointer', fontSize:13, color:'rgba(148,163,184,.8)', fontFamily:'inherit', padding:'4px 0', transition:'color .15s' }} onMouseEnter={(e) => { e.currentTarget.style.color='#14b8a6'; }} onMouseLeave={(e) => { e.currentTarget.style.color='rgba(148,163,184,.8)'; }}>Staff Login</button>
             </div>
             <div>
               <p style={{ fontSize:12, fontWeight:700, color:'#fff', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:14 }}>Quick Links</p>

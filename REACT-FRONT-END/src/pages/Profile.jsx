@@ -70,7 +70,7 @@ export default function Profile() {
   const { user, openModal } = useApp();
   const { setUser } = useAuthStore();
   const { t } = useLang();
-  const portal = user?.portal || 'resident';
+  const portal = user?.portal || 'admin';
   const { mutateAsync: saveProfile, isPending: isSaving } = useUpdateProfile(portal);
 
   const [editing, setEditing] = useState(false);
@@ -79,7 +79,7 @@ export default function Profile() {
     first_name: user?.first_name || '',
     last_name:  user?.last_name  || '',
     email:      user?.email   || '',
-    role:       user?.portal  || 'Resident',
+    role:       user?.portal  || 'Admin',
     phone:      user?.phone   || '',
     address:    user?.address || '',
     bio:        user?.bio     || '',

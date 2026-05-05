@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\Api\V1\Admin\AdminController;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\Guest\GuestController;
 use App\Http\Controllers\Api\V1\Personnel\PersonnelController;
-use App\Http\Controllers\Api\V1\Resident\ResidentController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -12,6 +12,12 @@ Route::prefix('v1')->group(function () {
     Route::prefix('auth')->middleware('throttle:10,1')->group(function () {
         Route::post('/login',    [AuthController::class, 'login']);
         Route::post('/register', [AuthController::class, 'register']);
+    });
+
+    // ── Guest Ticket Submission (Public, No Authentication) ────────────────
+    Route::prefix('guest')->middleware('throttle:15,1')->group(function () {
+        Route::post('/tickets',              [GuestController::class, 'submitTicket']);
+        Route::get('/tickets/{trackingCode}', [GuestController::class, 'trackTicket']);
     });
 
     // ── Protected ─────────────────────────────────────────────────────────
@@ -36,16 +42,6 @@ Route::prefix('v1')->group(function () {
             Route::get('/profile',                      [AdminController::class, 'profile']);
             Route::patch('/profile',                    [AdminController::class, 'updateProfile']);
             Route::get('/map',                          [AdminController::class, 'mapTickets']);
-        });
-
-        // ── Resident ───────────────────────────────────────────────────────
-        Route::middleware(['role:resident', 'portal:resident'])->prefix('resident')->group(function () {
-            Route::get('/dashboard',                    [ResidentController::class, 'dashboard']);
-            Route::get('/tickets',                      [ResidentController::class, 'myTickets']);
-            Route::post('/tickets',                     [ResidentController::class, 'submitTicket']);
-            Route::get('/tickets/{id}',                 [ResidentController::class, 'showTicket']);
-            Route::get('/profile',                      [ResidentController::class, 'profile']);
-            Route::patch('/profile',                    [ResidentController::class, 'updateProfile']);
         });
 
         // ── Personnel ──────────────────────────────────────────────────────

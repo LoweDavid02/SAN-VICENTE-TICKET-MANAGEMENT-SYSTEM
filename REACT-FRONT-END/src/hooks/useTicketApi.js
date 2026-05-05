@@ -36,8 +36,6 @@ export const QUERY_KEYS = {
   adminDashboard:    ['admin', 'dashboard'],
   adminTickets:      ['admin', 'tickets'],
   adminPersonnel:    ['admin', 'personnel'],
-  residentDashboard: ['resident', 'dashboard'],
-  residentTickets:   ['resident', 'tickets'],
   personnelDashboard:['personnel', 'dashboard'],
   personnelTasks:    ['personnel', 'tasks'],
   profile:           (portal) => [portal, 'profile'],
@@ -88,7 +86,6 @@ export function useUpdateTicketStatus() {
       api.patch(`/admin/tickets/${id}/status`, { status, field_note }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['admin'] });
-      qc.invalidateQueries({ queryKey: ['resident'] });
       qc.invalidateQueries({ queryKey: ['personnel'] });
     },
   });
@@ -102,43 +99,6 @@ export function useAssignTicket() {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['admin'] });
       qc.invalidateQueries({ queryKey: ['personnel'] });
-    },
-  });
-}
-
-// ── Resident hooks ────────────────────────────────────────────────────────
-
-export function useResidentDashboard() {
-  return useQuery({
-    ...QUERY_OPTS,
-    queryKey: QUERY_KEYS.residentDashboard,
-    queryFn: async () => {
-      const { data } = await api.get('/resident/dashboard');
-      return data.data;
-    },
-    refetchInterval: POLL.dashboard,
-  });
-}
-
-export function useResidentTickets() {
-  return useQuery({
-    ...QUERY_OPTS,
-    queryKey: QUERY_KEYS.residentTickets,
-    queryFn: async () => {
-      const { data } = await api.get('/resident/tickets');
-      return data.data;
-    },
-    refetchInterval: 25000, // 25s — staggered from dashboard
-  });
-}
-
-export function useSubmitTicket() {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: (ticketData) => api.post('/resident/tickets', ticketData),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ['resident'] });
-      qc.invalidateQueries({ queryKey: ['admin'] });
     },
   });
 }
@@ -177,7 +137,6 @@ export function useUpdateTaskStatus() {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['personnel'] });
       qc.invalidateQueries({ queryKey: ['admin'] });
-      qc.invalidateQueries({ queryKey: ['resident'] });
     },
   });
 }
