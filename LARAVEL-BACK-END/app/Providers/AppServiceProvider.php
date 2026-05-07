@@ -31,5 +31,16 @@ class AppServiceProvider extends ServiceProvider
                 ? Limit::perMinute(60)->by($request->user()->id)
                 : Limit::perMinute(30)->by($request->ip());
         });
+
+        // Uploads: 5 requests per minute per IP — prevent storage exhaustion
+        RateLimiter::for('uploads', function (Request $request) {
+            return Limit::perMinute(5)->by($request->ip())
+                ->response(function () {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Too many upload attempts. Please try again in a minute.',
+                    ], 429);
+                });
+        });
     }
 }

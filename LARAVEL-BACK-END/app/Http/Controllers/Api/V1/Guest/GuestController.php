@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Api\V1\Guest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\SubmitGuestTicketRequest;
 use App\Models\Ticket;
+use App\Models\TicketPhoto;
 use App\Models\TicketTimeline;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class GuestController extends Controller
@@ -31,6 +33,7 @@ class GuestController extends Controller
             // Create ticket with guest information
             $ticket = Ticket::create([
                 'tracking_id'      => $trackingId,
+                'reference_code'   => $trackingId, // Use same code for reference
                 'title'            => $request->title,
                 'description'      => $request->description,
                 'category'         => $request->category,
@@ -45,8 +48,59 @@ class GuestController extends Controller
                 'guest_email'      => $request->guest_email,
                 'guest_phone'      => $request->guest_phone,
                 'guest_address'    => $request->guest_address,
-                'images'           => $request->images ? json_encode($request->images) : null,
+                'images'           => null, // Will be populated with photo URLs
             ]);
+
+            // Handle photo uploads
+            $photoUrls = [];
+            $uploadedFiles = []; // Track uploaded files for cleanup on failure
+            
+            if ($request->hasFile('photos')) {
+                $photos = $request->file('photos');
+                
+                foreach ($photos as $index => $photo) {
+                    // Validate MIME type
+                    $allowedMimes = ['image/jpeg', 'image/png', 'image/webp'];
+                    if (!in_array($photo->getMimeType(), $allowedMimes)) {
+                        continue;
+                    }
+
+                    // Validate file size (10MB max)
+                    if ($photo->getSize() > 10 * 1024 * 1024) {
+                        continue;
+                    }
+
+                    // Generate unique filename
+                    $filename = sprintf(
+                        '%s_%d_%s.%s',
+                        $trackingId,
+                        $index + 1,
+                        Str::random(8),
+                        $photo->getClientOriginalExtension()
+                    );
+
+                    // Store file in storage/app/public/tickets/
+                    $path = $photo->storeAs('tickets', $filename, 'public');
+                    $uploadedFiles[] = $path; // Track for cleanup
+
+                    // Create TicketPhoto record
+                    $ticketPhoto = TicketPhoto::create([
+                        'ticket_id'  => $ticket->id,
+                        'file_path'  => $path,
+                        'file_name'  => $photo->getClientOriginalName(),
+                        'mime_type'  => $photo->getMimeType(),
+                        'file_size'  => $photo->getSize(),
+                    ]);
+
+                    // Add URL to array
+                    $photoUrls[] = asset('storage/' . $path);
+                }
+
+                // Update ticket with photo URLs
+                if (!empty($photoUrls)) {
+                    $ticket->update(['images' => json_encode($photoUrls)]);
+                }
+            }
 
             // Create initial timeline entry
             TicketTimeline::create([
@@ -63,6 +117,7 @@ class GuestController extends Controller
                 'tracking_id'  => $trackingId,
                 'category'     => $request->category,
                 'severity'     => $request->severity,
+                'photos_count' => count($photoUrls),
             ]);
 
             return response()->json([
@@ -77,6 +132,7 @@ class GuestController extends Controller
                     'status'       => $ticket->status,
                     'severity'     => $ticket->severity,
                     'location'     => $ticket->location,
+                    'photos'       => $photoUrls,
                     'created_at'   => $ticket->created_at->format('Y-m-d H:i:s'),
                 ],
             ], 201);
@@ -84,9 +140,16 @@ class GuestController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             
+            // Clean up uploaded files on transaction failure
+            if (!empty($uploadedFiles)) {
+                foreach ($uploadedFiles as $path) {
+                    Storage::disk('public')->delete($path);
+                }
+            }
+            
             Log::error('Guest ticket submission failed', [
                 'error'   => $e->getMessage(),
-                'request' => $request->all(),
+                'trace'   => $e->getTraceAsString(),
             ]);
 
             return response()->json([
@@ -181,33 +244,140 @@ class GuestController extends Controller
 
     /**
      * Generate unique tracking code: SV-YYYY-XXXXX
-     * Optimized to use database sequence instead of querying last ticket
+     * Uses database locking to prevent race conditions under concurrent requests.
      *
      * @return string
      */
     private function generateTrackingCode(): string
     {
         $year = date('Y');
-        $maxAttempts = 5;
 
-        for ($attempt = 0; $attempt < $maxAttempts; $attempt++) {
-            // Use database to get next sequence number atomically
-            $sequence = DB::table('tickets')
-                ->whereYear('created_at', $year)
+        return DB::transaction(function () use ($year) {
+            // Lock the last ticket for this year to prevent race conditions
+            $lastTicket = Ticket::whereYear('created_at', $year)
                 ->lockForUpdate()
-                ->count() + 1;
+                ->orderByDesc('id')
+                ->first();
+
+            $sequence = $lastTicket 
+                ? ((int) substr($lastTicket->tracking_id, -5)) + 1 
+                : 1;
 
             $trackingId = sprintf('SV-%s-%05d', $year, $sequence);
 
-            // Double-check uniqueness (race condition protection)
-            $exists = Ticket::where('tracking_id', $trackingId)->exists();
-            
-            if (!$exists) {
-                return $trackingId;
+            // Double-check uniqueness (should never happen with lock, but safety first)
+            if (Ticket::where('tracking_id', $trackingId)->exists()) {
+                // Fallback to random if somehow duplicate exists
+                return sprintf('SV-%s-%05d', $year, rand(10000, 99999));
             }
-        }
 
-        // Fallback to random code if sequential fails
-        return sprintf('SV-%s-%05d', $year, rand(10000, 99999));
+            return $trackingId;
+        });
+    }
+
+    /**
+     * Track ticket via POST (for civic UI).
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function trackTicketPost(Request $request): JsonResponse
+    {
+        $request->validate([
+            'reference_code' => 'required|string|min:5|max:20',
+        ]);
+
+        return $this->trackTicket($request->reference_code);
+    }
+
+    /**
+     * Confirm ticket resolution (resident confirmation).
+     *
+     * @param string $referenceCode
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function confirmResolution(string $referenceCode, Request $request): JsonResponse
+    {
+        $request->validate([
+            'resolved' => 'required|boolean',
+            'note'     => 'nullable|string|max:500',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $ticket = Ticket::where('tracking_id', strtoupper($referenceCode))
+                ->orWhere('reference_code', strtoupper($referenceCode))
+                ->first();
+
+            if (!$ticket) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Ticket not found.',
+                ], 404);
+            }
+
+            // Only allow confirmation if ticket is Completed
+            if ($ticket->status !== 'Completed') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Ticket must be in Completed status to confirm resolution.',
+                ], 400);
+            }
+
+            if ($request->resolved) {
+                // Mark as Verified & Closed
+                $ticket->update([
+                    'status'   => 'Verified & Closed',
+                    'progress' => 100,
+                ]);
+
+                // Create timeline entry
+                TicketTimeline::create([
+                    'ticket_id'   => $ticket->id,
+                    'status'      => 'Verified & Closed',
+                    'note'        => 'Resident confirmed resolution' . ($request->note ? ': ' . $request->note : ''),
+                    'updated_by'  => null,
+                ]);
+
+                $message = 'Thank you for confirming! Your ticket has been closed.';
+            } else {
+                // Keep as Completed, add note
+                TicketTimeline::create([
+                    'ticket_id'   => $ticket->id,
+                    'status'      => 'Completed',
+                    'note'        => 'Resident reported issue not resolved' . ($request->note ? ': ' . $request->note : ''),
+                    'updated_by'  => null,
+                ]);
+
+                $message = 'Thank you for your feedback. We will review your concern.';
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => $message,
+                'ticket'  => [
+                    'status'   => $ticket->status,
+                    'progress' => $ticket->progress,
+                ],
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            Log::error('Ticket confirmation failed', [
+                'reference_code' => $referenceCode,
+                'error'          => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to process confirmation. Please try again.',
+                'error'   => config('app.debug') ? $e->getMessage() : null,
+            ], 500);
+        }
     }
 }

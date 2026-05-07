@@ -20,21 +20,24 @@ class AdminController extends Controller
     /** Admin dashboard summary */
     public function dashboard(Request $request): JsonResponse
     {
-        // ✅ FIX: Add eager loading to prevent N+1 queries
+        // ✅ FIX: Limit tickets to prevent memory exhaustion
+        // Load only recent 100 tickets for dashboard overview
         $tickets = Ticket::with(['resident', 'assignedPersonnel', 'timeline.updatedBy'])
             ->orderByDesc('created_at')
+            ->limit(100)
             ->get();
 
+        // Calculate stats from entire dataset (efficient count queries)
         $stats = [
             'total_users'      => User::count(),
             'total_residents'  => User::where('portal', 'resident')->count(),
             'total_personnel'  => User::where('portal', 'personnel')->count(),
             'active_users'     => User::where('status', 'active')->count(),
-            'total_tickets'    => $tickets->count(),
-            'pending_tickets'  => $tickets->where('status', 'Pending')->count(),
-            'in_progress'      => $tickets->where('status', 'In Progress')->count(),
-            'resolved_tickets' => $tickets->where('status', 'Completed')->count(),
-            'urgent_tickets'   => $tickets->where('severity', 'High')
+            'total_tickets'    => Ticket::count(),
+            'pending_tickets'  => Ticket::where('status', 'Pending')->count(),
+            'in_progress'      => Ticket::where('status', 'In Progress')->count(),
+            'resolved_tickets' => Ticket::where('status', 'Completed')->count(),
+            'urgent_tickets'   => Ticket::where('severity', 'High')
                 ->whereNotIn('status', ['Completed', 'Rejected'])->count(),
         ];
 
@@ -97,6 +100,7 @@ class AdminController extends Controller
         \DB::beginTransaction();
         try {
             $ticket = Ticket::findOrFail($id);
+            
             $ticket->update([
                 'status'     => $request->status,
                 'progress'   => Ticket::$statusProgress[$request->status] ?? $ticket->progress,

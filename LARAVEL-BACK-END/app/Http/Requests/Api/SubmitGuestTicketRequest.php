@@ -25,22 +25,22 @@ class SubmitGuestTicketRequest extends FormRequest
         return [
             // Guest information (required for non-authenticated submissions)
             'guest_name'    => ['required', 'string', 'min:2', 'max:255'],
-            'guest_email'   => ['required', 'email:rfc,dns', 'max:255'],
+            'guest_email'   => ['required', 'email:rfc', 'max:255'],
             'guest_phone'   => ['required', 'string', 'regex:/^[0-9\-\+\(\)\s]+$/', 'min:7', 'max:20'],
             'guest_address' => ['required', 'string', 'min:10', 'max:500'],
             
             // Ticket information
             'title'         => ['required', 'string', 'min:5', 'max:255'],
             'description'   => ['required', 'string', 'min:10', 'max:2000'],
-            'category'      => ['required', 'string', 'in:streetlight,drainage,road,waste,water,other'],
+            'category'      => ['required', 'string', 'in:infrastructure,sanitation,public_safety,waste_management,health_&_medical,public_order,other'],
             'location'      => ['required', 'string', 'min:5', 'max:255'],
             'latitude'      => ['nullable', 'numeric', 'between:-90,90'],
             'longitude'     => ['nullable', 'numeric', 'between:-180,180'],
             'severity'      => ['required', 'string', 'in:Low,Medium,High'],
             
-            // Images (optional)
-            'images'        => ['nullable', 'array', 'max:5'],
-            'images.*'      => ['string'], // Base64 or HTTPS URLs
+            // Photos (optional) - multipart file upload
+            'photos'        => ['nullable', 'array', 'max:3'],
+            'photos.*'      => ['file', 'image', 'mimes:jpeg,png,webp', 'max:10240'], // 10MB max per file
         ];
     }
 
@@ -68,7 +68,12 @@ class SubmitGuestTicketRequest extends FormRequest
             'severity.required'      => 'Please select the urgency level.',
             'severity.in'            => 'Invalid urgency level selected.',
             
-            'images.max'             => 'You can upload a maximum of 5 images.',
+            'images.max'             => 'You can upload a maximum of 3 images.',
+            'photos.max'             => 'You can upload a maximum of 3 photos.',
+            'photos.*.file'          => 'Each upload must be a valid file.',
+            'photos.*.image'         => 'Each file must be an image.',
+            'photos.*.mimes'         => 'Only JPEG, PNG, and WebP images are allowed.',
+            'photos.*.max'           => 'Each photo must be under 10MB.',
         ];
     }
 }

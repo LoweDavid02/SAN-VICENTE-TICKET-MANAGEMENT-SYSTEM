@@ -13,7 +13,8 @@ class Ticket extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'tracking_id',
+        'reference_code',      // Renamed from tracking_id
+        'tracking_id',         // Keep for backward compatibility
         'title',
         'description',
         'category',
@@ -30,6 +31,7 @@ class Ticket extends Model
         'guest_phone',
         'guest_address',
         'assigned_to',
+        'rejection_reason',    // New field
         'field_note',
         'images',
     ];
@@ -62,6 +64,22 @@ class Ticket extends Model
     public function timeline(): HasMany
     {
         return $this->hasMany(TicketTimeline::class)->orderByDesc('created_at');
+    }
+
+    /**
+     * Get all photos for this ticket.
+     */
+    public function photos(): HasMany
+    {
+        return $this->hasMany(TicketPhoto::class)->orderBy('created_at');
+    }
+
+    /**
+     * Get all status logs for this ticket.
+     */
+    public function statusLogs(): HasMany
+    {
+        return $this->hasMany(TicketStatusLog::class)->orderBy('created_at');
     }
 
     /**

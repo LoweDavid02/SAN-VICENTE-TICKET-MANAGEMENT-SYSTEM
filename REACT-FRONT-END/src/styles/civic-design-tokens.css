@@ -1,0 +1,345 @@
+/**
+ * Barangay San Vicente Civic Design System
+ * Clean modern government UI with navy/teal palette
+ */
+
+:root {
+  /* Primary Colors */
+  --color-primary: #1E2D4E;        /* Navy — buttons, headings */
+  --color-primary-hover: #2A3F6B;  /* Navy hover state */
+  --color-teal: #0D9488;           /* Icons, Locate Me button */
+  --color-green: #10B981;          /* Success, Completed status */
+  --color-amber: #F59E0B;          /* Under Review status */
+  --color-danger: #EF4444;         /* Errors, Rejected status */
+  --color-blue: #3B82F6;           /* In Progress status */
+  --color-gray: #6B7280;           /* Pending status */
+  
+  /* Background Colors */
+  --color-bg-page: #F3F4F6;        /* Page background */
+  --color-bg-card: #FFFFFF;        /* Card surfaces */
+  --color-border: #E5E7EB;         /* Borders */
+  
+  /* Text Colors */
+  --color-text-primary: #111827;   /* Primary text */
+  --color-text-secondary: #6B7280; /* Secondary text */
+  --color-text-muted: #9CA3AF;     /* Muted text */
+  
+  /* Typography */
+  --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Droid Sans Mono', 'Source Code Pro', monospace;
+  
+  /* Border Radius */
+  --radius-card: 12px;
+  --radius-input: 8px;
+  --radius-badge: 999px;
+  --radius-button: 8px;
+  
+  /* Spacing */
+  --navbar-height: 64px;
+  --form-max-width: 760px;
+  --card-padding-desktop: 32px;
+  --card-padding-mobile: 20px;
+  
+  /* Transitions */
+  --transition: 150ms ease-in-out;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg-page);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Civic UI Components */
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 12px 24px;
+  border-radius: var(--radius-button);
+  border: none;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-family);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-primary);
+  padding: 12px 24px;
+  border-radius: var(--radius-button);
+  border: 2px solid var(--color-primary);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-family);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btn-teal {
+  background-color: var(--color-teal);
+  color: white;
+  padding: 12px 24px;
+  border-radius: var(--radius-button);
+  border: none;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-family);
+}
+
+.btn-teal:hover {
+  background-color: #0F766E;
+}
+
+/* Cards */
+.civic-card {
+  background-color: var(--color-bg-card);
+  border-radius: var(--radius-card);
+  padding: var(--card-padding-desktop);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-border);
+}
+
+@media (max-width: 640px) {
+  .civic-card {
+    padding: var(--card-padding-mobile);
+  }
+}
+
+/* Form Inputs */
+.civic-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-input);
+  font-size: 15px;
+  font-family: var(--font-family);
+  color: var(--color-text-primary);
+  background-color: white;
+  transition: all var(--transition);
+}
+
+.civic-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(30, 45, 78, 0.1);
+}
+
+.civic-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.civic-input.error {
+  border-color: var(--color-danger);
+}
+
+.civic-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-input);
+  font-size: 15px;
+  font-family: var(--font-family);
+  color: var(--color-text-primary);
+  background-color: white;
+  transition: all var(--transition);
+  resize: vertical;
+  min-height: 100px;
+}
+
+.civic-textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(30, 45, 78, 0.1);
+}
+
+.civic-select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-input);
+  font-size: 15px;
+  font-family: var(--font-family);
+  color: var(--color-text-primary);
+  background-color: white;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.civic-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(30, 45, 78, 0.1);
+}
+
+/* Status Badges */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-badge);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-badge.pending {
+  background-color: rgba(107, 114, 128, 0.1);
+  color: #6B7280;
+}
+
+.status-badge.under-review {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: #F59E0B;
+}
+
+.status-badge.in-progress {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: #3B82F6;
+}
+
+.status-badge.completed {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10B981;
+}
+
+.status-badge.verified {
+  background-color: rgba(13, 148, 136, 0.1);
+  color: #0D9488;
+}
+
+.status-badge.rejected {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #EF4444;
+}
+
+/* Status Dot */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot.pending { background-color: #6B7280; }
+.status-dot.under-review { background-color: #F59E0B; }
+.status-dot.in-progress { background-color: #3B82F6; }
+.status-dot.completed { background-color: #10B981; }
+.status-dot.verified { background-color: #0D9488; }
+.status-dot.rejected { background-color: #EF4444; }
+
+/* Error Message */
+.error-message {
+  color: var(--color-danger);
+  font-size: 13px;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Form Label */
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 8px;
+}
+
+.form-label.required::after {
+  content: ' *';
+  color: var(--color-danger);
+}
+
+/* Navbar */
+.civic-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--navbar-height);
+  background-color: white;
+  border-bottom: 1px solid var(--color-border);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+}
+
+/* Utility Classes */
+.text-primary { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-muted { color: var(--color-text-muted); }
+.text-danger { color: var(--color-danger); }
+.text-success { color: var(--color-green); }
+
+.bg-page { background-color: var(--color-bg-page); }
+.bg-card { background-color: var(--color-bg-card); }
+
+.font-mono { font-family: var(--font-mono); }
+
+/* Responsive */
+@media (max-width: 640px) {
+  .civic-navbar {
+    padding: 0 16px;
+  }
+  
+  .btn-primary,
+  .btn-outline,
+  .btn-teal {
+    width: 100%;
+    justify-content: center;
+  }
+}

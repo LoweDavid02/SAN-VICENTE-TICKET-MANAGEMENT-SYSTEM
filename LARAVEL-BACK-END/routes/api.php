@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\Admin\AdminController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\Guest\GuestController;
+use App\Http\Controllers\Api\V1\NotificationController;
 use App\Http\Controllers\Api\V1\Personnel\PersonnelController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,12 +21,31 @@ Route::prefix('v1')->group(function () {
         Route::get('/tickets/{trackingCode}', [GuestController::class, 'trackTicket']);
     });
 
+    // ── Civic UI Public Routes (Simplified paths) ──────────────────────────
+    // Submit ticket with photos - stricter rate limit to prevent storage abuse
+    Route::post('/tickets', [GuestController::class, 'submitTicket'])
+        ->middleware('throttle:uploads');
+    
+    // Track and confirm - standard rate limit
+    Route::middleware('throttle:15,1')->group(function () {
+        Route::post('/tickets/track',          [GuestController::class, 'trackTicketPost']);
+        Route::patch('/tickets/{ref}/confirm', [GuestController::class, 'confirmResolution']);
+    });
+
     // ── Protected ─────────────────────────────────────────────────────────
     Route::middleware(['auth:sanctum', 'throttle:60,1'])->group(function () {
 
         Route::prefix('auth')->group(function () {
             Route::post('/logout', [AuthController::class, 'logout']);
             Route::get('/me',      [AuthController::class, 'me']);
+        });
+
+        // ── Notifications (All Portals) ───────────────────────────────────
+        Route::prefix('notifications')->group(function () {
+            Route::get('/',                [NotificationController::class, 'index']);
+            Route::patch('/{id}/read',     [NotificationController::class, 'markAsRead']);
+            Route::post('/mark-all-read',  [NotificationController::class, 'markAllAsRead']);
+            Route::delete('/{id}',         [NotificationController::class, 'destroy']);
         });
 
         // ── Admin ──────────────────────────────────────────────────────────

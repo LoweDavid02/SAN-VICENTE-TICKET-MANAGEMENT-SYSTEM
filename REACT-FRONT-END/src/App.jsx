@@ -43,12 +43,12 @@ function ProtectedRoute({ portalType, children }) {
 }
 
 /* ── Public pages — loaded eagerly (entry points) ── */
-import Landing  from './pages/Landing';
+import Landing  from './pages/LandingCivic';
 import Login    from './pages/Login';
 
 /* ── Guest pages (public, no authentication) ── */
-import GuestSubmission from './pages/GuestSubmission';
-import TrackRequest    from './pages/TrackRequest';
+import ReportConcern from './pages/ReportConcern';
+import TrackConcern from './pages/TrackConcern';
 
 /* ── Lazy-loaded pages — only downloaded when navigated to ── */
 const PortalSelector = lazy(() => import('./pages/PortalSelector'));
@@ -133,9 +133,11 @@ function AppRoutes() {
           <Route path={ROUTES.PORTAL} element={<PortalSelector />} />
           
           {/* ── Guest Ticket Submission (Public, No Auth) ── */}
-          <Route path="/submit"       element={<GuestSubmission />} />
-          <Route path="/track"        element={<TrackRequest />} />
-          <Route path="/track/:code"  element={<TrackRequest />} />
+          <Route path="/submit"       element={<Navigate to="/report" replace />} />
+          <Route path="/report"       element={<ReportConcern />} />
+          <Route path="/report/success" element={<ReportConcern />} />
+          <Route path="/track"        element={<TrackConcern />} />
+          <Route path="/track/:code"  element={<TrackConcern />} />
 
           {/* ════════════════════════════════════
               ADMIN PORTAL

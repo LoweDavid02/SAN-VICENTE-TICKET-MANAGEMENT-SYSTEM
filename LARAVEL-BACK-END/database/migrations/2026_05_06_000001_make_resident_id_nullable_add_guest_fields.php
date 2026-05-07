@@ -24,9 +24,29 @@ return new class extends Migration
             $table->string('guest_phone')->nullable()->after('guest_email');
             $table->text('guest_address')->nullable()->after('guest_phone');
             
-            // Add index on tracking_id for fast guest lookups
-            $table->index('tracking_id');
+            // Add tracking_id column (same as reference_code for guest lookups)
+            if (!Schema::hasColumn('tickets', 'tracking_id')) {
+                $table->string('tracking_id', 20)->nullable()->after('reference_code');
+            }
         });
+        
+        // Check if unique constraint exists before adding
+        $constraintExists = \DB::select("SELECT 1 FROM pg_constraint WHERE conname = 'tickets_tracking_id_unique'");
+        
+        if (empty($constraintExists)) {
+            Schema::table('tickets', function (Blueprint $table) {
+                $table->unique('tracking_id');
+            });
+        }
+        
+        // Check if index exists before adding
+        $indexExists = \DB::select("SELECT 1 FROM pg_indexes WHERE indexname = 'tickets_tracking_id_index'");
+        
+        if (empty($indexExists)) {
+            Schema::table('tickets', function (Blueprint $table) {
+                $table->index('tracking_id');
+            });
+        }
     }
 
     /**

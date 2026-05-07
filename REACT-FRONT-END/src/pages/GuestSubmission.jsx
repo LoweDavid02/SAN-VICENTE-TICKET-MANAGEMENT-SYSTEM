@@ -12,6 +12,7 @@ import {
   AlertCircle, Loader, Home, Phone, Mail, User 
 } from 'lucide-react';
 import axios from 'axios';
+import GuestNavbar from '../components/GuestNavbar';
 
 const CATEGORIES = [
   { value: 'streetlight', label: 'Streetlight Issue', icon: '💡' },
@@ -121,8 +122,7 @@ export default function GuestSubmission() {
     setError(null);
 
     try {
-      const response = await axios.post('/api/v1/guest/tickets', formData, {
-        baseURL: import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000',
+      const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api/v1'}/guest/tickets`, formData, {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -151,8 +151,10 @@ export default function GuestSubmission() {
   // Success screen
   if (step === 4 && trackingCode) {
     return (
-      <div style={{ minHeight: '100vh', background: 'var(--bg)', padding: '40px 20px' }}>
-        <div style={{ maxWidth: 600, margin: '0 auto', textAlign: 'center' }}>
+      <>
+        <GuestNavbar />
+        <div style={{ minHeight: '100vh', background: 'var(--bg)', padding: '104px 20px 40px' }}>
+          <div style={{ maxWidth: 600, margin: '0 auto', textAlign: 'center' }}>
           <div style={{ 
             width: 80, height: 80, borderRadius: '50%', 
             background: 'rgba(16, 185, 129, 0.1)', 
@@ -236,12 +238,15 @@ export default function GuestSubmission() {
           </button>
         </div>
       </div>
+      </>
     );
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--bg)', padding: '40px 20px' }}>
-      <div style={{ maxWidth: 800, margin: '0 auto' }}>
+    <>
+      <GuestNavbar />
+      <div style={{ minHeight: '100vh', background: 'var(--bg)', padding: '104px 20px 40px' }}>
+        <div style={{ maxWidth: 800, margin: '0 auto' }}>
         {/* Header */}
         <div style={{ marginBottom: 40 }}>
           <button
@@ -580,6 +585,7 @@ export default function GuestSubmission() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
