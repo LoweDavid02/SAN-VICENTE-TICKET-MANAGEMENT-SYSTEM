@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\Traits\FormatsUser;
 use App\Http\Requests\Api\LoginRequest;
 use App\Http\Requests\Api\RegisterRequest;
 use App\Models\User;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    use FormatsUser;
     /**
      * Authenticate a user and issue a Sanctum token.
      *
@@ -101,27 +103,5 @@ class AuthController extends Controller
             $this->formatUser($request->user()),
             'Authenticated user retrieved.'
         );
-    }
-
-    /**
-     * Format user data for API responses.
-     */
-    private function formatUser(User $user): array
-    {
-        return [
-            'id'         => $user->id,
-            'first_name' => $user->first_name,
-            'last_name'  => $user->last_name,
-            'full_name'  => $user->full_name,
-            'email'      => $user->email,
-            'phone'      => $user->phone,
-            'address'    => $user->address,
-            'bio'        => $user->bio,
-            'avatar'     => $user->avatar,
-            'portal'     => $user->portal,
-            'status'     => $user->status,
-            'role'       => $user->getRoleNames()->first(),
-            'created_at' => $user->created_at,
-        ];
     }
 }

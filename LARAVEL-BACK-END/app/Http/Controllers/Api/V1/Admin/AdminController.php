@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1\Admin;
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\Traits\FormatsUser;
+use App\Http\Requests\Api\AssignTicketRequest;
 use App\Http\Requests\Api\CreateUserRequest;
 use App\Http\Requests\Api\UpdateProfileRequest;
 use App\Models\Ticket;
@@ -66,7 +67,8 @@ class AdminController extends Controller
             }
         }
         if ($request->search) {
-            $search = substr(strip_tags($request->search), 0, 100);
+            // ✅ FIX: Use htmlspecialchars instead of strip_tags for proper XSS prevention
+            $search = htmlspecialchars(substr($request->search, 0, 100), ENT_QUOTES, 'UTF-8');
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'LIKE', "%{$search}%")
                   ->orWhere('tracking_id', 'LIKE', "%{$search}%");
@@ -101,16 +103,21 @@ class AdminController extends Controller
         try {
             $ticket = Ticket::findOrFail($id);
             
+            // ✅ FIX: Use htmlspecialchars instead of strip_tags for proper XSS prevention
+            $sanitizedNote = $request->field_note 
+                ? htmlspecialchars($request->field_note, ENT_QUOTES, 'UTF-8') 
+                : null;
+
             $ticket->update([
                 'status'     => $request->status,
                 'progress'   => Ticket::$statusProgress[$request->status] ?? $ticket->progress,
-                'field_note' => $request->field_note ? strip_tags($request->field_note) : null,
+                'field_note' => $sanitizedNote,
             ]);
 
             TicketTimeline::create([
                 'ticket_id'  => $ticket->id,
                 'status'     => $request->status,
-                'note'       => $request->field_note ? strip_tags($request->field_note) : null,
+                'note'       => $sanitizedNote,
                 'updated_by' => $request->user()->id,
             ]);
 
@@ -130,13 +137,8 @@ class AdminController extends Controller
     }
 
     /** Assign ticket to personnel */
-    public function assignTicket(Request $request, int $id): JsonResponse
+    public function assignTicket(AssignTicketRequest $request, int $id): JsonResponse
     {
-        $request->validate([
-            'personnel_id' => ['required', 'integer', 'exists:users,id'],
-            'note'         => ['nullable', 'string', 'max:500'],
-        ]);
-
         $ticket    = Ticket::findOrFail($id);
         // Scope to personnel portal only — prevents assigning to admin/resident
         $personnel = User::where('portal', 'personnel')
@@ -149,7 +151,11 @@ class AdminController extends Controller
             'progress'    => $ticket->status === 'Pending' ? 30 : $ticket->progress,
         ]);
 
-        $note = "Assigned to {$personnel->full_name}." . ($request->note ? ' Note: ' . strip_tags($request->note) : '');
+        // ✅ FIX: Use htmlspecialchars instead of strip_tags for proper XSS prevention
+        $sanitizedNote = $request->note 
+            ? htmlspecialchars($request->note, ENT_QUOTES, 'UTF-8') 
+            : '';
+        $note = "Assigned to {$personnel->full_name}." . ($sanitizedNote ? ' Note: ' . $sanitizedNote : '');
 
         TicketTimeline::create([
             'ticket_id'  => $ticket->id,
@@ -302,13 +308,19 @@ class AdminController extends Controller
 
         // Search by resident name or address
         if ($request->search) {
-            $search = substr(strip_tags($request->search), 0, 100);
+            // ✅ FIX: Use htmlspecialchars instead of strip_tags for proper sanitization
+            $search = htmlspecialchars(substr($request->search, 0, 100), ENT_QUOTES, 'UTF-8');
             $query->where(function ($q) use ($search) {
                 $q->where('location', 'LIKE', "%{$search}%")
                   ->orWhere('title', 'LIKE', "%{$search}%")
-                  ->orWhereHas('resident', fn($r) => $r->whereRaw(
-                      "LOWER(first_name || ' ' || last_name) LIKE LOWER(?)", ["%{$search}%"]
-                  ));
+                  ->orWhereHas('resident', function ($r) use ($search) {
+                      // ✅ FIX: Replace SQL concatenation with Laravel query builder
+                      $r->where(function ($subQuery) use ($search) {
+                          $subQuery->where('first_name', 'LIKE', "%{$search}%")
+                                   ->orWhere('last_name', 'LIKE', "%{$search}%")
+                                   ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ["%{$search}%"]);
+                      });
+                  });
             });
         }
 

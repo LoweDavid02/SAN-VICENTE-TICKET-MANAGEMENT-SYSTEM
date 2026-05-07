@@ -62,16 +62,21 @@ class PersonnelController extends Controller
         $user   = $request->user();
         $ticket = Ticket::where('assigned_to', $user->id)->findOrFail($id);
 
+        // ✅ FIX: Use htmlspecialchars instead of strip_tags for proper XSS prevention
+        $sanitizedNote = $request->field_note 
+            ? htmlspecialchars($request->field_note, ENT_QUOTES, 'UTF-8') 
+            : null;
+
         $ticket->update([
             'status'     => $request->status,
             'progress'   => Ticket::$statusProgress[$request->status] ?? $ticket->progress,
-            'field_note' => $request->field_note ? strip_tags($request->field_note) : null,
+            'field_note' => $sanitizedNote,
         ]);
 
         TicketTimeline::create([
             'ticket_id'  => $ticket->id,
             'status'     => $request->status,
-            'note'       => $request->field_note ? strip_tags($request->field_note) : null,
+            'note'       => $sanitizedNote,
             'updated_by' => $user->id,
         ]);
 
