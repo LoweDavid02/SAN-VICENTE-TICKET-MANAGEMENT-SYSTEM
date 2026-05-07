@@ -53,3 +53,25 @@ Then open: **http://localhost:5173/login**
 - **Backend:** Laravel 11, PHP 8.3, PostgreSQL, Sanctum, Spatie Permissions
 - **Frontend:** React 19, Vite, Zustand, React Query, Tailwind CSS
 - **Deployment:** Render.com (Docker + Static Site)
+
+---
+
+## 📚 Documentation
+
+Comprehensive project documentation is organized in the [`docs/`](./docs/) folder:
+
+- **[Quick Start Guide](./docs/guides/QUICK-START-GUIDE.md)** - Get up and running quickly
+- **[Testing Guide](./docs/guides/TESTING-GUIDE.md)** - Testing procedures and checklists
+- **[Production Deployment](./docs/implementation/PRODUCTION-DEPLOYMENT-READY.md)** - Deploy to production
+- **[Project WBS](./docs/wbs/PROJECT-WBS.md)** - Complete work breakdown structure
+- **[Design System](./docs/design/COLOR-PALETTE-REFERENCE.md)** - UI/UX and color palette
+- **[All Documentation](./docs/README.md)** - Complete documentation index
+
+### Documentation Categories
+
+- **Implementation** (67 docs) - Bug fixes, features, and deployment guides
+- **Status Reports** (40 docs) - Project status and completion summaries
+- **Design** (19 docs) - UI/UX, Material Design 3, and theming
+- **Guides** (14 docs) - Setup, testing, and troubleshooting
+- **WBS** (6 docs) - Project structure and planning
+- **Testing** (3 docs) - Testing checklists and verification
