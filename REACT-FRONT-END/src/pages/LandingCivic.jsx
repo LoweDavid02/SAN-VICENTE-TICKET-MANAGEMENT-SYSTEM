@@ -53,10 +53,10 @@ export default function Landing() {
               <Shield size={22} color="white" strokeWidth={2.5} />
             </div>
             <div>
-              <p style={{ fontSize: 16, fontWeight: 700, color: 'var(--color-primary)', lineHeight: 1.2 }}>
+              <p style={{ fontSize: 16, fontWeight: 700, color: '#1E2D4E', lineHeight: 1.2 }}>
                 Barangay San Vicente
               </p>
-              <p style={{ fontSize: 11, color: 'var(--color-text-secondary)', letterSpacing: '0.05em' }}>
+              <p style={{ fontSize: 11, color: '#6B7280', letterSpacing: '0.05em' }}>
                 Public Service Portal
               </p>
             </div>
@@ -104,9 +104,9 @@ export default function Landing() {
             borderTop: '1px solid var(--color-border)',
             padding: '16px 24px',
           }}>
-            <button onClick={() => scrollTo('#home')} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 0', border: 'none', background: 'none', fontSize: 15, color: 'var(--color-text-primary)', cursor: 'pointer' }}>Home</button>
-            <button onClick={() => scrollTo('#services')} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 0', border: 'none', background: 'none', fontSize: 15, color: 'var(--color-text-primary)', cursor: 'pointer' }}>Services</button>
-            <button onClick={() => scrollTo('#contact')} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 0', border: 'none', background: 'none', fontSize: 15, color: 'var(--color-text-primary)', cursor: 'pointer' }}>Contact</button>
+            <button onClick={() => scrollTo('#home')} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 0', border: 'none', background: 'none', fontSize: 15, color: '#1F2937', cursor: 'pointer' }}>Home</button>
+            <button onClick={() => scrollTo('#services')} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 0', border: 'none', background: 'none', fontSize: 15, color: '#1F2937', cursor: 'pointer' }}>Services</button>
+            <button onClick={() => scrollTo('#contact')} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 0', border: 'none', background: 'none', fontSize: 15, color: '#1F2937', cursor: 'pointer' }}>Contact</button>
           </div>
         )}
       </nav>
@@ -150,20 +150,23 @@ export default function Landing() {
           <h1 style={{
             fontSize: 'clamp(2rem, 5vw, 3.5rem)',
             fontWeight: 700,
-            color: 'white',
+            color: '#FFFFFF',
             marginBottom: 24,
             lineHeight: 1.2,
+            textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
           }}>
             Welcome to the official<br />San Vicente Service Portal
           </h1>
 
           <p style={{
             fontSize: 'clamp(1rem, 2vw, 1.25rem)',
-            color: 'rgba(255, 255, 255, 0.9)',
+            color: '#FFFFFF',
+            opacity: 0.95,
             marginBottom: 60,
             maxWidth: 600,
             margin: '0 auto 60px',
             lineHeight: 1.6,
+            textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
           }}>
             Your direct link to local governance and public assistance.
           </p>
@@ -199,10 +202,10 @@ export default function Landing() {
               }}>
                 <FileText size={32} color="white" />
               </div>
-              <h3 style={{ fontSize: 22, fontWeight: 600, color: 'var(--color-primary)', marginBottom: 16 }}>
+              <h3 style={{ fontSize: 22, fontWeight: 600, color: '#1E2D4E', marginBottom: 16 }}>
                 Submit a Concern
               </h3>
-              <p style={{ fontSize: 15, color: 'var(--color-text-secondary)', marginBottom: 24, lineHeight: 1.7 }}>
+              <p style={{ fontSize: 15, color: '#4B5563', marginBottom: 24, lineHeight: 1.7 }}>
                 Report issues, suggest improvements, or request assistance directly from barangay officials.
               </p>
               <button className="btn-primary" style={{ width: '100%' }}>
@@ -233,10 +236,10 @@ export default function Landing() {
               }}>
                 <MapPin size={32} color="white" />
               </div>
-              <h3 style={{ fontSize: 22, fontWeight: 600, color: 'var(--color-primary)', marginBottom: 16 }}>
+              <h3 style={{ fontSize: 22, fontWeight: 600, color: '#1E2D4E', marginBottom: 16 }}>
                 Track a Ticket
               </h3>
-              <p style={{ fontSize: 15, color: 'var(--color-text-secondary)', marginBottom: 24, lineHeight: 1.7 }}>
+              <p style={{ fontSize: 15, color: '#4B5563', marginBottom: 24, lineHeight: 1.7 }}>
                 Check the real-time status of your submitted reports using your ticket ID.
               </p>
               <button className="btn-outline" style={{ width: '100%' }}>
@@ -251,10 +254,10 @@ export default function Landing() {
       <section id="services" style={{ padding: '100px 40px', background: 'white' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 60 }}>
-            <h2 style={{ fontSize: 36, fontWeight: 600, color: 'var(--color-primary)', marginBottom: 16 }}>
+            <h2 style={{ fontSize: 36, fontWeight: 600, color: '#1E2D4E', marginBottom: 16 }}>
               Quick Resources
             </h2>
-            <p style={{ fontSize: 18, color: 'var(--color-text-secondary)' }}>
+            <p style={{ fontSize: 18, color: '#4B5563' }}>
               Access essential barangay services and information
             </p>
           </div>
@@ -291,10 +294,10 @@ export default function Landing() {
                 }}>
                   <item.icon size={28} color={item.color} />
                 </div>
-                <h3 style={{ fontSize: 18, fontWeight: 600, color: 'var(--color-primary)', marginBottom: 12 }}>
+                <h3 style={{ fontSize: 18, fontWeight: 600, color: '#1E2D4E', marginBottom: 12 }}>
                   {item.title}
                 </h3>
-                <p style={{ fontSize: 15, color: 'var(--color-text-secondary)' }}>
+                <p style={{ fontSize: 15, color: '#4B5563' }}>
                   {item.desc}
                 </p>
               </div>
@@ -318,10 +321,10 @@ export default function Landing() {
               { value: '25,000+', label: 'Residents Served' },
             ].map((stat, idx) => (
               <div key={idx} className="civic-card" style={{ padding: 32, textAlign: 'center' }}>
-                <p style={{ fontSize: 40, fontWeight: 700, color: 'var(--color-primary)', marginBottom: 12 }}>
+                <p style={{ fontSize: 40, fontWeight: 700, color: '#1E2D4E', marginBottom: 12 }}>
                   {stat.value}
                 </p>
-                <p style={{ fontSize: 14, color: 'var(--color-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                <p style={{ fontSize: 14, color: '#6B7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                   {stat.label}
                 </p>
               </div>
@@ -333,10 +336,10 @@ export default function Landing() {
       {/* CONTACT */}
       <section id="contact" style={{ padding: '100px 40px', background: 'white' }}>
         <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{ fontSize: 36, fontWeight: 600, color: 'var(--color-primary)', marginBottom: 16 }}>
+          <h2 style={{ fontSize: 36, fontWeight: 600, color: '#1E2D4E', marginBottom: 16 }}>
             Get in Touch
           </h2>
-          <p style={{ fontSize: 18, color: 'var(--color-text-secondary)', marginBottom: 48 }}>
+          <p style={{ fontSize: 18, color: '#4B5563', marginBottom: 48 }}>
             Have questions? Reach out to the Barangay San Vicente office.
           </p>
 
@@ -363,10 +366,10 @@ export default function Landing() {
                 }}>
                   <item.icon size={24} color="var(--color-teal)" />
                 </div>
-                <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-text-secondary)', marginBottom: 8, textTransform: 'uppercase' }}>
+                <p style={{ fontSize: 13, fontWeight: 600, color: '#6B7280', marginBottom: 8, textTransform: 'uppercase' }}>
                   {item.label}
                 </p>
-                <p style={{ fontSize: 16, fontWeight: 600, color: 'var(--color-primary)' }}>
+                <p style={{ fontSize: 16, fontWeight: 600, color: '#1E2D4E' }}>
                   {item.value}
                 </p>
               </div>
