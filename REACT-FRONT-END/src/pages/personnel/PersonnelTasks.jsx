@@ -296,18 +296,21 @@ export default function PersonnelTasksPage() {
               </div>
 
               {/* Evidence */}
-              {selected.images && selected.images.length > 0 && (
-                <div>
-                  <p style={{ fontSize: '11px', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 8 }}>Evidence ({selected.images.length})</p>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(64px, 1fr))', gap: 6 }}>
-                    {selected.images.map((img, idx) => (
-                      <div key={idx} style={{ aspectRatio: '1', borderRadius: 8, overflow: 'hidden', border: '1px solid #e2e8f0', background: '#f8fafc', cursor: 'pointer' }} onClick={() => window.open(img.url, '_blank')}>
-                        {img.type?.startsWith('image/') ? <img src={img.url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ImageIcon size={16} style={{ color: '#94a3b8' }} /></div>}
-                      </div>
-                    ))}
+              {(() => {
+                const images = Array.isArray(selected.images) ? selected.images : [];
+                return images.length > 0 && (
+                  <div>
+                    <p style={{ fontSize: '11px', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 8 }}>Evidence ({images.length})</p>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(64px, 1fr))', gap: 6 }}>
+                      {images.map((img, idx) => (
+                        <div key={idx} style={{ aspectRatio: '1', borderRadius: 8, overflow: 'hidden', border: '1px solid #e2e8f0', background: '#f8fafc', cursor: 'pointer' }} onClick={() => window.open(img.url, '_blank')}>
+                          {img.type?.startsWith('image/') ? <img src={img.url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ImageIcon size={16} style={{ color: '#94a3b8' }} /></div>}
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                );
+              })()}
 
               {/* Contact */}
               <div style={{ display: 'flex', gap: 8 }}>

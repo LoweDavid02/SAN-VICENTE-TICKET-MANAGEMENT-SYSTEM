@@ -473,41 +473,43 @@ export default function TrackConcern() {
               )}
 
             {/* Photos Section */}
-            {ticket.images && ticket.images.length > 0 && (
-              <div style={{
-                background: 'white',
-                borderRadius: 16,
-                padding: 32,
-                border: '1px solid #E5E7EB',
-              }}>
-                <h3 style={{ fontSize: 18, fontWeight: 600, color: '#000000', marginBottom: 20, fontFamily: 'Public Sans, sans-serif' }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: 20, verticalAlign: 'middle', marginRight: 8 }}>photo_library</span>
-                  Attached Photos
-                </h3>
+            {(() => {
+              const images = Array.isArray(ticket.images) ? ticket.images : [];
+              return images.length > 0 && (
                 <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-                  gap: 16,
+                  background: 'white',
+                  borderRadius: 16,
+                  padding: 32,
+                  border: '1px solid #E5E7EB',
                 }}>
-                  {ticket.images.map((imageUrl, index) => (
-                    <div
-                      key={index}
-                      style={{
-                        position: 'relative',
-                        borderRadius: 12,
-                        overflow: 'hidden',
-                        border: '1px solid #E5E7EB',
-                        cursor: 'pointer',
-                        transition: 'transform 0.2s',
-                      }}
-                      onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
-                      onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                      onClick={() => window.open(imageUrl, '_blank')}
-                    >
-                      <img
-                        src={imageUrl}
-                        alt={`Evidence photo ${index + 1}`}
+                  <h3 style={{ fontSize: 18, fontWeight: 600, color: '#000000', marginBottom: 20, fontFamily: 'Public Sans, sans-serif' }}>
+                    <span className="material-symbols-outlined" style={{ fontSize: 20, verticalAlign: 'middle', marginRight: 8 }}>photo_library</span>
+                    Attached Photos
+                  </h3>
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+                    gap: 16,
+                  }}>
+                    {images.map((imageUrl, index) => (
+                      <div
+                        key={index}
                         style={{
+                          position: 'relative',
+                          borderRadius: 12,
+                          overflow: 'hidden',
+                          border: '1px solid #E5E7EB',
+                          cursor: 'pointer',
+                          transition: 'transform 0.2s',
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                        onClick={() => window.open(imageUrl, '_blank')}
+                      >
+                        <img
+                          src={imageUrl}
+                          alt={`Evidence photo ${index + 1}`}
+                          style={{
                           width: '100%',
                           height: 200,
                           objectFit: 'cover',
@@ -548,7 +550,8 @@ export default function TrackConcern() {
                   ))}
                 </div>
               </div>
-            )}
+              );
+            })()}
 
             {/* Details Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>

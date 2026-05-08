@@ -413,23 +413,26 @@ export default function FieldWorkTask() {
               )}
 
               {/* Evidence */}
-              {selected.images?.length > 0 && (
-                <div>
-                  <p style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-4)', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 8 }}>
-                    Evidence ({selected.images.length})
-                  </p>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(60px, 1fr))', gap: 6 }}>
-                    {selected.images.map((img, idx) => (
-                      <div key={idx} style={{ aspectRatio: '1', borderRadius: 8, overflow: 'hidden', border: '1px solid var(--border)', background: 'var(--surface-2)', cursor: 'pointer' }} onClick={() => window.open(img.url, '_blank')}>
-                        {img.type?.startsWith('image/')
-                          ? <img src={img.url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                          : <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ImageIcon size={14} style={{ color: 'var(--text-4)' }} /></div>
-                        }
-                      </div>
-                    ))}
+              {(() => {
+                const images = Array.isArray(selected.images) ? selected.images : [];
+                return images.length > 0 && (
+                  <div>
+                    <p style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-4)', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 8 }}>
+                      Evidence ({images.length})
+                    </p>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(60px, 1fr))', gap: 6 }}>
+                      {images.map((img, idx) => (
+                        <div key={idx} style={{ aspectRatio: '1', borderRadius: 8, overflow: 'hidden', border: '1px solid var(--border)', background: 'var(--surface-2)', cursor: 'pointer' }} onClick={() => window.open(img.url, '_blank')}>
+                          {img.type?.startsWith('image/')
+                            ? <img src={img.url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            : <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ImageIcon size={14} style={{ color: 'var(--text-4)' }} /></div>
+                          }
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                );
+              })()}
 
               {/* Update button */}
               {selected.status !== 'Completed' && (
