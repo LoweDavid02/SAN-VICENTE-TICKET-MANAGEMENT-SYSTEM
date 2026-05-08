@@ -21,13 +21,8 @@ const INITIAL_NOTIFICATIONS = [
 ];
 
 export function AppProvider({ children }) {
-  // Initialize dark mode from localStorage, default to true (dark mode)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
-  const [darkMode,         setDarkModeState]    = useState(() => {
-    const saved = localStorage.getItem('theme');
-    return saved ? saved === 'dark' : true; // default to dark mode
-  });
   const [notifications,    setNotifications]    = useState(INITIAL_NOTIFICATIONS);
   const [modal,            setModal]            = useState(null);
 
@@ -37,21 +32,12 @@ export function AppProvider({ children }) {
    */
   const { user, logout } = useAuthStore();
 
-  // Apply theme class to document root and persist to localStorage
+  // Apply light mode class to document root on mount
   useEffect(() => {
     const root = document.documentElement;
-    if (darkMode) {
-      root.classList.remove('light-mode');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      root.classList.add('light-mode');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [darkMode]);
-
-  // Wrapper function to update dark mode state
-  const setDarkMode = useCallback((value) => {
-    setDarkModeState(typeof value === 'function' ? value : () => value);
+    root.classList.add('light-mode');
+    // Clean up any old theme localStorage entries
+    localStorage.removeItem('theme');
   }, []);
 
   const unreadCount = notifications.filter((n) => !n.read).length;
@@ -79,13 +65,12 @@ export function AppProvider({ children }) {
   const contextValue = useMemo(() => ({
     sidebarCollapsed, setSidebarCollapsed,
     mobileDrawerOpen, setMobileDrawerOpen,
-    darkMode, setDarkMode,
     notifications, unreadCount, markAllRead, markRead, addNotification,
     modal, openModal, closeModal,
     user,
     logout,
   }), [
-    sidebarCollapsed, mobileDrawerOpen, darkMode,
+    sidebarCollapsed, mobileDrawerOpen,
     notifications, unreadCount, markAllRead, markRead, addNotification,
     modal, openModal, closeModal, user, logout,
   ]);

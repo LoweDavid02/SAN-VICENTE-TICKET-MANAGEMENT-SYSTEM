@@ -16,106 +16,10 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   COLOR PALETTE — Agent-Native Minimalist (DARK MODE - IMPROVED)
-   ═══════════════════════════════════════════════════════════════════════════ */
-:root {
-  /* ── Core Backgrounds ──────────────────────────────────────────────────── */
-  --bg:        #0D0D10;   /* page background - deep dark */
-  --surface:   #16161E;   /* cards, panels, sidebars - improved contrast */
-  --raised:    #1C1C26;   /* elevated elements, hover states - more visible */
-  
-  /* ── Borders ───────────────────────────────────────────────────────────── */
-  --border:    #27273A;   /* default border - more visible */
-  --border2:   #35354A;   /* stronger border, focus - improved contrast */
-  
-  /* ── Text ──────────────────────────────────────────────────────────────── */
-  --txt:       #EDEDF5;   /* primary text - brighter for better readability */
-  --muted:     #8B8BA5;   /* secondary text, labels - improved visibility */
-  --dim:       #52526A;   /* placeholder, disabled - more visible */
-  
-  /* ── Accent (Single Brand Color) ───────────────────────────────────────── */
-  --accent:    #8B7BFF;   /* purple-indigo accent - brighter for dark mode */
-  --accent-bg: rgba(139, 123, 255, 0.12); /* accent fill for active items - more visible */
-  --accent2:   #7B6CF6;   /* darker accent for hover */
-  
-  /* ── Semantic Colors (IMPROVED FOR DARK MODE) ──────────────────────────── */
-  --green:     #4ADE80;   /* success - brighter green */
-  --amber:     #FCD34D;   /* warning - brighter amber */
-  --red:       #FB7185;   /* error - softer but visible red */
-  
-  /* ── Legacy Compatibility (mapped to new system) ───────────────────────── */
-  --brand:          var(--accent);
-  --brand-dark:     var(--accent2);
-  --brand-light:    var(--accent-bg);
-  --brand-muted:    var(--accent-bg);
-  --navy:           var(--surface);
-  --sidebar-bg:     var(--surface);
-  --sidebar-border: var(--border);
-  --sidebar-hover:  var(--raised);
-  --sidebar-active: var(--accent-bg);
-  
-  /* ── Surface Variants ──────────────────────────────────────────────────── */
-  --surface-2:     var(--bg);
-  --surface-3:     var(--raised);
-  --surface-4:     var(--raised);
-  
-  /* ── Text Variants ─────────────────────────────────────────────────────── */
-  --text-1:        var(--txt);
-  --text-2:        var(--txt);
-  --text-3:        var(--muted);
-  --text-4:        var(--dim);
-  
-  /* ── Topbar ────────────────────────────────────────────────────────────── */
-  --topbar-h:      56px;
-  --topbar-bg:     var(--surface);
-  --topbar-border: var(--border);
-  
-  /* ── Sidebar ───────────────────────────────────────────────────────────── */
-  --sidebar-w:     240px;
-  --sidebar-w-sm:  64px;
-  
-  /* ── Shadows (Subtle for depth) ────────────────────────────────────────── */
-  --shadow-sm:     0 1px 2px 0 rgba(0, 0, 0, 0.3);
-  --shadow:        0 1px 3px 0 rgba(0, 0, 0, 0.4);
-  --shadow-md:     0 4px 6px -1px rgba(0, 0, 0, 0.4);
-  --shadow-lg:     0 10px 15px -3px rgba(0, 0, 0, 0.5);
-  --shadow-xl:     0 20px 25px -5px rgba(0, 0, 0, 0.5);
-  --shadow-xs:     0 1px 1px 0 rgba(0, 0, 0, 0.2);
-  
-  /* ── Typography ────────────────────────────────────────────────────────── */
-  --font-sans:     -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-  --font-mono:     'JetBrains Mono', 'Fira Mono', 'Cascadia Code', monospace;
-  --font-display:  var(--font-sans);
-  
-  /* ── Border Radius ─────────────────────────────────────────────────────── */
-  --radius-sm:     5px;
-  --radius:        6px;
-  --radius-lg:     8px;
-  --radius-xl:     10px;
-  
-  /* ── Tailwind Color Compatibility ──────────────────────────────────────── */
-  --color-navy-900: var(--surface);
-  --color-teal-500: var(--accent);
-  --color-teal-600: var(--accent2);
-  --color-slate-400: var(--muted);
-  --color-slate-500: var(--muted);
-  --color-slate-600: var(--muted);
-  --color-slate-700: var(--dim);
-  --color-slate-800: var(--raised);
-  --color-slate-900: var(--surface);
-  --color-red-500: var(--red);
-  --color-red-600: var(--red);
-  --color-amber-500: var(--amber);
-  --color-emerald-500: var(--green);
-  --color-blue-500: var(--accent);
-  --color-blue-600: var(--accent2);
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   LIGHT MODE THEME - MODERN & PROFESSIONAL (IMPROVED)
+   COLOR PALETTE — Modern Professional Light Mode
    Inspired by: GitHub, Linear, Notion, Stripe
    ═══════════════════════════════════════════════════════════════════════════ */
-.light-mode {
+:root {
   /* ── Core Backgrounds ──────────────────────────────────────────────────── */
   --bg:        #F8F9FA;   /* page background - soft neutral gray */
   --surface:   #FFFFFF;   /* cards, panels, sidebars - pure white */
@@ -162,7 +66,35 @@
   --sidebar-hover:  var(--raised);
   --sidebar-active: var(--accent-bg);
   
-  /* ── Tailwind Color Compatibility - LIGHT MODE ─────────────────────────── */
+  /* ── Topbar ────────────────────────────────────────────────────────────── */
+  --topbar-h:      56px;
+  --topbar-bg:     var(--surface);
+  --topbar-border: var(--border);
+  
+  /* ── Sidebar ───────────────────────────────────────────────────────────── */
+  --sidebar-w:     240px;
+  --sidebar-w-sm:  64px;
+  
+  /* ── Shadows (Subtle for depth) ────────────────────────────────────────── */
+  --shadow-sm:     0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow:        0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  --shadow-md:     0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg:     0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl:     0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --shadow-xs:     0 1px 1px 0 rgba(0, 0, 0, 0.05);
+  
+  /* ── Typography ────────────────────────────────────────────────────────── */
+  --font-sans:     -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+  --font-mono:     'JetBrains Mono', 'Fira Mono', 'Cascadia Code', monospace;
+  --font-display:  var(--font-sans);
+  
+  /* ── Border Radius ─────────────────────────────────────────────────────── */
+  --radius-sm:     5px;
+  --radius:        6px;
+  --radius-lg:     8px;
+  --radius-xl:     10px;
+  
+  /* ── Tailwind Color Compatibility ──────────────────────────────────────── */
   --color-navy-900: #111827;
   --color-teal-500: var(--accent);
   --color-teal-600: var(--accent2);
@@ -178,18 +110,10 @@
   --color-emerald-500: var(--green);
   --color-blue-500: var(--accent);
   --color-blue-600: var(--accent2);
-  
-  /* ── Shadows (Subtle for depth) ────────────────────────────────────────── */
-  --shadow-sm:     0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow:        0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  --shadow-md:     0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  --shadow-lg:     0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  --shadow-xl:     0 20px 25px -5px rgba(0, 0, 0, 0.1);
-  --shadow-xs:     0 1px 1px 0 rgba(0, 0, 0, 0.05);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   BASE STYLES — Agent-Native Minimalist
+   BASE STYLES — Modern Professional
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* ── Reset ───────────────────────────────────────────────── */
@@ -198,7 +122,7 @@ html { height:100%; scroll-behavior:smooth; scroll-padding-top: 80px }
 body {
   font-family: var(--font-sans);
   background: var(--bg);
-  color: var(--txt);
+  color: #111827;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -207,38 +131,21 @@ body {
 }
 #root { min-height:100vh }
 
-/* ── Light Mode Specific Overrides for Modern Professional Look ─── */
-.light-mode body {
+/* ── Typography ──────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
   color: #111827;
-}
-
-.light-mode h1,
-.light-mode h2,
-.light-mode h3,
-.light-mode h4,
-.light-mode h5,
-.light-mode h6 {
-  color: #111827 !important;
   font-weight: 700;
 }
 
-.light-mode p,
-.light-mode span:not(.badge):not([class*="icon"]):not([class*="status"]):not([class*="recharts"]),
-.light-mode div:not([class*="badge"]):not([class*="icon"]):not([class*="status"]):not([class*="recharts"]),
-.light-mode label,
-.light-mode a {
-  color: #374151 !important;
+p, span:not(.badge):not([class*="icon"]):not([class*="status"]):not([class*="recharts"]),
+div:not([class*="badge"]):not([class*="icon"]):not([class*="status"]):not([class*="recharts"]),
+label, a {
+  color: #374151;
 }
 
 /* ✅ EXCEPTION: Landing page hero section must keep white text on dark background */
-/* Only apply to direct text elements in hero, NOT to cards */
 .hero-section > div > h1,
 .hero-section > div > p:not(.civic-card p) {
-  color: #FFFFFF !important;
-}
-
-.light-mode .hero-section > div > h1,
-.light-mode .hero-section > div > p:not(.civic-card p) {
   color: #FFFFFF !important;
 }
 
@@ -250,423 +157,411 @@ body {
   color: #1E2D4E !important;
 }
 
-.light-mode .hero-section .civic-card h3,
-.light-mode .hero-section .civic-card p,
-.light-mode .hero-section .civic-card span {
-  color: #1E2D4E !important;
-}
-
-.light-mode .hero-section .civic-card p {
+.hero-section .civic-card p {
   color: #4B5563 !important;
 }
 
-.light-mode #hero h1,
-.light-mode #hero h2,
-.light-mode #hero h3,
-.light-mode #hero p,
-.light-mode #hero span,
-.light-mode #hero div,
-.light-mode #hero button {
+#hero h1, #hero h2, #hero h3, #hero p, #hero span, #hero div, #hero button {
   color: inherit !important;
 }
 
 /* ✅ Ensure hero text remains white/light colored */
-.light-mode #hero .font-display {
+#hero .font-display {
   color: #fff !important;
 }
 
-.light-mode #hero [style*="color: #fff"],
-.light-mode #hero [style*="color: rgba(226,232,240"],
-.light-mode #hero [style*="color: rgba(148,163,184"],
-.light-mode #hero [style*="color: #22a83a"],
-.light-mode #hero [style*="color: #86efac"] {
+#hero [style*="color: #fff"],
+#hero [style*="color: rgba(226,232,240"],
+#hero [style*="color: rgba(148,163,184"],
+#hero [style*="color: #22a83a"],
+#hero [style*="color: #86efac"] {
   color: inherit !important;
 }
 
-.light-mode .nav-item {
+.nav-item {
   color: #6B7280;
 }
 
-.light-mode .nav-item:hover {
+.nav-item:hover {
   color: #111827;
   background: #F3F4F6;
 }
 
-.light-mode .nav-item.active {
+.nav-item.active {
   color: #7C3AED;
   background: rgba(124, 58, 237, 0.08);
   font-weight: 600;
 }
 
-.light-mode .section-label {
+.section-label {
   color: #6B7280;
   font-weight: 600;
   text-transform: uppercase;
 }
 
-.light-mode .badge {
+.badge {
   font-weight: 600;
 }
 
-.light-mode .badge-slate {
+.badge-slate {
   background: #F3F4F6;
   color: #4B5563;
   border: 1px solid #E5E7EB;
 }
 
-.light-mode .badge-success,
-.light-mode .badge-green {
+.badge-success,
+.badge-green {
   background: rgba(16, 185, 129, 0.12);
   color: #059669;
   border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
-.light-mode .badge-warning,
-.light-mode .badge-amber {
+.badge-warning,
+.badge-amber {
   background: rgba(245, 158, 11, 0.12);
   color: #D97706;
   border: 1px solid rgba(245, 158, 11, 0.2);
 }
 
-.light-mode .badge-error,
-.light-mode .badge-red {
+.badge-error,
+.badge-red {
   background: rgba(239, 68, 68, 0.12);
   color: #DC2626;
   border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
-.light-mode .badge-blue {
+.badge-blue {
   background: rgba(124, 58, 237, 0.12);
   color: #7C3AED;
   border: 1px solid rgba(124, 58, 237, 0.2);
 }
 
-.light-mode .stat-value {
+.stat-value {
   color: #111827;
   font-weight: 700;
 }
 
-.light-mode .data-table th {
+.data-table th {
   color: #111827;
   background: #F9FAFB;
   font-weight: 600;
 }
 
-.light-mode .data-table td {
+.data-table td {
   color: #374151;
 }
 
-.light-mode .data-table tbody tr:hover {
+.data-table tbody tr:hover {
   background: #F9FAFB;
 }
 
-.light-mode .btn-ghost {
+.btn-ghost {
   color: #6B7280;
 }
 
-.light-mode .btn-ghost:hover {
+.btn-ghost:hover {
   color: #111827;
   background: #F3F4F6;
 }
 
-.light-mode .btn-outline {
+.btn-outline {
   color: #111827;
   border-color: #D1D5DB;
   background: transparent;
 }
 
-.light-mode .btn-outline:hover {
+.btn-outline:hover {
   background: #F3F4F6;
   border-color: #9CA3AF;
 }
 
-.light-mode .btn-brand {
+.btn-brand {
   background: #7C3AED;
   color: #FFFFFF;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   font-weight: 600;
 }
 
-.light-mode .btn-brand:hover {
+.btn-brand:hover {
   background: #6D28D9;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-.light-mode .input {
+.input {
   color: #111827;
   border-color: #D1D5DB;
   background: #FFFFFF;
 }
 
-.light-mode .input:focus {
+.input:focus {
   border-color: #7C3AED;
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
 }
 
-.light-mode .input::placeholder {
+.input::placeholder {
   color: #9CA3AF;
 }
 
-.light-mode .card {
+.card {
   background: #FFFFFF;
   border-color: #E5E7EB;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
-.light-mode .card:hover {
+.card:hover {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   border-color: #D1D5DB;
 }
 
-.light-mode .topbar {
+.topbar {
   background: #FFFFFF;
   border-bottom-color: #E5E7EB;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-.light-mode .topbar h1,
-.light-mode .topbar p,
-.light-mode .topbar span {
+.topbar h1,
+.topbar p,
+.topbar span {
   color: #111827;
 }
 
-.light-mode .sidebar {
+.sidebar {
   background: #FFFFFF;
   border-right-color: #E5E7EB;
   box-shadow: 1px 0 3px 0 rgba(0, 0, 0, 0.05);
 }
 
-.light-mode .modal-backdrop {
+.modal-backdrop {
   background: rgba(17, 24, 39, 0.6);
 }
 
-.light-mode .modal-box {
+.modal-box {
   background: #FFFFFF;
   border-color: #E5E7EB;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 /* Additional overrides for specific text elements */
-.light-mode [style*="color: var(--text-1)"],
-.light-mode [style*="color: var(--text-2)"],
-.light-mode [style*="color: var(--text-3)"],
-.light-mode [style*="color: var(--text-4)"],
-.light-mode [style*="color: var(--txt)"],
-.light-mode [style*="color: var(--muted)"] {
+[style*="color: var(--text-1)"],
+[style*="color: var(--text-2)"],
+[style*="color: var(--text-3)"],
+[style*="color: var(--text-4)"],
+[style*="color: var(--txt)"],
+[style*="color: var(--muted)"] {
   color: inherit;
 }
 
 /* Ensure all text in light mode is visible */
-.light-mode * {
+* {
   color: inherit;
 }
 
-.light-mode button:not([style*="color"]):not([style*="background: #"]):not([style*="background:#"]):not(.btn-teal):not(.btn-brand),
-.light-mode .btn:not([style*="color"]):not([style*="background: #"]):not([style*="background:#"]):not(.btn-teal):not(.btn-brand) {
+button:not([style*="color"]):not([style*="background: #"]):not([style*="background:#"]):not(.btn-teal):not(.btn-brand),
+.btn:not([style*="color"]):not([style*="background: #"]):not([style*="background:#"]):not(.btn-teal):not(.btn-brand) {
   color: #111827;
 }
 
-.light-mode .btn-brand,
-.light-mode .btn-brand *,
-.light-mode .btn-teal,
-.light-mode .btn-teal *,
-.light-mode button[style*="background: #0058be"],
-.light-mode button[style*="background: #0058be"] *,
-.light-mode button[style*="background:#0058be"],
-.light-mode button[style*="background:#0058be"] *,
-.light-mode button[style*="background: #10B981"],
-.light-mode button[style*="background: #10B981"] *,
-.light-mode button[style*="background:#10B981"],
-.light-mode button[style*="background:#10B981"] *,
-.light-mode button[style*="background: #22a83a"],
-.light-mode button[style*="background: #22a83a"] *,
-.light-mode button[style*="background:#22a83a"],
-.light-mode button[style*="background:#22a83a"] *,
-.light-mode button[style*="background: #0d9488"],
-.light-mode button[style*="background: #0d9488"] *,
-.light-mode button[style*="background:#0d9488"],
-.light-mode button[style*="background:#0d9488"] * {
+.btn-brand,
+.btn-brand *,
+.btn-teal,
+.btn-teal *,
+button[style*="background: #0058be"],
+button[style*="background: #0058be"] *,
+button[style*="background:#0058be"],
+button[style*="background:#0058be"] *,
+button[style*="background: #10B981"],
+button[style*="background: #10B981"] *,
+button[style*="background:#10B981"],
+button[style*="background:#10B981"] *,
+button[style*="background: #22a83a"],
+button[style*="background: #22a83a"] *,
+button[style*="background:#22a83a"],
+button[style*="background:#22a83a"] *,
+button[style*="background: #0d9488"],
+button[style*="background: #0d9488"] *,
+button[style*="background:#0d9488"],
+button[style*="background:#0d9488"] * {
   color: #FFFFFF !important;
 }
 
 /* Mobile drawer */
-.light-mode .mobile-drawer {
+.mobile-drawer {
   background: #FFFFFF;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
 }
 
-.light-mode .mobile-drawer__action {
+.mobile-drawer__action {
   color: #6B7280;
 }
 
-.light-mode .mobile-drawer__action:hover {
+.mobile-drawer__action:hover {
   color: #111827;
   background: #F3F4F6;
 }
 
 /* Notification dropdown */
-.light-mode .notif-dropdown {
+.notif-dropdown {
   background: #FFFFFF;
   border-color: #E5E7EB;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* User dropdown */
-.light-mode [class*="dropdown"] {
+[class*="dropdown"] {
   background: #FFFFFF;
   color: #111827;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* ── Light Mode Chart Text Overrides ─────────────────────────────────── */
-.light-mode .recharts-text,
-.light-mode .recharts-cartesian-axis-tick-value,
-.light-mode .recharts-legend-item-text {
+.recharts-text,
+.recharts-cartesian-axis-tick-value,
+.recharts-legend-item-text {
   fill: #374151 !important;
 }
 
-.light-mode .recharts-label {
+.recharts-label {
   fill: #111827 !important;
 }
 
 /* ── Light Mode Inline Style Overrides ──────────────────────────────── */
 /* Override inline styles that use CSS variables */
-.light-mode [style*="color: var(--text-1)"],
-.light-mode [style*="color: var(--text-2)"],
-.light-mode [style*="color: var(--text-3)"],
-.light-mode [style*="color: var(--text-4)"],
-.light-mode [style*="color: var(--txt)"],
-.light-mode [style*="color: var(--muted)"],
-.light-mode [style*="color:var(--text-1)"],
-.light-mode [style*="color:var(--text-2)"],
-.light-mode [style*="color:var(--text-3)"],
-.light-mode [style*="color:var(--text-4)"],
-.light-mode [style*="color:var(--txt)"],
-.light-mode [style*="color:var(--muted)"] {
+[style*="color: var(--text-1)"],
+[style*="color: var(--text-2)"],
+[style*="color: var(--text-3)"],
+[style*="color: var(--text-4)"],
+[style*="color: var(--txt)"],
+[style*="color: var(--muted)"],
+[style*="color:var(--text-1)"],
+[style*="color:var(--text-2)"],
+[style*="color:var(--text-3)"],
+[style*="color:var(--text-4)"],
+[style*="color:var(--txt)"],
+[style*="color:var(--muted)"] {
   color: inherit !important;
 }
 
 /* Ensure stat values are visible */
-.light-mode .stat-value,
-.light-mode [class*="stat"] [style*="fontSize: 20"],
-.light-mode [class*="stat"] [style*="fontSize: '1.85rem'"],
-.light-mode [class*="stat"] [style*="fontWeight: 800"] {
+.stat-value,
+[class*="stat"] [style*="fontSize: 20"],
+[class*="stat"] [style*="fontSize: '1.85rem'"],
+[class*="stat"] [style*="fontWeight: 800"] {
   color: #111827 !important;
 }
 
 /* Ensure all text in cards is visible */
-.light-mode .card p,
-.light-mode .card span,
-.light-mode .card div,
-.light-mode .card label,
-.light-mode .card h1,
-.light-mode .card h2,
-.light-mode .card h3,
-.light-mode .card h4,
-.light-mode .card h5,
-.light-mode .card h6 {
+.card p,
+.card span,
+.card div,
+.card label,
+.card h1,
+.card h2,
+.card h3,
+.card h4,
+.card h5,
+.card h6 {
   color: inherit;
 }
 
 /* Ensure table text is visible */
-.light-mode .data-table th,
-.light-mode .data-table td,
-.light-mode table th,
-.light-mode table td {
+.data-table th,
+.data-table td,
+table th,
+table td {
   color: #374151 !important;
 }
 
-.light-mode .data-table th {
+.data-table th {
   color: #111827 !important;
   font-weight: 600;
 }
 
 /* Ensure form labels and inputs are visible */
-.light-mode .form-label,
-.light-mode label {
+.form-label,
+label {
   color: #111827 !important;
 }
 
-.light-mode .input,
-.light-mode input,
-.light-mode textarea,
-.light-mode select {
+.input,
+input,
+textarea,
+select {
   color: #111827 !important;
 }
 
-.light-mode .input::placeholder,
-.light-mode input::placeholder,
-.light-mode textarea::placeholder {
+.input::placeholder,
+input::placeholder,
+textarea::placeholder {
   color: #9CA3AF !important;
 }
 
 /* Ensure section labels are visible */
-.light-mode .section-label {
+.section-label {
   color: #6B7280 !important;
 }
 
 /* Ensure topbar text is visible */
-.light-mode .topbar h1,
-.light-mode .topbar p,
-.light-mode .topbar span,
-.light-mode .topbar div {
+.topbar h1,
+.topbar p,
+.topbar span,
+.topbar div {
   color: inherit;
 }
 
-.light-mode .topbar h1 {
+.topbar h1 {
   color: #111827 !important;
 }
 
-.light-mode .topbar p {
+.topbar p {
   color: #6B7280 !important;
 }
 
 /* Ensure sidebar text is visible */
-.light-mode .sidebar p,
-.light-mode .sidebar span,
-.light-mode .sidebar div {
+.sidebar p,
+.sidebar span,
+.sidebar div {
   color: inherit;
 }
 
 /* Ensure modal text is visible */
-.light-mode .modal-box p,
-.light-mode .modal-box span,
-.light-mode .modal-box div,
-.light-mode .modal-box h1,
-.light-mode .modal-box h2,
-.light-mode .modal-box h3 {
+.modal-box p,
+.modal-box span,
+.modal-box div,
+.modal-box h1,
+.modal-box h2,
+.modal-box h3 {
   color: inherit;
 }
 
-.light-mode .modal-box h1,
-.light-mode .modal-box h2,
-.light-mode .modal-box h3 {
+.modal-box h1,
+.modal-box h2,
+.modal-box h3 {
   color: #111827 !important;
 }
 
 /* Ensure notification text is visible */
-.light-mode .notif-dropdown p,
-.light-mode .notif-dropdown span {
+.notif-dropdown p,
+.notif-dropdown span {
   color: inherit;
 }
 
 /* Ensure dropdown menu text is visible */
-.light-mode [class*="dropdown"] p,
-.light-mode [class*="dropdown"] span,
-.light-mode [class*="dropdown"] button {
+[class*="dropdown"] p,
+[class*="dropdown"] span,
+[class*="dropdown"] button {
   color: inherit;
 }
 
 /* Ensure all button text is visible */
-.light-mode .btn,
-.light-mode button:not([style*="color: #fff"]):not([style*="color:#fff"]):not([style*="color: white"]):not([style*="color:white"]) {
+.btn,
+button:not([style*="color: #fff"]):not([style*="color:#fff"]):not([style*="color: white"]):not([style*="color:white"]) {
   color: #111827;
 }
 
 /* Ensure monospace text is visible */
-.light-mode .mono,
-.light-mode [style*="fontFamily: 'monospace'"],
-.light-mode [style*="fontFamily: var(--font-mono)"] {
+.mono,
+[style*="fontFamily: 'monospace'"],
+[style*="fontFamily: var(--font-mono)"] {
   color: inherit;
 }
 
@@ -1736,56 +1631,56 @@ body {
 }
 
 /* Light mode overrides for Civic status badges */
-.light-mode .status-badge.pending {
+.status-badge.pending {
   background-color: rgba(107, 114, 128, 0.1);
   color: #4B5563;
   border-color: rgba(107, 114, 128, 0.2);
 }
 
-.light-mode .status-badge.under-review {
+.status-badge.under-review {
   background-color: rgba(245, 158, 11, 0.1);
   color: #D97706;
   border-color: rgba(245, 158, 11, 0.2);
 }
 
-.light-mode .status-badge.in-progress {
+.status-badge.in-progress {
   background-color: rgba(59, 130, 246, 0.1);
   color: #2563EB;
   border-color: rgba(59, 130, 246, 0.2);
 }
 
-.light-mode .status-badge.completed {
+.status-badge.completed {
   background-color: rgba(16, 185, 129, 0.1);
   color: #059669;
   border-color: rgba(16, 185, 129, 0.2);
 }
 
-.light-mode .status-badge.verified,
-.light-mode .status-badge.verified-closed {
+.status-badge.verified,
+.status-badge.verified-closed {
   background-color: rgba(13, 148, 136, 0.1);
   color: #0F766E;
   border-color: rgba(13, 148, 136, 0.2);
 }
 
-.light-mode .status-badge.rejected {
+.status-badge.rejected {
   background-color: rgba(239, 68, 68, 0.1);
   color: #DC2626;
   border-color: rgba(239, 68, 68, 0.2);
 }
 
-.light-mode .status-badge-red {
+.status-badge-red {
   background-color: rgba(239, 68, 68, 0.1);
   color: #DC2626;
   border-color: rgba(239, 68, 68, 0.2);
 }
 
-.light-mode .status-badge-amber {
+.status-badge-amber {
   background-color: rgba(245, 158, 11, 0.1);
   color: #D97706;
   border-color: rgba(245, 158, 11, 0.2);
 }
 
-.light-mode .status-badge-green {
+.status-badge-green {
   background-color: rgba(16, 185, 129, 0.1);
   color: #059669;
   border-color: rgba(16, 185, 129, 0.2);
@@ -1941,7 +1836,7 @@ body {
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
 }
 
-.light-mode .glass-panel {
+.glass-panel {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -1958,7 +1853,7 @@ body {
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
 
-.light-mode .glass-panel-dark {
+.glass-panel-dark {
   background: rgba(30, 45, 78, 0.95);
 }
 
@@ -2014,7 +1909,7 @@ body {
   background: var(--color-border);
 }
 
-.light-mode .timeline-line {
+.timeline-line {
   background: #E5E7EB;
 }
 
@@ -2042,7 +1937,7 @@ body {
   background: white;
 }
 
-.light-mode .timeline-dot {
+.timeline-dot {
   background: white;
 }
 
@@ -2067,7 +1962,7 @@ body {
   opacity: 0.7;
 }
 
-.light-mode .timeline-content {
+.timeline-content {
   background: white;
   border-color: #E5E7EB;
 }
@@ -2101,126 +1996,126 @@ body {
 }
 
 /* ── Light Mode Priority Badge Text ────────────────────────────────────── */
-.light-mode [style*="background: #fef2f2"],
-.light-mode [style*="background: #fffbeb"],
-.light-mode [style*="background: #f0fdf4"] {
+[style*="background: #fef2f2"],
+[style*="background: #fffbeb"],
+[style*="background: #f0fdf4"] {
   color: inherit !important;
 }
 
-.light-mode [style*="color: #b91c1c"],
-.light-mode [style*="color: #b45309"],
-.light-mode [style*="color: #065f46"] {
+[style*="color: #b91c1c"],
+[style*="color: #b45309"],
+[style*="color: #065f46"] {
   color: inherit !important;
 }
 
 /* ── Light Mode Task Text ──────────────────────────────────────────────── */
-.light-mode [style*="color: #94a3b8"],
-.light-mode [style*="color: rgba(148,163,184"] {
+[style*="color: #94a3b8"],
+[style*="color: rgba(148,163,184"] {
   color: #6B7280 !important;
 }
 
-.light-mode [style*="color: #0f172a"],
-.light-mode [style*="color: #1e293b"] {
+[style*="color: #0f172a"],
+[style*="color: #1e293b"] {
   color: #111827 !important;
 }
 
 /* ── Light Mode Slate Color Overrides ──────────────────────────────────── */
-.light-mode [style*="color: #64748b"],
-.light-mode [style*="color: #475569"],
-.light-mode [style*="color: #334155"] {
+[style*="color: #64748b"],
+[style*="color: #475569"],
+[style*="color: #334155"] {
   color: #374151 !important;
 }
 
-.light-mode [style*="color: #cbd5e1"],
-.light-mode [style*="color: #e2e8f0"] {
+[style*="color: #cbd5e1"],
+[style*="color: #e2e8f0"] {
   color: #9CA3AF !important;
 }
 
 /* ── Light Mode Text Size Overrides ────────────────────────────────────── */
-.light-mode [style*="fontSize: 11"],
-.light-mode [style*="fontSize: 12"],
-.light-mode [style*="fontSize: 13"] {
+[style*="fontSize: 11"],
+[style*="fontSize: 12"],
+[style*="fontSize: 13"] {
   color: inherit;
 }
 
 /* ── Light Mode Specific Component Text ────────────────────────────────── */
-.light-mode .animate-fade-up p,
-.light-mode .animate-fade-up span,
-.light-mode .animate-fade-up div {
+.animate-fade-up p,
+.animate-fade-up span,
+.animate-fade-up div {
   color: inherit;
 }
 
 /* ── Light Mode Grid Text ──────────────────────────────────────────────── */
-.light-mode [style*="display: grid"] p,
-.light-mode [style*="display: grid"] span,
-.light-mode [style*="display: grid"] div {
+[style*="display: grid"] p,
+[style*="display: grid"] span,
+[style*="display: grid"] div {
   color: inherit;
 }
 
 /* ── Light Mode Flex Text ──────────────────────────────────────────────── */
-.light-mode [style*="display: flex"] p,
-.light-mode [style*="display: flex"] span,
-.light-mode [style*="display: flex"] div {
+[style*="display: flex"] p,
+[style*="display: flex"] span,
+[style*="display: flex"] div {
   color: inherit;
 }
 
 /* ── Light Mode Avatar Text ────────────────────────────────────────────── */
-.light-mode .avatar,
-.light-mode [style*="borderRadius: '50%'"],
-.light-mode [style*="borderRadius: 50"] {
+.avatar,
+[style*="borderRadius: '50%'"],
+[style*="borderRadius: 50"] {
   color: #FFFFFF !important;
 }
 
 /* ── Light Mode Empty State Text ───────────────────────────────────────── */
-.light-mode .empty-state,
-.light-mode [style*="textAlign: 'center'"] p {
+.empty-state,
+[style*="textAlign: 'center'"] p {
   color: #6B7280 !important;
 }
 
 /* ── Light Mode Loading Text ───────────────────────────────────────────── */
-.light-mode [style*="color: '#94a3b8'"],
-.light-mode [style*="color:'#94a3b8'"] {
+[style*="color: '#94a3b8'"],
+[style*="color:'#94a3b8'"] {
   color: #6B7280 !important;
 }
 
 /* ── Light Mode Link Text ──────────────────────────────────────────────── */
-.light-mode a:not(.btn):not([class*="badge"]) {
+a:not(.btn):not([class*="badge"]) {
   color: #7C3AED !important;
 }
 
-.light-mode a:not(.btn):not([class*="badge"]):hover {
+a:not(.btn):not([class*="badge"]):hover {
   color: #6D28D9 !important;
 }
 
 /* ── Light Mode Accent Text ────────────────────────────────────────────── */
-.light-mode [style*="color: var(--brand)"],
-.light-mode [style*="color:var(--brand)"],
-.light-mode [style*="color: var(--accent)"],
-.light-mode [style*="color:var(--accent)"] {
+[style*="color: var(--brand)"],
+[style*="color:var(--brand)"],
+[style*="color: var(--accent)"],
+[style*="color:var(--accent)"] {
   color: #7C3AED !important;
 }
 
 /* ── Light Mode Success Text ───────────────────────────────────────────── */
-.light-mode [style*="color: var(--green)"],
-.light-mode [style*="color:var(--green)"] {
+[style*="color: var(--green)"],
+[style*="color:var(--green)"] {
   color: #059669 !important;
 }
 
 /* ── Light Mode Warning Text ───────────────────────────────────────────── */
-.light-mode [style*="color: var(--amber)"],
-.light-mode [style*="color:var(--amber)"] {
+[style*="color: var(--amber)"],
+[style*="color:var(--amber)"] {
   color: #D97706 !important;
 }
 
 /* ── Light Mode Error Text ─────────────────────────────────────────────── */
-.light-mode [style*="color: var(--red)"],
-.light-mode [style*="color:var(--red)"] {
+[style*="color: var(--red)"],
+[style*="color:var(--red)"] {
   color: #DC2626 !important;
 }
 
 /* ── Light Mode Dim Text ───────────────────────────────────────────────── */
-.light-mode [style*="color: var(--dim)"],
-.light-mode [style*="color:var(--dim)"] {
+[style*="color: var(--dim)"],
+[style*="color:var(--dim)"] {
   color: #9CA3AF !important;
 }
 
@@ -2230,84 +2125,84 @@ body {
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* ── Fix All Dark Inline Text Colors ───────────────────────────────────── */
-.light-mode [style*="color: '#0f172a'"],
-.light-mode [style*="color:'#0f172a'"],
-.light-mode [style*="color: #0f172a"],
-.light-mode [style*="color:#0f172a"] {
+[style*="color: '#0f172a'"],
+[style*="color:'#0f172a'"],
+[style*="color: #0f172a"],
+[style*="color:#0f172a"] {
   color: #111827 !important;
 }
 
-.light-mode [style*="color: '#1e293b'"],
-.light-mode [style*="color:'#1e293b'"],
-.light-mode [style*="color: #1e293b"],
-.light-mode [style*="color:#1e293b"] {
+[style*="color: '#1e293b'"],
+[style*="color:'#1e293b'"],
+[style*="color: #1e293b"],
+[style*="color:#1e293b"] {
   color: #111827 !important;
 }
 
-.light-mode [style*="color: '#334155'"],
-.light-mode [style*="color:'#334155'"],
-.light-mode [style*="color: #334155"],
-.light-mode [style*="color:#334155"] {
+[style*="color: '#334155'"],
+[style*="color:'#334155'"],
+[style*="color: #334155"],
+[style*="color:#334155"] {
   color: #374151 !important;
 }
 
-.light-mode [style*="color: '#475569'"],
-.light-mode [style*="color:'#475569'"],
-.light-mode [style*="color: #475569"],
-.light-mode [style*="color:#475569"] {
+[style*="color: '#475569'"],
+[style*="color:'#475569'"],
+[style*="color: #475569"],
+[style*="color:#475569"] {
   color: #374151 !important;
 }
 
-.light-mode [style*="color: '#64748b'"],
-.light-mode [style*="color:'#64748b'"],
-.light-mode [style*="color: #64748b"],
-.light-mode [style*="color:#64748b"] {
+[style*="color: '#64748b'"],
+[style*="color:'#64748b'"],
+[style*="color: #64748b"],
+[style*="color:#64748b"] {
   color: #6B7280 !important;
 }
 
-.light-mode [style*="color: '#94a3b8'"],
-.light-mode [style*="color:'#94a3b8'"],
-.light-mode [style*="color: #94a3b8"],
-.light-mode [style*="color:#94a3b8"] {
+[style*="color: '#94a3b8'"],
+[style*="color:'#94a3b8'"],
+[style*="color: #94a3b8"],
+[style*="color:#94a3b8"] {
   color: #9CA3AF !important;
 }
 
-.light-mode [style*="color: '#cbd5e1'"],
-.light-mode [style*="color:'#cbd5e1'"],
-.light-mode [style*="color: #cbd5e1"],
-.light-mode [style*="color:#cbd5e1"] {
+[style*="color: '#cbd5e1'"],
+[style*="color:'#cbd5e1'"],
+[style*="color: #cbd5e1"],
+[style*="color:#cbd5e1"] {
   color: #D1D5DB !important;
 }
 
-.light-mode [style*="color: '#e2e8f0'"],
-.light-mode [style*="color:'#e2e8f0'"],
-.light-mode [style*="color: #e2e8f0"],
-.light-mode [style*="color:#e2e8f0"] {
+[style*="color: '#e2e8f0'"],
+[style*="color:'#e2e8f0'"],
+[style*="color: #e2e8f0"],
+[style*="color:#e2e8f0"] {
   color: #E5E7EB !important;
 }
 
 /* ── Fix RGBA Dark Text Colors ─────────────────────────────────────────── */
-.light-mode [style*="color: rgba(15,23,42"],
-.light-mode [style*="color:rgba(15,23,42"],
-.light-mode [style*="color: rgba(30,41,59"],
-.light-mode [style*="color:rgba(30,41,59"] {
+[style*="color: rgba(15,23,42"],
+[style*="color:rgba(15,23,42"],
+[style*="color: rgba(30,41,59"],
+[style*="color:rgba(30,41,59"] {
   color: #111827 !important;
 }
 
-.light-mode [style*="color: rgba(51,65,85"],
-.light-mode [style*="color:rgba(51,65,85"],
-.light-mode [style*="color: rgba(71,85,105"],
-.light-mode [style*="color:rgba(71,85,105"] {
+[style*="color: rgba(51,65,85"],
+[style*="color:rgba(51,65,85"],
+[style*="color: rgba(71,85,105"],
+[style*="color:rgba(71,85,105"] {
   color: #374151 !important;
 }
 
-.light-mode [style*="color: rgba(100,116,139"],
-.light-mode [style*="color:rgba(100,116,139"] {
+[style*="color: rgba(100,116,139"],
+[style*="color:rgba(100,116,139"] {
   color: #6B7280 !important;
 }
 
-.light-mode [style*="color: rgba(148,163,184"],
-.light-mode [style*="color:rgba(148,163,184"] {
+[style*="color: rgba(148,163,184"],
+[style*="color:rgba(148,163,184"] {
   color: #9CA3AF !important;
 }
 
@@ -2326,85 +2221,85 @@ footer *,
 }
 
 /* ── Dark Background Sections - Force White Text ───────────────────────── */
-.light-mode [style*="background: linear-gradient"][style*="#0f172a"] *,
-.light-mode [style*="background: linear-gradient"][style*="#1e293b"] *,
-.light-mode [style*="background: linear-gradient"][style*="#334155"] * {
+[style*="background: linear-gradient"][style*="#0f172a"] *,
+[style*="background: linear-gradient"][style*="#1e293b"] *,
+[style*="background: linear-gradient"][style*="#334155"] * {
   color: #FFFFFF !important;
 }
 
 /* ── Hero Section Text - Always White on Dark Backgrounds ──────────────── */
-.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] h1,
-.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] h2,
-.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] h3,
-.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] p,
-.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] span {
+[style*="background: linear-gradient"][style*="rgba(15,23,42"] h1,
+[style*="background: linear-gradient"][style*="rgba(15,23,42"] h2,
+[style*="background: linear-gradient"][style*="rgba(15,23,42"] h3,
+[style*="background: linear-gradient"][style*="rgba(15,23,42"] p,
+[style*="background: linear-gradient"][style*="rgba(15,23,42"] span {
   color: #FFFFFF !important;
 }
 
 /* ── Card Text on Light Backgrounds ────────────────────────────────────── */
-.light-mode [style*="background: '#fff'"] [style*="color"],
-.light-mode [style*="background:'#fff'"] [style*="color"],
-.light-mode [style*="background: #fff"] [style*="color"],
-.light-mode [style*="background:#fff"] [style*="color"],
-.light-mode [style*="background: white"] [style*="color"] {
+[style*="background: '#fff'"] [style*="color"],
+[style*="background:'#fff'"] [style*="color"],
+[style*="background: #fff"] [style*="color"],
+[style*="background:#fff"] [style*="color"],
+[style*="background: white"] [style*="color"] {
   /* Inherit from parent or use default text colors */
 }
 
 /* ── Ensure Headings Are Always Visible ────────────────────────────────── */
-.light-mode h1[style*="color"],
-.light-mode h2[style*="color"],
-.light-mode h3[style*="color"],
-.light-mode h4[style*="color"],
-.light-mode h5[style*="color"],
-.light-mode h6[style*="color"] {
+h1[style*="color"],
+h2[style*="color"],
+h3[style*="color"],
+h4[style*="color"],
+h5[style*="color"],
+h6[style*="color"] {
   color: #111827 !important;
 }
 
 /* ── Ensure Paragraphs Are Always Visible ──────────────────────────────── */
-.light-mode p[style*="color: '#64748b'"],
-.light-mode p[style*="color:'#64748b'"],
-.light-mode p[style*="color: #64748b"],
-.light-mode p[style*="color:#64748b"],
-.light-mode p[style*="color: '#475569'"],
-.light-mode p[style*="color:'#475569'"],
-.light-mode p[style*="color: #475569"],
-.light-mode p[style*="color:#475569"] {
+p[style*="color: '#64748b'"],
+p[style*="color:'#64748b'"],
+p[style*="color: #64748b"],
+p[style*="color:#64748b"],
+p[style*="color: '#475569'"],
+p[style*="color:'#475569'"],
+p[style*="color: #475569"],
+p[style*="color:#475569"] {
   color: #6B7280 !important;
 }
 
 /* ── Button Text - Always White on Colored Backgrounds ─────────────────── */
-.light-mode button[style*="background: linear-gradient"] {
+button[style*="background: linear-gradient"] {
   color: #FFFFFF !important;
 }
 
-.light-mode button[style*="background: '#14b8a6'"],
-.light-mode button[style*="background:'#14b8a6'"],
-.light-mode button[style*="background: #14b8a6"],
-.light-mode button[style*="background:#14b8a6"],
-.light-mode button[style*="background: '#22a83a'"],
-.light-mode button[style*="background:'#22a83a'"],
-.light-mode button[style*="background: #22a83a"],
-.light-mode button[style*="background:#22a83a"] {
+button[style*="background: '#14b8a6'"],
+button[style*="background:'#14b8a6'"],
+button[style*="background: #14b8a6"],
+button[style*="background:#14b8a6"],
+button[style*="background: '#22a83a'"],
+button[style*="background:'#22a83a'"],
+button[style*="background: #22a83a"],
+button[style*="background:#22a83a"] {
   color: #FFFFFF !important;
 }
 
 /* ── Span Text Visibility ──────────────────────────────────────────────── */
-.light-mode span[style*="color: '#94a3b8'"],
-.light-mode span[style*="color:'#94a3b8'"],
-.light-mode span[style*="color: #94a3b8"],
-.light-mode span[style*="color:#94a3b8"] {
+span[style*="color: '#94a3b8'"],
+span[style*="color:'#94a3b8'"],
+span[style*="color: #94a3b8"],
+span[style*="color:#94a3b8"] {
   color: #9CA3AF !important;
 }
 
-.light-mode span[style*="color: '#64748b'"],
-.light-mode span[style*="color:'#64748b'"],
-.light-mode span[style*="color: #64748b"],
-.light-mode span[style*="color:#64748b"] {
+span[style*="color: '#64748b'"],
+span[style*="color:'#64748b'"],
+span[style*="color: #64748b"],
+span[style*="color:#64748b"] {
   color: #6B7280 !important;
 }
 
 /* ── Professional Color Hierarchy ──────────────────────────────────────── */
-.light-mode {
+{
   /* Primary text - Pure black for maximum readability */
   --color-text-primary: #111827;
   
@@ -2419,113 +2314,113 @@ footer *,
 }
 
 /* ── Ensure All Text Elements Use Professional Colors ──────────────────── */
-.light-mode body {
+body {
   color: var(--color-text-primary);
 }
 
-.light-mode h1,
-.light-mode h2,
-.light-mode h3,
-.light-mode h4,
-.light-mode h5,
-.light-mode h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--color-text-primary);
 }
 
-.light-mode p {
+p {
   color: var(--color-text-secondary);
 }
 
-.light-mode small,
-.light-mode .text-sm {
+small,
+.text-sm {
   color: var(--color-text-muted);
 }
 
 /* ── Override Any Remaining Dark Text Issues ───────────────────────────── */
-.light-mode [class*="text-slate"],
-.light-mode [class*="text-gray"] {
+[class*="text-slate"],
+[class*="text-gray"] {
   color: var(--color-text-secondary) !important;
 }
 
 /* ── Ensure Consistent Text Colors in All Sections ─────────────────────── */
-.light-mode section {
+section {
   color: var(--color-text-primary);
 }
 
-.light-mode section p {
+section p {
   color: var(--color-text-secondary);
 }
 
-.light-mode section span {
+section span {
   color: var(--color-text-muted);
 }
 
 /* ── Fix Text in Cards ─────────────────────────────────────────────────── */
-.light-mode .civic-card,
-.light-mode [style*="borderRadius: 20"],
-.light-mode [style*="borderRadius:20"],
-.light-mode [style*="border-radius: 20"],
-.light-mode [style*="border-radius:20"] {
+.civic-card,
+[style*="borderRadius: 20"],
+[style*="borderRadius:20"],
+[style*="border-radius: 20"],
+[style*="border-radius:20"] {
   color: var(--color-text-primary);
 }
 
-.light-mode .civic-card p,
-.light-mode [style*="borderRadius: 20"] p,
-.light-mode [style*="borderRadius:20"] p {
+.civic-card p,
+[style*="borderRadius: 20"] p,
+[style*="borderRadius:20"] p {
   color: var(--color-text-secondary);
 }
 
 /* ── Fix Navigation Text ───────────────────────────────────────────────── */
-.light-mode nav,
-.light-mode nav * {
+nav,
+nav * {
   color: var(--color-text-primary);
 }
 
-.light-mode nav button {
+nav button {
   color: var(--color-text-secondary);
 }
 
-.light-mode nav button:hover {
+nav button:hover {
   color: var(--color-text-primary);
 }
 
 /* ── Fix Stats and Numbers ─────────────────────────────────────────────── */
-.light-mode [class*="stats"] *,
-.light-mode [style*="textAlign: 'center'"] [style*="fontSize: '1.5rem'"],
-.light-mode [style*="textAlign:'center'"] [style*="fontSize:'1.5rem'"] {
+[class*="stats"] *,
+[style*="textAlign: 'center'"] [style*="fontSize: '1.5rem'"],
+[style*="textAlign:'center'"] [style*="fontSize:'1.5rem'"] {
   color: inherit;
 }
 
 /* ── Accessibility - Ensure WCAG AA Contrast Ratios ────────────────────── */
-.light-mode {
+{
   /* Minimum contrast ratio of 4.5:1 for normal text */
   /* Minimum contrast ratio of 3:1 for large text (18pt+ or 14pt+ bold) */
 }
 
 /* ── Force White Text on All Dark Gradient Backgrounds ─────────────────── */
-.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"],
-.light-mode [style*="background:linear-gradient"][style*="rgba(15,23,42"],
-.light-mode [style*="background: linear-gradient"][style*="rgba(30,41,59"],
-.light-mode [style*="background:linear-gradient"][style*="rgba(30,41,59"] {
+[style*="background: linear-gradient"][style*="rgba(15,23,42"],
+[style*="background:linear-gradient"][style*="rgba(15,23,42"],
+[style*="background: linear-gradient"][style*="rgba(30,41,59"],
+[style*="background:linear-gradient"][style*="rgba(30,41,59"] {
   color: #FFFFFF !important;
 }
 
-.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] *,
-.light-mode [style*="background:linear-gradient"][style*="rgba(15,23,42"] *,
-.light-mode [style*="background: linear-gradient"][style*="rgba(30,41,59"] *,
-.light-mode [style*="background:linear-gradient"][style*="rgba(30,41,59"] * {
+[style*="background: linear-gradient"][style*="rgba(15,23,42"] *,
+[style*="background:linear-gradient"][style*="rgba(15,23,42"] *,
+[style*="background: linear-gradient"][style*="rgba(30,41,59"] *,
+[style*="background:linear-gradient"][style*="rgba(30,41,59"] * {
   color: #FFFFFF !important;
 }
 
 /* ── Exception: Keep Accent Colors on Dark Backgrounds ─────────────────── */
-.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color: '#22a83a'"],
-.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color:'#22a83a'"],
-.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color: #22a83a"],
-.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color:#22a83a"],
-.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color: '#14b8a6'"],
-.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color:'#14b8a6'"],
-.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color: #14b8a6"],
-.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color:#14b8a6"] {
+[style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color: '#22a83a'"],
+[style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color:'#22a83a'"],
+[style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color: #22a83a"],
+[style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color:#22a83a"],
+[style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color: '#14b8a6'"],
+[style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color:'#14b8a6'"],
+[style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color: #14b8a6"],
+[style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color:#14b8a6"] {
   /* Keep accent colors as-is on dark backgrounds */
   color: inherit !important;
 }
@@ -2552,7 +2447,7 @@ footer *,
   border-top: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-.light-mode .map-overlay {
+.map-overlay {
   background: rgba(255, 255, 255, 0.95);
 }
 
@@ -2564,7 +2459,7 @@ footer *,
   padding: 32px;
 }
 
-.light-mode .help-card {
+.help-card {
   background: #1E2D4E;
 }
 
@@ -2657,7 +2552,7 @@ footer *,
   border-color: var(--md3-secondary);
 }
 
-.light-mode .bento-context-card {
+.bento-context-card {
   background: white;
   border-color: #E5E7EB;
 }
@@ -2702,7 +2597,7 @@ footer *,
   border: 1px solid var(--md3-outline-variant);
 }
 
-.light-mode .instruction-card {
+.instruction-card {
   background: #F9FAFB;
   border-color: #E5E7EB;
 }

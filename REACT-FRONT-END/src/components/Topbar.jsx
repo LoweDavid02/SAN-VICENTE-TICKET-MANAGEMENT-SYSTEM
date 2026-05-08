@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Bell, Sun, Moon, X, AlertTriangle, CheckCircle, Info, User, ChevronRight, Globe, Menu } from 'lucide-react';
+import { Bell, X, AlertTriangle, CheckCircle, Info, User, ChevronRight, Globe, Menu } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useT } from '../stores/langStore';
 
@@ -12,7 +12,7 @@ const NOTIF_ICON = {
 };
 
 export default function Topbar({ sidebarWidth }) {
-  const { darkMode, setDarkMode, notifications, unreadCount, markAllRead, markRead, user, openModal, logout, mobileDrawerOpen, setMobileDrawerOpen } = useApp();
+  const { notifications, unreadCount, markAllRead, markRead, user, openModal, logout, mobileDrawerOpen, setMobileDrawerOpen } = useApp();
   const { t, lang, setLang } = useT();
   const navigate  = useNavigate();
   const location  = useLocation();
@@ -86,11 +86,6 @@ export default function Topbar({ sidebarWidth }) {
         <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--brand)', flexShrink: 0 }} />
         Live · v4.2.1
       </div>
-
-      {/* Dark mode */}
-      <button onClick={() => setDarkMode((d) => !d)} className="btn btn-ghost" style={{ width: 36, height: 36, padding: 0, justifyContent: 'center', borderRadius: 'var(--radius)' }} aria-label="Toggle dark mode">
-        {darkMode ? <Sun size={15} /> : <Moon size={15} />}
-      </button>
 
       {/* Language toggle */}
       <button

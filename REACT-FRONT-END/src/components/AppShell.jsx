@@ -7,12 +7,8 @@ import SyncStatusBar from './SyncStatusBar';
 import { useApp } from '../context/AppContext';
 
 export default function AppShell({ portalType }) {
-  const { sidebarCollapsed, darkMode, mobileDrawerOpen, setMobileDrawerOpen } = useApp();
+  const { sidebarCollapsed, mobileDrawerOpen, setMobileDrawerOpen } = useApp();
   const sidebarW = sidebarCollapsed ? 'var(--sidebar-w-sm)' : 'var(--sidebar-w)';
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', darkMode);
-  }, [darkMode]);
 
   // Close drawer on route change
   useEffect(() => {
