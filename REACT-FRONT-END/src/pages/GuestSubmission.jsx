@@ -5,21 +5,23 @@
  * Residents can submit requests without creating an account.
  */
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, ArrowRight, CheckCircle2, MapPin, Upload, 
   AlertCircle, Loader, Home, Phone, Mail, User 
 } from 'lucide-react';
 import axios from 'axios';
+import ReCAPTCHA from 'react-google-recaptcha';
 import GuestNavbar from '../components/GuestNavbar';
 
 const CATEGORIES = [
-  { value: 'streetlight', label: 'Streetlight Issue', icon: '💡' },
-  { value: 'drainage', label: 'Drainage Problem', icon: '🌊' },
-  { value: 'road', label: 'Road Damage', icon: '🛣️' },
-  { value: 'waste', label: 'Waste Management', icon: '🗑️' },
-  { value: 'water', label: 'Water Supply', icon: '💧' },
+  { value: 'infrastructure', label: 'Infrastructure', icon: '🛣️' },
+  { value: 'sanitation', label: 'Sanitation', icon: '🚰' },
+  { value: 'public_safety', label: 'Public Safety', icon: '🚨' },
+  { value: 'waste_management', label: 'Waste Management', icon: '🗑️' },
+  { value: 'health_&_medical', label: 'Health & Medical', icon: '⚕️' },
+  { value: 'public_order', label: 'Public Order', icon: '👮' },
   { value: 'other', label: 'Other', icon: '📋' },
 ];
 
@@ -35,6 +37,8 @@ export default function GuestSubmission() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [trackingCode, setTrackingCode] = useState(null);
+  const [captchaToken, setCaptchaToken] = useState(null);
+  const recaptchaRef = useRef(null);
 
   // Form data
   const [formData, setFormData] = useState({
@@ -118,11 +122,20 @@ export default function GuestSubmission() {
   const handleSubmit = async () => {
     if (!validateStep()) return;
 
+    // Check if CAPTCHA is completed
+    if (!captchaToken) {
+      setError('Please complete the reCAPTCHA verification');
+      return;
+    }
+
     setIsSubmitting(true);
     setError(null);
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api/v1'}/guest/tickets`, formData, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api/v1'}/guest/tickets`, {
+        ...formData,
+        captcha_token: captchaToken,
+      }, {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -132,8 +145,18 @@ export default function GuestSubmission() {
       if (response.data.success) {
         setTrackingCode(response.data.tracking_id);
         setStep(4); // Success step
+        // Reset CAPTCHA after successful submission
+        if (recaptchaRef.current) {
+          recaptchaRef.current.reset();
+        }
+        setCaptchaToken(null);
       } else {
         setError(response.data.message || 'Failed to submit request');
+        // Reset CAPTCHA on failure
+        if (recaptchaRef.current) {
+          recaptchaRef.current.reset();
+        }
+        setCaptchaToken(null);
       }
     } catch (err) {
       if (import.meta.env.DEV) {
@@ -143,6 +166,11 @@ export default function GuestSubmission() {
         err.response?.data?.message || 
         'Failed to submit your request. Please try again.'
       );
+      // Reset CAPTCHA on error
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset();
+      }
+      setCaptchaToken(null);
     } finally {
       setIsSubmitting(false);
     }
@@ -220,6 +248,10 @@ export default function GuestSubmission() {
                   images: [],
                 });
                 setTrackingCode(null);
+                setCaptchaToken(null);
+                if (recaptchaRef.current) {
+                  recaptchaRef.current.reset();
+                }
               }}
               className="btn btn-outline"
               style={{ minWidth: 180 }}
@@ -529,6 +561,36 @@ export default function GuestSubmission() {
                     <p style={{ fontSize: 14, color: 'var(--txt)' }}><strong>Urgency:</strong> {formData.severity}</p>
                   </div>
                 </div>
+
+                {/* reCAPTCHA Widget */}
+                <div>
+                  <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--muted)', marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    Verification Required
+                  </h3>
+                  <div style={{ display: 'flex', justifyContent: 'center', padding: '16px 0' }}>
+                    <ReCAPTCHA
+                      ref={recaptchaRef}
+                      sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+                      onChange={(token) => {
+                        setCaptchaToken(token);
+                        setError(null);
+                      }}
+                      onExpired={() => {
+                        setCaptchaToken(null);
+                        setError('reCAPTCHA expired. Please verify again.');
+                      }}
+                      onErrored={() => {
+                        setCaptchaToken(null);
+                        setError('reCAPTCHA error. Please try again.');
+                      }}
+                    />
+                  </div>
+                  {!captchaToken && (
+                    <p style={{ fontSize: 12, color: 'var(--muted)', textAlign: 'center', marginTop: 8 }}>
+                      Please complete the verification above to submit your request
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           )}
@@ -565,7 +627,7 @@ export default function GuestSubmission() {
                 <button
                   onClick={handleSubmit}
                   className="btn btn-brand"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !captchaToken}
                   style={{ minWidth: 140 }}
                 >
                   {isSubmitting ? (

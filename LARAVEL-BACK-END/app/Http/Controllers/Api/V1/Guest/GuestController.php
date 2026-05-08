@@ -10,6 +10,7 @@ use App\Models\TicketTimeline;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -25,6 +26,31 @@ class GuestController extends Controller
     public function submitTicket(SubmitGuestTicketRequest $request): JsonResponse
     {
         try {
+            // Verify reCAPTCHA token with Google
+            $recaptchaResponse = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+                'secret'   => config('services.recaptcha.secret'),
+                'response' => $request->captcha_token,
+                'remoteip' => $request->ip(),
+            ]);
+
+            $recaptchaData = $recaptchaResponse->json();
+
+            // Check if CAPTCHA verification failed
+            if (!$recaptchaData['success']) {
+                Log::warning('reCAPTCHA verification failed', [
+                    'ip'           => $request->ip(),
+                    'error_codes'  => $recaptchaData['error-codes'] ?? [],
+                ]);
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'reCAPTCHA verification failed. Please try again.',
+                    'errors'  => [
+                        'captcha_token' => ['Invalid or expired reCAPTCHA. Please verify again.']
+                    ],
+                ], 422);
+            }
+
             DB::beginTransaction();
 
             // Generate unique tracking code: SV-YYYY-XXXXX

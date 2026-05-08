@@ -23,6 +23,9 @@ class SubmitGuestTicketRequest extends FormRequest
     public function rules(): array
     {
         return [
+            // reCAPTCHA verification
+            'captcha_token' => ['required', 'string'],
+            
             // Guest information (required for non-authenticated submissions)
             'guest_name'    => ['required', 'string', 'min:2', 'max:255'],
             'guest_email'   => ['required', 'email:rfc', 'max:255'],
@@ -50,6 +53,8 @@ class SubmitGuestTicketRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'captcha_token.required' => 'Please complete the reCAPTCHA verification.',
+            
             'guest_name.required'    => 'Please provide your full name.',
             'guest_email.required'   => 'Please provide your email address.',
             'guest_email.email'      => 'Please provide a valid email address.',

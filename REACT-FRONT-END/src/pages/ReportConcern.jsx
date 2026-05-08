@@ -4,8 +4,9 @@
  * Material Design 3 success page with glass morphism
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import ReCAPTCHA from 'react-google-recaptcha';
 import api from '../lib/axios';
 
 const CATEGORIES = [
@@ -32,6 +33,8 @@ export default function ReportConcern() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
   const [locating, setLocating] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState(null);
+  const recaptchaRef = useRef(null);
 
   // Get reference code directly from location.state (synchronous)
   // This ensures it's available immediately when the component renders
@@ -173,6 +176,17 @@ export default function ReportConcern() {
 
     console.log('Submit button clicked - starting validation');
 
+    // Check CAPTCHA first
+    if (!captchaToken) {
+      setErrors({ captcha: 'Please complete the reCAPTCHA verification' });
+      // Scroll to CAPTCHA
+      const captchaElement = document.querySelector('.recaptcha-container');
+      if (captchaElement) {
+        captchaElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return;
+    }
+
     // Validate all fields
     const fieldsToValidate = ['guest_name', 'guest_email', 'guest_phone', 'guest_address', 'category', 'description', 'location'];
     let isValid = true;
@@ -211,6 +225,9 @@ export default function ReportConcern() {
       formDataToSend.append('location', formData.location);
       formDataToSend.append('severity', formData.severity);
       
+      // Add CAPTCHA token
+      formDataToSend.append('captcha_token', captchaToken);
+      
       // Add coordinates if available
       if (formData.latitude) {
         formDataToSend.append('latitude', formData.latitude);
@@ -247,11 +264,22 @@ export default function ReportConcern() {
       } else {
         console.error('Submission failed:', response.data.message);
         setErrors({ submit: response.data.message || 'Failed to submit concern' });
+        // Reset CAPTCHA on failure
+        if (recaptchaRef.current) {
+          recaptchaRef.current.reset();
+          setCaptchaToken(null);
+        }
       }
     } catch (error) {
       console.error('Submission error:', error);
       console.error('Error response:', error.response);
       console.error('Error message:', error.message);
+      
+      // Reset CAPTCHA on error
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset();
+        setCaptchaToken(null);
+      }
       
       if (error.response?.status === 422) {
         // Validation errors from server
@@ -1002,10 +1030,36 @@ export default function ReportConcern() {
             </div>
           )}
 
+          {/* reCAPTCHA Widget */}
+          <div className="recaptcha-container" style={{ marginBottom: 24 }}>
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+              onChange={(token) => {
+                console.log('reCAPTCHA token received:', token ? 'Valid' : 'Null');
+                setCaptchaToken(token);
+                setErrors(prev => ({ ...prev, captcha: null }));
+              }}
+              onExpired={() => {
+                console.log('reCAPTCHA token expired');
+                setCaptchaToken(null);
+                setErrors(prev => ({ ...prev, captcha: 'reCAPTCHA expired. Please verify again.' }));
+              }}
+              onErrored={() => {
+                console.log('reCAPTCHA error occurred');
+                setCaptchaToken(null);
+                setErrors(prev => ({ ...prev, captcha: 'reCAPTCHA error. Please refresh and try again.' }));
+              }}
+            />
+            {errors.captcha && (
+              <p className="error-message" style={{ marginTop: 8 }}>{errors.captcha}</p>
+            )}
+          </div>
+
           {/* Submit Button */}
           <button
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || !captchaToken}
             onClick={(e) => {
               console.log('Button clicked directly');
               // Let the form's onSubmit handle it, but log for debugging
@@ -1018,27 +1072,27 @@ export default function ReportConcern() {
               display: 'flex',
               alignItems: 'center',
               gap: 8,
-              background: '#0058be',
+              background: (isSubmitting || !captchaToken) ? '#9CA3AF' : '#0058be',
               color: '#ffffff',
               border: 'none',
               borderRadius: 12,
               fontWeight: 600,
-              cursor: isSubmitting ? 'not-allowed' : 'pointer',
-              opacity: isSubmitting ? 0.7 : 1,
+              cursor: (isSubmitting || !captchaToken) ? 'not-allowed' : 'pointer',
+              opacity: (isSubmitting || !captchaToken) ? 0.7 : 1,
               transition: 'all 0.2s ease',
-              boxShadow: '0 2px 4px rgba(0, 88, 190, 0.2)',
+              boxShadow: (isSubmitting || !captchaToken) ? 'none' : '0 2px 4px rgba(0, 88, 190, 0.2)',
               position: 'relative',
               zIndex: 1,
             }}
             onMouseEnter={(e) => {
-              if (!isSubmitting) {
+              if (!isSubmitting && captchaToken) {
                 e.currentTarget.style.background = '#004a9f';
                 e.currentTarget.style.transform = 'translateY(-2px)';
                 e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 88, 190, 0.3)';
               }
             }}
             onMouseLeave={(e) => {
-              if (!isSubmitting) {
+              if (!isSubmitting && captchaToken) {
                 e.currentTarget.style.background = '#0058be';
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = '0 2px 4px rgba(0, 88, 190, 0.2)';
@@ -1049,6 +1103,11 @@ export default function ReportConcern() {
               <>
                 <span className="material-symbols-outlined spinning" style={{ fontSize: 20, pointerEvents: 'none', color: '#ffffff' }}>progress_activity</span>
                 <span style={{ pointerEvents: 'none', color: '#ffffff' }}>Submitting...</span>
+              </>
+            ) : !captchaToken ? (
+              <>
+                <span className="material-symbols-outlined" style={{ fontSize: 20, pointerEvents: 'none', color: '#ffffff' }}>lock</span>
+                <span style={{ pointerEvents: 'none', color: '#ffffff' }}>Complete reCAPTCHA to Submit</span>
               </>
             ) : (
               <>
