@@ -131,37 +131,3 @@
     height: 36px !important;
   }
 }
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  .mapboxgl-popup-content {
-    background: #1e293b !important;
-    color: #f1f5f9 !important;
-  }
-  
-  .mapboxgl-popup-close-button {
-    color: #94a3b8;
-  }
-  
-  .mapboxgl-popup-close-button:hover {
-    background: #334155;
-    color: #f1f5f9;
-  }
-  
-  .mapboxgl-ctrl-group {
-    background: #1e293b !important;
-  }
-  
-  .mapboxgl-ctrl-group button {
-    background: #1e293b !important;
-    color: #f1f5f9 !important;
-  }
-  
-  .mapboxgl-ctrl-group button:hover {
-    background: #334155 !important;
-  }
-  
-  .mapboxgl-ctrl-attrib {
-    background: rgba(30, 41, 59, 0.8) !important;
-  }
-}

@@ -10,13 +10,13 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import api from '../lib/axios';
 
 const CATEGORIES = [
-  { value: 'Infrastructure', label: 'Infrastructure' },
-  { value: 'Sanitation', label: 'Sanitation' },
-  { value: 'Public Safety', label: 'Public Safety' },
-  { value: 'Waste Management', label: 'Waste Management' },
-  { value: 'Health & Medical', label: 'Health & Medical' },
-  { value: 'Public Order', label: 'Public Order' },
-  { value: 'Other', label: 'Other' },
+  { value: 'infrastructure', label: 'Infrastructure' },
+  { value: 'sanitation', label: 'Sanitation' },
+  { value: 'public_safety', label: 'Public Safety' },
+  { value: 'waste_management', label: 'Waste Management' },
+  { value: 'health_&_medical', label: 'Health & Medical' },
+  { value: 'public_order', label: 'Public Order' },
+  { value: 'other', label: 'Other' },
 ];
 
 const URGENCY_LEVELS = [
@@ -221,7 +221,7 @@ export default function ReportConcern() {
       formDataToSend.append('guest_address', formData.guest_address);
       formDataToSend.append('title', formData.description.substring(0, 100)); // Use first 100 chars as title
       formDataToSend.append('description', formData.description);
-      formDataToSend.append('category', formData.category.toLowerCase().replace(/\s+/g, '_'));
+      formDataToSend.append('category', formData.category); // Already in correct format from CATEGORIES array
       formDataToSend.append('location', formData.location);
       formDataToSend.append('severity', formData.severity);
       

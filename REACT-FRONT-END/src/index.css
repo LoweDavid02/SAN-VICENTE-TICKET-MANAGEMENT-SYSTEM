@@ -1418,15 +1418,15 @@ body {
   --color-blue: #3B82F6;           /* In Progress status */
   --color-gray: #6B7280;           /* Pending status */
   
-  /* Civic Background Colors */
-  --color-bg-page: #F7F9FB;        /* Page background - MD3 aligned */
-  --color-bg-card: #FFFFFF;        /* Card surfaces */
-  --color-border: #E5E7EB;         /* Borders */
+  /* Civic Background Colors - High Contrast for Maximum Visibility */
+  --color-bg-page: #FFFFFF;        /* Pure white page background */
+  --color-bg-card: #FFFFFF;        /* Pure white card surfaces */
+  --color-border: #D1D5DB;         /* Darker border for better visibility */
   
-  /* Civic Text Colors */
-  --color-text-primary: #191c1e;   /* Primary text - MD3 aligned */
-  --color-text-secondary: #45464d; /* Secondary text - MD3 aligned */
-  --color-text-muted: #9CA3AF;     /* Muted text */
+  /* Civic Text Colors - High Contrast for Maximum Readability */
+  --color-text-primary: #000000;   /* Pure black primary text */
+  --color-text-secondary: #374151; /* Dark gray secondary text */
+  --color-text-muted: #6B7280;     /* Medium gray muted text */
   
   /* Civic Typography */
   --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
