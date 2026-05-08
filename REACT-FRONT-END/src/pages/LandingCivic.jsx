@@ -4,7 +4,7 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { Shield, ArrowRight, Phone, MapPin, Calendar, FileText, Bell, Menu, X } from 'lucide-react';
+import { Shield, ArrowRight, Phone, MapPin, Calendar, FileText, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 
 export default function Landing() {
