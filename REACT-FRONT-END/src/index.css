@@ -218,16 +218,16 @@ body {
 .light-mode h4,
 .light-mode h5,
 .light-mode h6 {
-  color: #111827;
+  color: #111827 !important;
   font-weight: 700;
 }
 
 .light-mode p,
-.light-mode span:not(.badge):not([class*="icon"]):not([class*="status"]),
-.light-mode div:not([class*="badge"]):not([class*="icon"]):not([class*="status"]),
+.light-mode span:not(.badge):not([class*="icon"]):not([class*="status"]):not([class*="recharts"]),
+.light-mode div:not([class*="badge"]):not([class*="icon"]):not([class*="status"]):not([class*="recharts"]),
 .light-mode label,
 .light-mode a {
-  color: #374151;
+  color: #374151 !important;
 }
 
 /* ✅ EXCEPTION: Landing page hero section must keep white text on dark background */
@@ -487,6 +487,158 @@ body {
   background: #FFFFFF;
   color: #111827;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ── Light Mode Chart Text Overrides ─────────────────────────────────── */
+.light-mode .recharts-text,
+.light-mode .recharts-cartesian-axis-tick-value,
+.light-mode .recharts-legend-item-text {
+  fill: #374151 !important;
+}
+
+.light-mode .recharts-label {
+  fill: #111827 !important;
+}
+
+/* ── Light Mode Inline Style Overrides ──────────────────────────────── */
+/* Override inline styles that use CSS variables */
+.light-mode [style*="color: var(--text-1)"],
+.light-mode [style*="color: var(--text-2)"],
+.light-mode [style*="color: var(--text-3)"],
+.light-mode [style*="color: var(--text-4)"],
+.light-mode [style*="color: var(--txt)"],
+.light-mode [style*="color: var(--muted)"],
+.light-mode [style*="color:var(--text-1)"],
+.light-mode [style*="color:var(--text-2)"],
+.light-mode [style*="color:var(--text-3)"],
+.light-mode [style*="color:var(--text-4)"],
+.light-mode [style*="color:var(--txt)"],
+.light-mode [style*="color:var(--muted)"] {
+  color: inherit !important;
+}
+
+/* Ensure stat values are visible */
+.light-mode .stat-value,
+.light-mode [class*="stat"] [style*="fontSize: 20"],
+.light-mode [class*="stat"] [style*="fontSize: '1.85rem'"],
+.light-mode [class*="stat"] [style*="fontWeight: 800"] {
+  color: #111827 !important;
+}
+
+/* Ensure all text in cards is visible */
+.light-mode .card p,
+.light-mode .card span,
+.light-mode .card div,
+.light-mode .card label,
+.light-mode .card h1,
+.light-mode .card h2,
+.light-mode .card h3,
+.light-mode .card h4,
+.light-mode .card h5,
+.light-mode .card h6 {
+  color: inherit;
+}
+
+/* Ensure table text is visible */
+.light-mode .data-table th,
+.light-mode .data-table td,
+.light-mode table th,
+.light-mode table td {
+  color: #374151 !important;
+}
+
+.light-mode .data-table th {
+  color: #111827 !important;
+  font-weight: 600;
+}
+
+/* Ensure form labels and inputs are visible */
+.light-mode .form-label,
+.light-mode label {
+  color: #111827 !important;
+}
+
+.light-mode .input,
+.light-mode input,
+.light-mode textarea,
+.light-mode select {
+  color: #111827 !important;
+}
+
+.light-mode .input::placeholder,
+.light-mode input::placeholder,
+.light-mode textarea::placeholder {
+  color: #9CA3AF !important;
+}
+
+/* Ensure section labels are visible */
+.light-mode .section-label {
+  color: #6B7280 !important;
+}
+
+/* Ensure topbar text is visible */
+.light-mode .topbar h1,
+.light-mode .topbar p,
+.light-mode .topbar span,
+.light-mode .topbar div {
+  color: inherit;
+}
+
+.light-mode .topbar h1 {
+  color: #111827 !important;
+}
+
+.light-mode .topbar p {
+  color: #6B7280 !important;
+}
+
+/* Ensure sidebar text is visible */
+.light-mode .sidebar p,
+.light-mode .sidebar span,
+.light-mode .sidebar div {
+  color: inherit;
+}
+
+/* Ensure modal text is visible */
+.light-mode .modal-box p,
+.light-mode .modal-box span,
+.light-mode .modal-box div,
+.light-mode .modal-box h1,
+.light-mode .modal-box h2,
+.light-mode .modal-box h3 {
+  color: inherit;
+}
+
+.light-mode .modal-box h1,
+.light-mode .modal-box h2,
+.light-mode .modal-box h3 {
+  color: #111827 !important;
+}
+
+/* Ensure notification text is visible */
+.light-mode .notif-dropdown p,
+.light-mode .notif-dropdown span {
+  color: inherit;
+}
+
+/* Ensure dropdown menu text is visible */
+.light-mode [class*="dropdown"] p,
+.light-mode [class*="dropdown"] span,
+.light-mode [class*="dropdown"] button {
+  color: inherit;
+}
+
+/* Ensure all button text is visible */
+.light-mode .btn,
+.light-mode button:not([style*="color: #fff"]):not([style*="color:#fff"]):not([style*="color: white"]):not([style*="color:white"]) {
+  color: #111827;
+}
+
+/* Ensure monospace text is visible */
+.light-mode .mono,
+.light-mode [style*="fontFamily: 'monospace'"],
+.light-mode [style*="fontFamily: var(--font-mono)"] {
+  color: inherit;
 }
 
 /* ── Scrollbar ───────────────────────────────────────────── */
@@ -1917,6 +2069,130 @@ body {
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+
+/* ── Light Mode Priority Badge Text ────────────────────────────────────── */
+.light-mode [style*="background: #fef2f2"],
+.light-mode [style*="background: #fffbeb"],
+.light-mode [style*="background: #f0fdf4"] {
+  color: inherit !important;
+}
+
+.light-mode [style*="color: #b91c1c"],
+.light-mode [style*="color: #b45309"],
+.light-mode [style*="color: #065f46"] {
+  color: inherit !important;
+}
+
+/* ── Light Mode Task Text ──────────────────────────────────────────────── */
+.light-mode [style*="color: #94a3b8"],
+.light-mode [style*="color: rgba(148,163,184"] {
+  color: #6B7280 !important;
+}
+
+.light-mode [style*="color: #0f172a"],
+.light-mode [style*="color: #1e293b"] {
+  color: #111827 !important;
+}
+
+/* ── Light Mode Slate Color Overrides ──────────────────────────────────── */
+.light-mode [style*="color: #64748b"],
+.light-mode [style*="color: #475569"],
+.light-mode [style*="color: #334155"] {
+  color: #374151 !important;
+}
+
+.light-mode [style*="color: #cbd5e1"],
+.light-mode [style*="color: #e2e8f0"] {
+  color: #9CA3AF !important;
+}
+
+/* ── Light Mode Text Size Overrides ────────────────────────────────────── */
+.light-mode [style*="fontSize: 11"],
+.light-mode [style*="fontSize: 12"],
+.light-mode [style*="fontSize: 13"] {
+  color: inherit;
+}
+
+/* ── Light Mode Specific Component Text ────────────────────────────────── */
+.light-mode .animate-fade-up p,
+.light-mode .animate-fade-up span,
+.light-mode .animate-fade-up div {
+  color: inherit;
+}
+
+/* ── Light Mode Grid Text ──────────────────────────────────────────────── */
+.light-mode [style*="display: grid"] p,
+.light-mode [style*="display: grid"] span,
+.light-mode [style*="display: grid"] div {
+  color: inherit;
+}
+
+/* ── Light Mode Flex Text ──────────────────────────────────────────────── */
+.light-mode [style*="display: flex"] p,
+.light-mode [style*="display: flex"] span,
+.light-mode [style*="display: flex"] div {
+  color: inherit;
+}
+
+/* ── Light Mode Avatar Text ────────────────────────────────────────────── */
+.light-mode .avatar,
+.light-mode [style*="borderRadius: '50%'"],
+.light-mode [style*="borderRadius: 50"] {
+  color: #FFFFFF !important;
+}
+
+/* ── Light Mode Empty State Text ───────────────────────────────────────── */
+.light-mode .empty-state,
+.light-mode [style*="textAlign: 'center'"] p {
+  color: #6B7280 !important;
+}
+
+/* ── Light Mode Loading Text ───────────────────────────────────────────── */
+.light-mode [style*="color: '#94a3b8'"],
+.light-mode [style*="color:'#94a3b8'"] {
+  color: #6B7280 !important;
+}
+
+/* ── Light Mode Link Text ──────────────────────────────────────────────── */
+.light-mode a:not(.btn):not([class*="badge"]) {
+  color: #7C3AED !important;
+}
+
+.light-mode a:not(.btn):not([class*="badge"]):hover {
+  color: #6D28D9 !important;
+}
+
+/* ── Light Mode Accent Text ────────────────────────────────────────────── */
+.light-mode [style*="color: var(--brand)"],
+.light-mode [style*="color:var(--brand)"],
+.light-mode [style*="color: var(--accent)"],
+.light-mode [style*="color:var(--accent)"] {
+  color: #7C3AED !important;
+}
+
+/* ── Light Mode Success Text ───────────────────────────────────────────── */
+.light-mode [style*="color: var(--green)"],
+.light-mode [style*="color:var(--green)"] {
+  color: #059669 !important;
+}
+
+/* ── Light Mode Warning Text ───────────────────────────────────────────── */
+.light-mode [style*="color: var(--amber)"],
+.light-mode [style*="color:var(--amber)"] {
+  color: #D97706 !important;
+}
+
+/* ── Light Mode Error Text ─────────────────────────────────────────────── */
+.light-mode [style*="color: var(--red)"],
+.light-mode [style*="color:var(--red)"] {
+  color: #DC2626 !important;
+}
+
+/* ── Light Mode Dim Text ───────────────────────────────────────────────── */
+.light-mode [style*="color: var(--dim)"],
+.light-mode [style*="color:var(--dim)"] {
+  color: #9CA3AF !important;
 }
 
 /* ── Map Preview with Glass Overlay ────────────────────────────────────── */
