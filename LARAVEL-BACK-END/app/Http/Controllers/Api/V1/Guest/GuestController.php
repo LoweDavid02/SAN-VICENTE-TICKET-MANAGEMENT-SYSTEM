@@ -29,33 +29,83 @@ class GuestController extends Controller
             // Verify reCAPTCHA token with Google
             // Note: SSL verification is disabled in local development to avoid certificate issues
             // In production, proper SSL certificates should be configured on the server
-            $httpClient = Http::asForm();
+            $httpClient = Http::asForm()->timeout(10);
             
             // Only disable SSL verification in local/development environment
             if (config('app.env') === 'local' || config('app.env') === 'development') {
                 $httpClient = $httpClient->withoutVerifying();
             }
             
-            $recaptchaResponse = $httpClient->post('https://www.google.com/recaptcha/api/siteverify', [
-                'secret'   => config('services.recaptcha.secret'),
-                'response' => $request->captcha_token,
-                'remoteip' => $request->ip(),
-            ]);
+            try {
+                $recaptchaResponse = $httpClient->post('https://www.google.com/recaptcha/api/siteverify', [
+                    'secret'   => config('services.recaptcha.secret'),
+                    'response' => $request->captcha_token,
+                    'remoteip' => $request->ip(),
+                ]);
 
-            $recaptchaData = $recaptchaResponse->json();
+                $recaptchaData = $recaptchaResponse->json();
 
-            // Check if CAPTCHA verification failed
-            if (!$recaptchaData['success']) {
-                Log::warning('reCAPTCHA verification failed', [
-                    'ip'           => $request->ip(),
+                // Log detailed reCAPTCHA response for debugging
+                Log::info('reCAPTCHA verification attempt', [
+                    'success'      => $recaptchaData['success'] ?? false,
                     'error_codes'  => $recaptchaData['error-codes'] ?? [],
+                    'hostname'     => $recaptchaData['hostname'] ?? null,
+                    'challenge_ts' => $recaptchaData['challenge_ts'] ?? null,
+                    'ip'           => $request->ip(),
+                ]);
+
+                // Check if CAPTCHA verification failed
+                if (!isset($recaptchaData['success']) || !$recaptchaData['success']) {
+                    $errorCodes = $recaptchaData['error-codes'] ?? [];
+                    
+                    // Provide user-friendly error messages based on error codes
+                    $errorMessage = 'reCAPTCHA verification failed. Please try again.';
+                    
+                    if (in_array('missing-input-secret', $errorCodes)) {
+                        $errorMessage = 'Server configuration error. Please contact support.';
+                        Log::error('reCAPTCHA: Missing secret key configuration');
+                    } elseif (in_array('invalid-input-secret', $errorCodes)) {
+                        $errorMessage = 'Server configuration error. Please contact support.';
+                        Log::error('reCAPTCHA: Invalid secret key');
+                    } elseif (in_array('missing-input-response', $errorCodes)) {
+                        $errorMessage = 'Please complete the reCAPTCHA verification.';
+                    } elseif (in_array('invalid-input-response', $errorCodes)) {
+                        $errorMessage = 'Invalid or expired reCAPTCHA. Please verify again.';
+                    } elseif (in_array('bad-request', $errorCodes)) {
+                        $errorMessage = 'Invalid request. Please refresh and try again.';
+                    } elseif (in_array('timeout-or-duplicate', $errorCodes)) {
+                        $errorMessage = 'reCAPTCHA expired or already used. Please verify again.';
+                    }
+
+                    Log::warning('reCAPTCHA verification failed', [
+                        'ip'           => $request->ip(),
+                        'error_codes'  => $errorCodes,
+                        'hostname'     => $recaptchaData['hostname'] ?? null,
+                    ]);
+
+                    return response()->json([
+                        'success' => false,
+                        'message' => $errorMessage,
+                        'errors'  => [
+                            'captcha_token' => [$errorMessage]
+                        ],
+                        'debug' => config('app.debug') ? [
+                            'error_codes' => $errorCodes,
+                            'hostname' => $recaptchaData['hostname'] ?? null,
+                        ] : null,
+                    ], 422);
+                }
+            } catch (\Exception $e) {
+                Log::error('reCAPTCHA verification request failed', [
+                    'error' => $e->getMessage(),
+                    'ip'    => $request->ip(),
                 ]);
 
                 return response()->json([
                     'success' => false,
-                    'message' => 'reCAPTCHA verification failed. Please try again.',
+                    'message' => 'Unable to verify reCAPTCHA. Please try again.',
                     'errors'  => [
-                        'captcha_token' => ['Invalid or expired reCAPTCHA. Please verify again.']
+                        'captcha_token' => ['reCAPTCHA verification service unavailable. Please try again.']
                     ],
                 ], 422);
             }
