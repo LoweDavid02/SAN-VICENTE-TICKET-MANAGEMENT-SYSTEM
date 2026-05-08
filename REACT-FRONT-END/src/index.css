@@ -2224,6 +2224,312 @@ body {
   color: #9CA3AF !important;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   COMPREHENSIVE TEXT VISIBILITY FIXES - ALL INLINE STYLES
+   Ensures professional, consistent, and visible text colors across the entire app
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Fix All Dark Inline Text Colors ───────────────────────────────────── */
+.light-mode [style*="color: '#0f172a'"],
+.light-mode [style*="color:'#0f172a'"],
+.light-mode [style*="color: #0f172a"],
+.light-mode [style*="color:#0f172a"] {
+  color: #111827 !important;
+}
+
+.light-mode [style*="color: '#1e293b'"],
+.light-mode [style*="color:'#1e293b'"],
+.light-mode [style*="color: #1e293b"],
+.light-mode [style*="color:#1e293b"] {
+  color: #111827 !important;
+}
+
+.light-mode [style*="color: '#334155'"],
+.light-mode [style*="color:'#334155'"],
+.light-mode [style*="color: #334155"],
+.light-mode [style*="color:#334155"] {
+  color: #374151 !important;
+}
+
+.light-mode [style*="color: '#475569'"],
+.light-mode [style*="color:'#475569'"],
+.light-mode [style*="color: #475569"],
+.light-mode [style*="color:#475569"] {
+  color: #374151 !important;
+}
+
+.light-mode [style*="color: '#64748b'"],
+.light-mode [style*="color:'#64748b'"],
+.light-mode [style*="color: #64748b"],
+.light-mode [style*="color:#64748b"] {
+  color: #6B7280 !important;
+}
+
+.light-mode [style*="color: '#94a3b8'"],
+.light-mode [style*="color:'#94a3b8'"],
+.light-mode [style*="color: #94a3b8"],
+.light-mode [style*="color:#94a3b8"] {
+  color: #9CA3AF !important;
+}
+
+.light-mode [style*="color: '#cbd5e1'"],
+.light-mode [style*="color:'#cbd5e1'"],
+.light-mode [style*="color: #cbd5e1"],
+.light-mode [style*="color:#cbd5e1"] {
+  color: #D1D5DB !important;
+}
+
+.light-mode [style*="color: '#e2e8f0'"],
+.light-mode [style*="color:'#e2e8f0'"],
+.light-mode [style*="color: #e2e8f0"],
+.light-mode [style*="color:#e2e8f0"] {
+  color: #E5E7EB !important;
+}
+
+/* ── Fix RGBA Dark Text Colors ─────────────────────────────────────────── */
+.light-mode [style*="color: rgba(15,23,42"],
+.light-mode [style*="color:rgba(15,23,42"],
+.light-mode [style*="color: rgba(30,41,59"],
+.light-mode [style*="color:rgba(30,41,59"] {
+  color: #111827 !important;
+}
+
+.light-mode [style*="color: rgba(51,65,85"],
+.light-mode [style*="color:rgba(51,65,85"],
+.light-mode [style*="color: rgba(71,85,105"],
+.light-mode [style*="color:rgba(71,85,105"] {
+  color: #374151 !important;
+}
+
+.light-mode [style*="color: rgba(100,116,139"],
+.light-mode [style*="color:rgba(100,116,139"] {
+  color: #6B7280 !important;
+}
+
+.light-mode [style*="color: rgba(148,163,184"],
+.light-mode [style*="color:rgba(148,163,184"] {
+  color: #9CA3AF !important;
+}
+
+/* ── Footer Text Visibility Fix ────────────────────────────────────────── */
+footer,
+footer *,
+[style*="background: '#0f172a'"] *,
+[style*="background:'#0f172a'"] *,
+[style*="background: #0f172a"] *,
+[style*="background:#0f172a"] *,
+[style*="background: '#1e293b'"] *,
+[style*="background:'#1e293b'"] *,
+[style*="background: #1e293b"] *,
+[style*="background:#1e293b"] * {
+  color: #FFFFFF !important;
+}
+
+/* ── Dark Background Sections - Force White Text ───────────────────────── */
+.light-mode [style*="background: linear-gradient"][style*="#0f172a"] *,
+.light-mode [style*="background: linear-gradient"][style*="#1e293b"] *,
+.light-mode [style*="background: linear-gradient"][style*="#334155"] * {
+  color: #FFFFFF !important;
+}
+
+/* ── Hero Section Text - Always White on Dark Backgrounds ──────────────── */
+.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] h1,
+.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] h2,
+.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] h3,
+.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] p,
+.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] span {
+  color: #FFFFFF !important;
+}
+
+/* ── Card Text on Light Backgrounds ────────────────────────────────────── */
+.light-mode [style*="background: '#fff'"] [style*="color"],
+.light-mode [style*="background:'#fff'"] [style*="color"],
+.light-mode [style*="background: #fff"] [style*="color"],
+.light-mode [style*="background:#fff"] [style*="color"],
+.light-mode [style*="background: white"] [style*="color"] {
+  /* Inherit from parent or use default text colors */
+}
+
+/* ── Ensure Headings Are Always Visible ────────────────────────────────── */
+.light-mode h1[style*="color"],
+.light-mode h2[style*="color"],
+.light-mode h3[style*="color"],
+.light-mode h4[style*="color"],
+.light-mode h5[style*="color"],
+.light-mode h6[style*="color"] {
+  color: #111827 !important;
+}
+
+/* ── Ensure Paragraphs Are Always Visible ──────────────────────────────── */
+.light-mode p[style*="color: '#64748b'"],
+.light-mode p[style*="color:'#64748b'"],
+.light-mode p[style*="color: #64748b"],
+.light-mode p[style*="color:#64748b"],
+.light-mode p[style*="color: '#475569'"],
+.light-mode p[style*="color:'#475569'"],
+.light-mode p[style*="color: #475569"],
+.light-mode p[style*="color:#475569"] {
+  color: #6B7280 !important;
+}
+
+/* ── Button Text - Always White on Colored Backgrounds ─────────────────── */
+.light-mode button[style*="background: linear-gradient"] {
+  color: #FFFFFF !important;
+}
+
+.light-mode button[style*="background: '#14b8a6'"],
+.light-mode button[style*="background:'#14b8a6'"],
+.light-mode button[style*="background: #14b8a6"],
+.light-mode button[style*="background:#14b8a6"],
+.light-mode button[style*="background: '#22a83a'"],
+.light-mode button[style*="background:'#22a83a'"],
+.light-mode button[style*="background: #22a83a"],
+.light-mode button[style*="background:#22a83a"] {
+  color: #FFFFFF !important;
+}
+
+/* ── Span Text Visibility ──────────────────────────────────────────────── */
+.light-mode span[style*="color: '#94a3b8'"],
+.light-mode span[style*="color:'#94a3b8'"],
+.light-mode span[style*="color: #94a3b8"],
+.light-mode span[style*="color:#94a3b8"] {
+  color: #9CA3AF !important;
+}
+
+.light-mode span[style*="color: '#64748b'"],
+.light-mode span[style*="color:'#64748b'"],
+.light-mode span[style*="color: #64748b"],
+.light-mode span[style*="color:#64748b"] {
+  color: #6B7280 !important;
+}
+
+/* ── Professional Color Hierarchy ──────────────────────────────────────── */
+.light-mode {
+  /* Primary text - Pure black for maximum readability */
+  --color-text-primary: #111827;
+  
+  /* Secondary text - Dark gray for supporting content */
+  --color-text-secondary: #374151;
+  
+  /* Muted text - Medium gray for less important content */
+  --color-text-muted: #6B7280;
+  
+  /* Dim text - Light gray for subtle content */
+  --color-text-dim: #9CA3AF;
+}
+
+/* ── Ensure All Text Elements Use Professional Colors ──────────────────── */
+.light-mode body {
+  color: var(--color-text-primary);
+}
+
+.light-mode h1,
+.light-mode h2,
+.light-mode h3,
+.light-mode h4,
+.light-mode h5,
+.light-mode h6 {
+  color: var(--color-text-primary);
+}
+
+.light-mode p {
+  color: var(--color-text-secondary);
+}
+
+.light-mode small,
+.light-mode .text-sm {
+  color: var(--color-text-muted);
+}
+
+/* ── Override Any Remaining Dark Text Issues ───────────────────────────── */
+.light-mode [class*="text-slate"],
+.light-mode [class*="text-gray"] {
+  color: var(--color-text-secondary) !important;
+}
+
+/* ── Ensure Consistent Text Colors in All Sections ─────────────────────── */
+.light-mode section {
+  color: var(--color-text-primary);
+}
+
+.light-mode section p {
+  color: var(--color-text-secondary);
+}
+
+.light-mode section span {
+  color: var(--color-text-muted);
+}
+
+/* ── Fix Text in Cards ─────────────────────────────────────────────────── */
+.light-mode .civic-card,
+.light-mode [style*="borderRadius: 20"],
+.light-mode [style*="borderRadius:20"],
+.light-mode [style*="border-radius: 20"],
+.light-mode [style*="border-radius:20"] {
+  color: var(--color-text-primary);
+}
+
+.light-mode .civic-card p,
+.light-mode [style*="borderRadius: 20"] p,
+.light-mode [style*="borderRadius:20"] p {
+  color: var(--color-text-secondary);
+}
+
+/* ── Fix Navigation Text ───────────────────────────────────────────────── */
+.light-mode nav,
+.light-mode nav * {
+  color: var(--color-text-primary);
+}
+
+.light-mode nav button {
+  color: var(--color-text-secondary);
+}
+
+.light-mode nav button:hover {
+  color: var(--color-text-primary);
+}
+
+/* ── Fix Stats and Numbers ─────────────────────────────────────────────── */
+.light-mode [class*="stats"] *,
+.light-mode [style*="textAlign: 'center'"] [style*="fontSize: '1.5rem'"],
+.light-mode [style*="textAlign:'center'"] [style*="fontSize:'1.5rem'"] {
+  color: inherit;
+}
+
+/* ── Accessibility - Ensure WCAG AA Contrast Ratios ────────────────────── */
+.light-mode {
+  /* Minimum contrast ratio of 4.5:1 for normal text */
+  /* Minimum contrast ratio of 3:1 for large text (18pt+ or 14pt+ bold) */
+}
+
+/* ── Force White Text on All Dark Gradient Backgrounds ─────────────────── */
+.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"],
+.light-mode [style*="background:linear-gradient"][style*="rgba(15,23,42"],
+.light-mode [style*="background: linear-gradient"][style*="rgba(30,41,59"],
+.light-mode [style*="background:linear-gradient"][style*="rgba(30,41,59"] {
+  color: #FFFFFF !important;
+}
+
+.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] *,
+.light-mode [style*="background:linear-gradient"][style*="rgba(15,23,42"] *,
+.light-mode [style*="background: linear-gradient"][style*="rgba(30,41,59"] *,
+.light-mode [style*="background:linear-gradient"][style*="rgba(30,41,59"] * {
+  color: #FFFFFF !important;
+}
+
+/* ── Exception: Keep Accent Colors on Dark Backgrounds ─────────────────── */
+.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color: '#22a83a'"],
+.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color:'#22a83a'"],
+.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color: #22a83a"],
+.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color:#22a83a"],
+.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color: '#14b8a6'"],
+.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color:'#14b8a6'"],
+.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color: #14b8a6"],
+.light-mode [style*="background: linear-gradient"][style*="rgba(15,23,42"] [style*="color:#14b8a6"] {
+  /* Keep accent colors as-is on dark backgrounds */
+  color: inherit !important;
+}
+
 /* ── Map Preview with Glass Overlay ────────────────────────────────────── */
 .map-preview {
   position: relative;
