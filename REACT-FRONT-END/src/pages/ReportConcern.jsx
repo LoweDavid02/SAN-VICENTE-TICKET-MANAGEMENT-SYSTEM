@@ -242,15 +242,8 @@ export default function ReportConcern() {
       });
 
       console.log('Sending request to API...');
-      const response = await api.post(
-        '/tickets',
-        formDataToSend,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
+      // Note: Don't set Content-Type for FormData - axios will set it with the correct boundary
+      const response = await api.post('/tickets', formDataToSend);
 
       console.log('API response:', response.data);
 
