@@ -12,7 +12,7 @@ const api = axios.create({
   timeout: 30000,  // 30s — Laravel cold start on first request can be slow
   headers: {
     Accept: 'application/json',
-    'Content-Type': 'application/json',
+    // Don't set Content-Type here - let it be set per request
   },
 });
 
@@ -24,9 +24,13 @@ api.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
     
-    // If sending FormData, remove Content-Type header to let browser set it with boundary
+    // Set Content-Type based on data type
     if (config.data instanceof FormData) {
+      // For FormData, don't set Content-Type - browser will set it with boundary
       delete config.headers['Content-Type'];
+    } else if (!config.headers['Content-Type']) {
+      // For other requests, default to JSON
+      config.headers['Content-Type'] = 'application/json';
     }
     
     return config;

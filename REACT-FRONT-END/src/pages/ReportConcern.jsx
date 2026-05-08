@@ -88,7 +88,8 @@ export default function ReportConcern() {
         else if (!/^09\d{9}$/.test(value.replace(/[\s\-]/g, ''))) error = 'Must be PH format: 09XXXXXXXXX';
         break;
       case 'guest_address':
-        if (!value || value.length < 5) error = 'Address must be at least 5 characters';
+        if (!value || value.length < 10) error = 'Address must be at least 10 characters';
+        else if (value.length > 500) error = 'Address cannot exceed 500 characters';
         break;
       case 'category':
         if (!value) error = 'Please select a category';
@@ -242,6 +243,17 @@ export default function ReportConcern() {
       });
 
       console.log('Sending request to API...');
+      
+      // Log FormData contents for debugging
+      console.log('FormData contents:');
+      for (let [key, value] of formDataToSend.entries()) {
+        if (value instanceof File) {
+          console.log(`  ${key}: File(${value.name}, ${value.type}, ${value.size} bytes)`);
+        } else {
+          console.log(`  ${key}: ${value}`);
+        }
+      }
+      
       // Note: Don't set Content-Type for FormData - axios will set it with the correct boundary
       const response = await api.post('/tickets', formDataToSend);
 
