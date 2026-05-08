@@ -27,7 +27,16 @@ class GuestController extends Controller
     {
         try {
             // Verify reCAPTCHA token with Google
-            $recaptchaResponse = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            // Note: SSL verification is disabled in local development to avoid certificate issues
+            // In production, proper SSL certificates should be configured on the server
+            $httpClient = Http::asForm();
+            
+            // Only disable SSL verification in local/development environment
+            if (config('app.env') === 'local' || config('app.env') === 'development') {
+                $httpClient = $httpClient->withoutVerifying();
+            }
+            
+            $recaptchaResponse = $httpClient->post('https://www.google.com/recaptcha/api/siteverify', [
                 'secret'   => config('services.recaptcha.secret'),
                 'response' => $request->captcha_token,
                 'remoteip' => $request->ip(),
