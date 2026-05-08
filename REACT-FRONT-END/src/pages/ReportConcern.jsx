@@ -1039,7 +1039,7 @@ export default function ReportConcern() {
           <div className="recaptcha-container" style={{ marginBottom: 24 }}>
             <ReCAPTCHA
               ref={recaptchaRef}
-              sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+              sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || '6Lfpzt8sAAAAACzA8SodKS3sKJjemeH5g33CKTHL'}
               onChange={(token) => {
                 console.log('reCAPTCHA token received:', token ? 'Valid' : 'Null');
                 setCaptchaToken(token);
