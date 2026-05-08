@@ -112,7 +112,7 @@ export default function Landing() {
       </nav>
 
       {/* HERO SECTION */}
-      <section id="home" style={{
+      <section id="home" className="hero-section" style={{
         position: 'relative',
         minHeight: '90vh',
         display: 'flex',

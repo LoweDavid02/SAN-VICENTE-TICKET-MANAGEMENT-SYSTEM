@@ -231,6 +231,35 @@ body {
 }
 
 /* ✅ EXCEPTION: Landing page hero section must keep white text on dark background */
+/* Only apply to direct text elements in hero, NOT to cards */
+.hero-section > div > h1,
+.hero-section > div > p:not(.civic-card p) {
+  color: #FFFFFF !important;
+}
+
+.light-mode .hero-section > div > h1,
+.light-mode .hero-section > div > p:not(.civic-card p) {
+  color: #FFFFFF !important;
+}
+
+/* Ensure card text inside hero section is dark */
+.hero-section .civic-card h3,
+.hero-section .civic-card p,
+.hero-section .civic-card span,
+.hero-section .civic-card button {
+  color: #1E2D4E !important;
+}
+
+.light-mode .hero-section .civic-card h3,
+.light-mode .hero-section .civic-card p,
+.light-mode .hero-section .civic-card span {
+  color: #1E2D4E !important;
+}
+
+.light-mode .hero-section .civic-card p {
+  color: #4B5563 !important;
+}
+
 .light-mode #hero h1,
 .light-mode #hero h2,
 .light-mode #hero h3,
