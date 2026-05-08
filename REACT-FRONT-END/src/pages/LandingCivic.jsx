@@ -144,14 +144,14 @@ export default function Landing() {
           zIndex: 10,
           maxWidth: 1200,
           margin: '0 auto',
-          padding: '0 24px',
+          padding: '80px 40px',
           textAlign: 'center',
         }}>
           <h1 style={{
             fontSize: 'clamp(2rem, 5vw, 3.5rem)',
             fontWeight: 700,
             color: 'white',
-            marginBottom: 16,
+            marginBottom: 24,
             lineHeight: 1.2,
           }}>
             Welcome to the official<br />San Vicente Service Portal
@@ -160,9 +160,10 @@ export default function Landing() {
           <p style={{
             fontSize: 'clamp(1rem, 2vw, 1.25rem)',
             color: 'rgba(255, 255, 255, 0.9)',
-            marginBottom: 48,
+            marginBottom: 60,
             maxWidth: 600,
-            margin: '0 auto 48px',
+            margin: '0 auto 60px',
+            lineHeight: 1.6,
           }}>
             Your direct link to local governance and public assistance.
           </p>
@@ -170,14 +171,14 @@ export default function Landing() {
           {/* Action Cards */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: 24,
-            maxWidth: 800,
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: 32,
+            maxWidth: 900,
             margin: '0 auto',
           }}>
             {/* Submit Concern Card */}
             <div className="civic-card" style={{
-              padding: 32,
+              padding: 40,
               textAlign: 'left',
               cursor: 'pointer',
               transition: 'transform 0.2s',
@@ -187,21 +188,21 @@ export default function Landing() {
             onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
             >
               <div style={{
-                width: 56,
-                height: 56,
+                width: 64,
+                height: 64,
                 borderRadius: 12,
                 background: 'var(--color-teal)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginBottom: 20,
+                marginBottom: 24,
               }}>
-                <FileText size={28} color="white" />
+                <FileText size={32} color="white" />
               </div>
-              <h3 style={{ fontSize: 20, fontWeight: 600, color: 'var(--color-primary)', marginBottom: 12 }}>
+              <h3 style={{ fontSize: 22, fontWeight: 600, color: 'var(--color-primary)', marginBottom: 16 }}>
                 Submit a Concern
               </h3>
-              <p style={{ fontSize: 14, color: 'var(--color-text-secondary)', marginBottom: 20, lineHeight: 1.6 }}>
+              <p style={{ fontSize: 15, color: 'var(--color-text-secondary)', marginBottom: 24, lineHeight: 1.7 }}>
                 Report issues, suggest improvements, or request assistance directly from barangay officials.
               </p>
               <button className="btn-primary" style={{ width: '100%' }}>
@@ -211,7 +212,7 @@ export default function Landing() {
 
             {/* Track Ticket Card */}
             <div className="civic-card" style={{
-              padding: 32,
+              padding: 40,
               textAlign: 'left',
               cursor: 'pointer',
               transition: 'transform 0.2s',
@@ -221,21 +222,21 @@ export default function Landing() {
             onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
             >
               <div style={{
-                width: 56,
-                height: 56,
+                width: 64,
+                height: 64,
                 borderRadius: 12,
                 background: 'var(--color-green)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginBottom: 20,
+                marginBottom: 24,
               }}>
-                <MapPin size={28} color="white" />
+                <MapPin size={32} color="white" />
               </div>
-              <h3 style={{ fontSize: 20, fontWeight: 600, color: 'var(--color-primary)', marginBottom: 12 }}>
+              <h3 style={{ fontSize: 22, fontWeight: 600, color: 'var(--color-primary)', marginBottom: 16 }}>
                 Track a Ticket
               </h3>
-              <p style={{ fontSize: 14, color: 'var(--color-text-secondary)', marginBottom: 20, lineHeight: 1.6 }}>
+              <p style={{ fontSize: 15, color: 'var(--color-text-secondary)', marginBottom: 24, lineHeight: 1.7 }}>
                 Check the real-time status of your submitted reports using your ticket ID.
               </p>
               <button className="btn-outline" style={{ width: '100%' }}>
@@ -247,21 +248,21 @@ export default function Landing() {
       </section>
 
       {/* QUICK RESOURCES */}
-      <section id="services" style={{ padding: '80px 24px', background: 'white' }}>
+      <section id="services" style={{ padding: '100px 40px', background: 'white' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <h2 style={{ fontSize: 32, fontWeight: 600, color: 'var(--color-primary)', marginBottom: 12 }}>
+          <div style={{ textAlign: 'center', marginBottom: 60 }}>
+            <h2 style={{ fontSize: 36, fontWeight: 600, color: 'var(--color-primary)', marginBottom: 16 }}>
               Quick Resources
             </h2>
-            <p style={{ fontSize: 16, color: 'var(--color-text-secondary)' }}>
+            <p style={{ fontSize: 18, color: 'var(--color-text-secondary)' }}>
               Access essential barangay services and information
             </p>
           </div>
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: 24,
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: 32,
           }}>
             {[
               { icon: Phone, title: 'Emergency Hotlines', desc: '24/7 Response Team', color: '#EF4444' },
@@ -270,7 +271,7 @@ export default function Landing() {
               { icon: MapPin, title: 'District Map', desc: 'Boundaries & Landmarks', color: '#10B981' },
             ].map((item, idx) => (
               <div key={idx} className="civic-card" style={{
-                padding: 24,
+                padding: 32,
                 textAlign: 'center',
                 cursor: 'pointer',
                 transition: 'transform 0.2s',
@@ -279,21 +280,21 @@ export default function Landing() {
               onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
               >
                 <div style={{
-                  width: 48,
-                  height: 48,
+                  width: 56,
+                  height: 56,
                   borderRadius: 12,
                   background: `${item.color}20`,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  margin: '0 auto 16px',
+                  margin: '0 auto 20px',
                 }}>
-                  <item.icon size={24} color={item.color} />
+                  <item.icon size={28} color={item.color} />
                 </div>
-                <h3 style={{ fontSize: 16, fontWeight: 600, color: 'var(--color-primary)', marginBottom: 8 }}>
+                <h3 style={{ fontSize: 18, fontWeight: 600, color: 'var(--color-primary)', marginBottom: 12 }}>
                   {item.title}
                 </h3>
-                <p style={{ fontSize: 14, color: 'var(--color-text-secondary)' }}>
+                <p style={{ fontSize: 15, color: 'var(--color-text-secondary)' }}>
                   {item.desc}
                 </p>
               </div>
@@ -303,12 +304,12 @@ export default function Landing() {
       </section>
 
       {/* STATS STRIP */}
-      <section style={{ padding: '60px 24px', background: 'var(--color-bg-page)' }}>
+      <section style={{ padding: '80px 40px', background: 'var(--color-bg-page)' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: 24,
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+            gap: 32,
           }}>
             {[
               { value: '98%', label: 'Ticket Resolution Rate' },
@@ -316,11 +317,11 @@ export default function Landing() {
               { value: '14.2h', label: 'Avg Resolution Time' },
               { value: '25,000+', label: 'Residents Served' },
             ].map((stat, idx) => (
-              <div key={idx} className="civic-card" style={{ padding: 24, textAlign: 'center' }}>
-                <p style={{ fontSize: 36, fontWeight: 700, color: 'var(--color-primary)', marginBottom: 8 }}>
+              <div key={idx} className="civic-card" style={{ padding: 32, textAlign: 'center' }}>
+                <p style={{ fontSize: 40, fontWeight: 700, color: 'var(--color-primary)', marginBottom: 12 }}>
                   {stat.value}
                 </p>
-                <p style={{ fontSize: 13, color: 'var(--color-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                <p style={{ fontSize: 14, color: 'var(--color-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                   {stat.label}
                 </p>
               </div>
@@ -330,49 +331,49 @@ export default function Landing() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" style={{ padding: '80px 24px', background: 'white' }}>
+      <section id="contact" style={{ padding: '100px 40px', background: 'white' }}>
         <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{ fontSize: 32, fontWeight: 600, color: 'var(--color-primary)', marginBottom: 12 }}>
+          <h2 style={{ fontSize: 36, fontWeight: 600, color: 'var(--color-primary)', marginBottom: 16 }}>
             Get in Touch
           </h2>
-          <p style={{ fontSize: 16, color: 'var(--color-text-secondary)', marginBottom: 40 }}>
+          <p style={{ fontSize: 18, color: 'var(--color-text-secondary)', marginBottom: 48 }}>
             Have questions? Reach out to the Barangay San Vicente office.
           </p>
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: 24,
-            marginBottom: 40,
+            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+            gap: 32,
+            marginBottom: 48,
           }}>
             {[
               { icon: Phone, label: 'Phone', value: '(02) 8123-4567' },
               { icon: MapPin, label: 'Address', value: 'San Vicente, Apalit, Pampanga' },
             ].map((item, idx) => (
-              <div key={idx} className="civic-card" style={{ padding: 24 }}>
+              <div key={idx} className="civic-card" style={{ padding: 32 }}>
                 <div style={{
-                  width: 40,
-                  height: 40,
+                  width: 48,
+                  height: 48,
                   borderRadius: 10,
                   background: 'rgba(13, 148, 136, 0.1)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  margin: '0 auto 12px',
+                  margin: '0 auto 16px',
                 }}>
-                  <item.icon size={20} color="var(--color-teal)" />
+                  <item.icon size={24} color="var(--color-teal)" />
                 </div>
-                <p style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-text-secondary)', marginBottom: 4, textTransform: 'uppercase' }}>
+                <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-text-secondary)', marginBottom: 8, textTransform: 'uppercase' }}>
                   {item.label}
                 </p>
-                <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--color-primary)' }}>
+                <p style={{ fontSize: 16, fontWeight: 600, color: 'var(--color-primary)' }}>
                   {item.value}
                 </p>
               </div>
             ))}
           </div>
 
-          <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: 20, justifyContent: 'center', flexWrap: 'wrap' }}>
             <button onClick={() => navigate('/report')} className="btn-primary">
               Submit Request <ArrowRight size={16} />
             </button>
@@ -384,13 +385,13 @@ export default function Landing() {
       </section>
 
       {/* FOOTER */}
-      <footer style={{ background: 'var(--color-primary)', padding: '48px 24px 32px', color: 'white' }}>
+      <footer style={{ background: 'var(--color-primary)', padding: '60px 40px 40px', color: 'white' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: 32,
-            marginBottom: 32,
+            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+            gap: 40,
+            marginBottom: 40,
           }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
@@ -463,6 +464,25 @@ export default function Landing() {
 
           .mobile-menu-btn {
             display: flex !important;
+          }
+          
+          /* Mobile spacing adjustments */
+          section {
+            padding-left: 20px !important;
+            padding-right: 20px !important;
+          }
+          
+          #home > div {
+            padding: 60px 20px !important;
+          }
+          
+          #services,
+          #contact {
+            padding: 60px 20px !important;
+          }
+          
+          footer {
+            padding: 48px 20px 32px !important;
           }
         }
       `}</style>

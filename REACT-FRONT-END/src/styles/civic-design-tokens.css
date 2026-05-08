@@ -342,4 +342,14 @@ body {
     width: 100%;
     justify-content: center;
   }
+  
+  .civic-card {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --card-padding-desktop: 24px;
+  }
 }

@@ -112,13 +112,13 @@ export default function TrackConcern() {
         onClick={() => navigate('/')}
         style={{
           position: 'fixed',
-          top: 24,
-          left: 24,
+          top: 32,
+          left: 32,
           zIndex: 100,
           display: 'inline-flex',
           alignItems: 'center',
           gap: 8,
-          padding: '10px 20px',
+          padding: '12px 24px',
           borderRadius: 10,
           border: '1px solid #E5E7EB',
           background: 'white',
@@ -147,7 +147,7 @@ export default function TrackConcern() {
       {/* Hero Section with Gradient Background */}
       <div className="track-hero">
         <div className="track-hero-content">
-          <h1 style={{ fontSize: 42, fontWeight: 700, color: 'white', marginBottom: 12, fontFamily: 'Public Sans, sans-serif' }}>
+          <h1 style={{ fontSize: 42, fontWeight: 700, color: 'white', marginBottom: 16, fontFamily: 'Public Sans, sans-serif' }}>
             Track Your Concern
           </h1>
           <p style={{ fontSize: 18, color: 'rgba(255, 255, 255, 0.9)', maxWidth: 600, margin: '0 auto' }}>
@@ -157,12 +157,12 @@ export default function TrackConcern() {
       </div>
 
       {/* Main Content Container */}
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 20px 60px' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 40px 80px' }}>
         
         {/* Glass Morphism Search Panel */}
         <div className="search-panel-wrapper">
-          <div className="glass-panel" style={{ padding: 12, borderRadius: 16 }}>
-            <form onSubmit={handleSearch} style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+          <div className="glass-panel" style={{ padding: 16, borderRadius: 16 }}>
+            <form onSubmit={handleSearch} style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
               <div style={{ flex: 1, position: 'relative' }}>
                 <input
                   type="text"
@@ -174,7 +174,7 @@ export default function TrackConcern() {
                   }}
                   style={{
                     width: '100%',
-                    padding: '16px 20px',
+                    padding: '18px 24px',
                     fontSize: 16,
                     border: 'none',
                     borderRadius: 12,
@@ -191,7 +191,7 @@ export default function TrackConcern() {
                 type="submit"
                 disabled={isSearching}
                 style={{
-                  padding: '16px 32px',
+                  padding: '18px 36px',
                   borderRadius: 12,
                   border: 'none',
                   background: '#0058be',
@@ -230,8 +230,8 @@ export default function TrackConcern() {
             background: 'rgba(239, 68, 68, 0.08)',
             border: '2px solid rgba(239, 68, 68, 0.2)',
             borderRadius: 12,
-            padding: 16,
-            marginTop: 24,
+            padding: 20,
+            marginTop: 32,
             display: 'flex',
             alignItems: 'flex-start',
             gap: 12,
