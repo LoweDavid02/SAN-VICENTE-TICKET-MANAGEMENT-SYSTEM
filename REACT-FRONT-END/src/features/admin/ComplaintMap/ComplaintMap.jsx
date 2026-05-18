@@ -439,7 +439,7 @@ export default function ComplaintMap() {
         }
         .leaflet-control-zoom a:hover { background: #f1f5f9 !important; }
         .leaflet-control-attribution {
-          font-size: 9px !important;
+          font-size: 11px !important;
           background: rgba(255,255,255,.75) !important;
           backdrop-filter: blur(4px);
         }

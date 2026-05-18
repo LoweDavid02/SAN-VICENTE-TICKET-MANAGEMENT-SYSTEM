@@ -707,7 +707,7 @@ export default function ReportConcern() {
             <p style={{ fontSize: 18, fontWeight: 600, marginBottom: 8, color: '#FFFFFF' }}>
               Office of Public Service
             </p>
-            <p style={{ fontSize: 14, opacity: 0.9, color: '#FFFFFF' }}>
+            <p style={{ fontSize: 14, color: '#FFFFFF' }}>
               Serving the citizens of San Vicente with integrity and care.
             </p>
           </div>
