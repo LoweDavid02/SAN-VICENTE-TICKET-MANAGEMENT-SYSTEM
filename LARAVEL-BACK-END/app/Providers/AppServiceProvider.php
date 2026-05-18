@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Routing\UrlGenerator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -17,6 +18,24 @@ class AppServiceProvider extends ServiceProvider
         // Force HTTPS on Render (production)
         if (config('app.env') === 'production') {
             $url->forceScheme('https');
+        }
+
+        // ── DB connection resilience (Render free-tier cold restarts) ─────
+        // Attempt to verify the DB connection is alive; retry up to 3 times
+        // with a 3-second backoff before giving up. This handles the window
+        // where Render restarts the PostgreSQL instance before the app boots.
+        $attempts = 0;
+        while ($attempts < 3) {
+            try {
+                DB::connection()->getPdo();
+                break; // connection is good
+            } catch (\Exception $e) {
+                $attempts++;
+                if ($attempts >= 3) {
+                    throw $e; // re-throw after final attempt
+                }
+                sleep(3);
+            }
         }
 
         // ── Rate Limiters ─────────────────────────────────────────────────
