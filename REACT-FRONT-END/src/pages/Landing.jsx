@@ -183,7 +183,7 @@ export default function Landing() {
         <div style={{ position:'absolute', top:88, left:'50%', transform:'translateX(-50%)', zIndex:10 }}>
           <div style={{ display:'inline-flex', alignItems:'center', gap:8, padding:'6px 16px', borderRadius:99, background:'rgba(34,168,58,.15)', border:'1px solid rgba(34,168,58,.35)', backdropFilter:'blur(8px)' }}>
             <span style={{ width:7, height:7, borderRadius:'50%', background:'#22a83a', display:'inline-block', animation:'pulse 2s ease-in-out infinite' }} />
-            <span style={{ fontSize:11.5, fontWeight:700, color:'#86efac', letterSpacing:'0.1em', textTransform:'uppercase', whiteSpace:'nowrap' }}>
+            <span style={{ fontSize:11.5, fontWeight:700, color:'#ffffff', letterSpacing:'0.1em', textTransform:'uppercase', whiteSpace:'nowrap' }}>
               San Vicente, Apalit, Pampanga
             </span>
           </div>
@@ -356,7 +356,7 @@ export default function Landing() {
       </section>
 
       {/* FOOTER */}
-      <footer style={{ background:'#0f172a', padding:'48px 24px 32px', color:'rgba(148,163,184,.8)' }}>
+      <footer style={{ background:'#0f172a', padding:'48px 24px 32px' }}>
         <div style={{ maxWidth:1100, margin:'0 auto' }}>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))', gap:32, marginBottom:40 }}>
             <div>
@@ -366,29 +366,29 @@ export default function Landing() {
                 </div>
                 <span style={{ fontSize:14, fontWeight:700, color:'#fff' }}>BLINKED</span>
               </div>
-              <p style={{ fontSize:13, lineHeight:1.7 }}>Centralized Intelligence Platform for Apalit, Pampanga. v4.2.1-stable.</p>
+              <p style={{ fontSize:13, lineHeight:1.7, color:'#ffffff' }}>Centralized Intelligence Platform for Apalit, Pampanga. v4.2.1-stable.</p>
             </div>
             <div>
               <p style={{ fontSize:12, fontWeight:700, color:'#fff', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:14 }}>Quick Links</p>
-              <button onClick={() => navigate('/submit')} style={{ display:'block', background:'none', border:'none', cursor:'pointer', fontSize:13, color:'rgba(148,163,184,.8)', fontFamily:'inherit', padding:'4px 0', transition:'color .15s' }} onMouseEnter={(e) => { e.currentTarget.style.color='#14b8a6'; }} onMouseLeave={(e) => { e.currentTarget.style.color='rgba(148,163,184,.8)'; }}>Submit Request</button>
-              <button onClick={() => navigate('/login')} style={{ display:'block', background:'none', border:'none', cursor:'pointer', fontSize:13, color:'rgba(148,163,184,.8)', fontFamily:'inherit', padding:'4px 0', transition:'color .15s' }} onMouseEnter={(e) => { e.currentTarget.style.color='#14b8a6'; }} onMouseLeave={(e) => { e.currentTarget.style.color='rgba(148,163,184,.8)'; }}>Staff Login</button>
+              <button onClick={() => navigate('/submit')} style={{ display:'block', background:'none', border:'none', cursor:'pointer', fontSize:13, color:'#ffffff', fontFamily:'inherit', padding:'4px 0', transition:'color .15s' }} onMouseEnter={(e) => { e.currentTarget.style.color='#14b8a6'; }} onMouseLeave={(e) => { e.currentTarget.style.color='#ffffff'; }}>Submit Request</button>
+              <button onClick={() => navigate('/login')} style={{ display:'block', background:'none', border:'none', cursor:'pointer', fontSize:13, color:'#ffffff', fontFamily:'inherit', padding:'4px 0', transition:'color .15s' }} onMouseEnter={(e) => { e.currentTarget.style.color='#14b8a6'; }} onMouseLeave={(e) => { e.currentTarget.style.color='#ffffff'; }}>Staff Login</button>
             </div>
             <div>
               <p style={{ fontSize:12, fontWeight:700, color:'#fff', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:14 }}>Quick Links</p>
               {[['Home','#hero'],['About','#about'],['Features','#features'],['Contact','#contact']].map(([l,h]) => (
-                <button key={l} onClick={() => scrollTo(h)} style={{ display:'block', background:'none', border:'none', cursor:'pointer', fontSize:13, color:'rgba(148,163,184,.8)', fontFamily:'inherit', padding:'4px 0', transition:'color .15s' }} onMouseEnter={(e) => { e.currentTarget.style.color='#14b8a6'; }} onMouseLeave={(e) => { e.currentTarget.style.color='rgba(148,163,184,.8)'; }}>{l}</button>
+                <button key={l} onClick={() => scrollTo(h)} style={{ display:'block', background:'none', border:'none', cursor:'pointer', fontSize:13, color:'#ffffff', fontFamily:'inherit', padding:'4px 0', transition:'color .15s' }} onMouseEnter={(e) => { e.currentTarget.style.color='#14b8a6'; }} onMouseLeave={(e) => { e.currentTarget.style.color='#ffffff'; }}>{l}</button>
               ))}
             </div>
             <div>
               <p style={{ fontSize:12, fontWeight:700, color:'#fff', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:14 }}>Contact</p>
-              <p style={{ fontSize:13, marginBottom:6 }}>Phone: (02) 8123-4567</p>
-              <p style={{ fontSize:13, marginBottom:6 }}>Email: info@bsv.gov.ph</p>
-              <p style={{ fontSize:13 }}>San Vicente, Apalit, Pampanga</p>
+              <p style={{ fontSize:13, marginBottom:6, color:'#ffffff' }}>Phone: (02) 8123-4567</p>
+              <p style={{ fontSize:13, marginBottom:6, color:'#ffffff' }}>Email: info@bsv.gov.ph</p>
+              <p style={{ fontSize:13, color:'#ffffff' }}>San Vicente, Apalit, Pampanga</p>
             </div>
           </div>
           <div style={{ borderTop:'1px solid rgba(255,255,255,.08)', paddingTop:24, display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:12 }}>
-            <p style={{ fontSize:12 }}>2025 BLINKED. All rights reserved.</p>
-            <p style={{ fontSize:12 }}>BLINKED v4.2.1-stable</p>
+            <p style={{ fontSize:12, color:'#ffffff' }}>2025 BLINKED. All rights reserved.</p>
+            <p style={{ fontSize:12, color:'#ffffff' }}>BLINKED v4.2.1-stable</p>
           </div>
         </div>
       </footer>

@@ -93,7 +93,19 @@ export default function Login() {
       }}
     >
       {/* ══ LEFT PANEL ══════════════════════════════════════════════════════ */}
+      {/* Scoped style: force white text on the dark left panel, overriding any global CSS */}
+      <style>{`
+        #login-left-panel,
+        #login-left-panel * {
+          color: #ffffff !important;
+        }
+        #login-left-panel .lp-gradient-text {
+          color: transparent !important;
+          -webkit-text-fill-color: transparent !important;
+        }
+      `}</style>
       <div
+        id="login-left-panel"
         className="hidden lg:flex lg:w-[52%] relative overflow-hidden flex-col justify-between"
         style={{
           padding: '52px 56px',
@@ -127,8 +139,8 @@ export default function Login() {
             <Shield size={18} style={{ color: '#5eead4' }} />
           </div>
           <div>
-            <p className="text-white font-semibold text-sm tracking-wide leading-none">BLINKED</p>
-            <p className="text-[10px] mt-0.5" style={{ color: 'rgba(94,234,212,.6)' }}>v4.2.1-stable</p>
+            <p className="text-white font-semibold text-sm tracking-wide leading-none" style={{ color: '#ffffff' }}>BLINKED</p>
+            <p className="text-[10px] mt-0.5" style={{ color: '#ffffff' }}>v4.2.1-stable</p>
           </div>
         </div>
 
@@ -137,14 +149,14 @@ export default function Login() {
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-7"
                style={{ background: 'rgba(20,184,166,.1)', border: '1px solid rgba(20,184,166,.2)' }}>
             <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
-            <span className="text-[10.5px] font-semibold tracking-[0.1em] uppercase" style={{ color: '#5eead4' }}>
+            <span className="text-[10.5px] font-semibold tracking-[0.1em] uppercase" style={{ color: '#ffffff' }}>
               San Vicente, Apalit, Pampanga
             </span>
           </div>
-          <h1 className="font-display text-white leading-[1.1] mb-5"
-              style={{ fontSize: 'clamp(2.4rem, 3.8vw, 3.2rem)', fontWeight: 400 }}>
+          <h1 className="font-display leading-[1.1] mb-5"
+              style={{ fontSize: 'clamp(2.4rem, 3.8vw, 3.2rem)', fontWeight: 400, color: '#ffffff' }}>
             Smarter local<br />
-            <span style={{
+            <span className="lp-gradient-text" style={{
               background: 'linear-gradient(90deg, #5eead4 0%, #2dd4bf 50%, #14b8a6 100%)',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontStyle: 'italic',
             }}>
@@ -152,7 +164,7 @@ export default function Login() {
             </span>
             <br />starts here.
           </h1>
-          <p style={{ fontSize: '0.9rem', color: 'rgba(148,163,184,.75)', lineHeight: 1.7, maxWidth: 320 }}>
+          <p style={{ fontSize: '0.9rem', color: '#ffffff', lineHeight: 1.7, maxWidth: 320 }}>
             A unified platform for real-time incident tracking, department workload management,
             and citizen service requests.
           </p>
@@ -163,8 +175,8 @@ export default function Login() {
           {STATS.map((s) => (
             <div key={s.label} className="rounded-2xl"
                  style={{ padding: '16px 18px', background: 'rgba(255,255,255,.04)', border: '1px solid rgba(255,255,255,.07)' }}>
-              <p className="font-display text-white leading-none mb-1.5" style={{ fontSize: '1.75rem', fontWeight: 400 }}>{s.value}</p>
-              <p className="text-[11px]" style={{ color: 'rgba(148,163,184,.6)' }}>{s.label}</p>
+              <p className="font-display leading-none mb-1.5" style={{ fontSize: '1.75rem', fontWeight: 400, color: '#ffffff' }}>{s.value}</p>
+              <p className="text-[11px]" style={{ color: '#ffffff' }}>{s.label}</p>
             </div>
           ))}
         </div>
