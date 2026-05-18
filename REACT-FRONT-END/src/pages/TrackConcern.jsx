@@ -7,15 +7,16 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../lib/axios';
+import LocationMap from '../components/LocationMap';
 
-// Material Symbols Outlined icon mapping
+// Material Symbols Outlined icon mapping - Professional Status Colors
 const STATUS_CONFIG = {
-  'Pending': { color: '#6B7280', icon: 'schedule', label: 'Pending' },
-  'Under Review': { color: '#F59E0B', icon: 'analytics', label: 'Under Review' },
-  'In Progress': { color: '#3B82F6', icon: 'autorenew', label: 'In Progress' },
-  'Completed': { color: '#10B981', icon: 'check_circle', label: 'Completed' },
-  'Verified & Closed': { color: '#0D9488', icon: 'verified', label: 'Verified & Closed' },
-  'Rejected': { color: '#EF4444', icon: 'cancel', label: 'Rejected' },
+  'Pending': { color: '#94A3B8', icon: 'schedule', label: 'Pending' }, // Slate Gray - Neutral waiting state
+  'Under Review': { color: '#F59E0B', icon: 'analytics', label: 'Under Review' }, // Amber - Attention/Review
+  'In Progress': { color: '#3B82F6', icon: 'autorenew', label: 'In Progress' }, // Blue - Active work
+  'Completed': { color: '#22C55E', icon: 'check_circle', label: 'Completed' }, // Green - Success
+  'Verified & Closed': { color: '#059669', icon: 'verified', label: 'Verified & Closed' }, // Dark Green - Final success
+  'Rejected': { color: '#EF4444', icon: 'cancel', label: 'Rejected' }, // Red - Error/Rejection
 };
 
 export default function TrackConcern() {
@@ -147,10 +148,10 @@ export default function TrackConcern() {
       {/* Hero Section with Gradient Background */}
       <div className="track-hero">
         <div className="track-hero-content">
-          <h1 style={{ fontSize: 42, fontWeight: 700, color: 'white', marginBottom: 16, fontFamily: 'Public Sans, sans-serif' }}>
+          <h1 style={{ fontSize: 42, fontWeight: 700, color: '#FFFFFF', marginBottom: 16, fontFamily: 'Public Sans, sans-serif' }}>
             Track Your Concern
           </h1>
-          <p style={{ fontSize: 18, color: 'rgba(255, 255, 255, 0.9)', maxWidth: 600, margin: '0 auto' }}>
+          <p style={{ fontSize: 18, color: '#FFFFFF', opacity: 0.9, maxWidth: 600, margin: '0 auto' }}>
             Enter your reference code to check the real-time status of your concern
           </p>
         </div>
@@ -797,59 +798,38 @@ export default function TrackConcern() {
 
           {/* Sidebar Column */}
           <div className="bento-sidebar">
-            {/* Map Preview with Glass Overlay */}
+            {/* Interactive Map with Real Location */}
             <div style={{
               background: 'white',
               borderRadius: 16,
               overflow: 'hidden',
               border: '1px solid #E5E7EB',
             }}>
-              <div className="map-preview">
-                <div style={{
-                  width: '100%',
-                  height: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexDirection: 'column',
-                  gap: 12,
-                }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: 48, color: '#9CA3AF' }}>map</span>
-                  <p style={{ fontSize: 14, color: '#6B7280', fontWeight: 500 }}>Map Preview</p>
-                </div>
-                <div className="map-overlay">
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <span className="material-symbols-outlined" style={{ fontSize: 20, color: '#0058be' }}>location_on</span>
-                    <p style={{ fontSize: 13, fontWeight: 600, color: '#000000', margin: 0 }}>
-                      {ticket.location}
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <LocationMap address={ticket.location} height={300} />
             </div>
 
             {/* Help Section Card */}
             <div className="help-card">
-              <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span className="material-symbols-outlined" style={{ fontSize: 24 }}>help</span>
+              <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8, color: '#FFFFFF' }}>
+                <span className="material-symbols-outlined" style={{ fontSize: 24, color: '#FFFFFF' }}>help</span>
                 Need Help?
               </h3>
-              <p style={{ fontSize: 14, opacity: 0.9, marginBottom: 20, lineHeight: 1.6 }}>
+              <p style={{ fontSize: 14, opacity: 0.9, marginBottom: 20, lineHeight: 1.6, color: '#FFFFFF' }}>
                 Have questions about your concern? Contact us anytime.
               </p>
               <div style={{ display: 'grid', gap: 12 }}>
                 <div className="contact-card">
-                  <span className="material-symbols-outlined" style={{ fontSize: 24 }}>call</span>
+                  <span className="material-symbols-outlined" style={{ fontSize: 24, color: '#FFFFFF' }}>call</span>
                   <div>
-                    <p style={{ fontSize: 12, opacity: 0.8, marginBottom: 2 }}>Phone</p>
-                    <p style={{ fontSize: 14, fontWeight: 600 }}>(02) 8123-4567</p>
+                    <p style={{ fontSize: 12, opacity: 0.8, marginBottom: 2, color: '#FFFFFF' }}>Phone</p>
+                    <p style={{ fontSize: 14, fontWeight: 600, color: '#FFFFFF' }}>(02) 8123-4567</p>
                   </div>
                 </div>
                 <div className="contact-card">
-                  <span className="material-symbols-outlined" style={{ fontSize: 24 }}>mail</span>
+                  <span className="material-symbols-outlined" style={{ fontSize: 24, color: '#FFFFFF' }}>mail</span>
                   <div>
-                    <p style={{ fontSize: 12, opacity: 0.8, marginBottom: 2 }}>Email</p>
-                    <p style={{ fontSize: 14, fontWeight: 600 }}>support@sanvicente.gov.ph</p>
+                    <p style={{ fontSize: 12, opacity: 0.8, marginBottom: 2, color: '#FFFFFF' }}>Email</p>
+                    <p style={{ fontSize: 14, fontWeight: 600, color: '#FFFFFF' }}>support@sanvicente.gov.ph</p>
                   </div>
                 </div>
               </div>
@@ -862,11 +842,11 @@ export default function TrackConcern() {
               padding: 24,
               color: 'white',
             }}>
-              <span className="material-symbols-outlined" style={{ fontSize: 32, marginBottom: 12, display: 'block' }}>verified_user</span>
-              <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 8 }}>
+              <span className="material-symbols-outlined" style={{ fontSize: 32, marginBottom: 12, display: 'block', color: '#FFFFFF' }}>verified_user</span>
+              <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#FFFFFF' }}>
                 Our Commitment to Transparency
               </h3>
-              <p style={{ fontSize: 14, opacity: 0.9, lineHeight: 1.6 }}>
+              <p style={{ fontSize: 14, opacity: 0.9, lineHeight: 1.6, color: '#FFFFFF' }}>
                 We're dedicated to keeping you informed every step of the way.
               </p>
             </div>

@@ -87,7 +87,7 @@ function ModalShell({ stripeColor, title, subtitle, onClose, children, footer })
 function FormField({ label, children }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-      <label style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.07em', textTransform: 'uppercase', color: 'var(--text-3)' }}>
+      <label style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.07em', textTransform: 'uppercase', color: '#6b7280' }}>
         {label}
       </label>
       {children}
@@ -97,9 +97,9 @@ function FormField({ label, children }) {
 
 const inputStyle = {
   height: 38, width: '100%', padding: '0 12px',
-  border: '1.5px solid var(--border)', borderRadius: 9,
+  border: '1.5px solid #d1d5db', borderRadius: 9,
   fontSize: 13, fontFamily: 'inherit',
-  color: 'var(--text-1)', background: 'var(--surface-2)',
+  color: '#111827', background: '#ffffff',
   outline: 'none', transition: 'border-color .15s, box-shadow .15s',
 };
 
@@ -306,8 +306,8 @@ export default function Personnel() {
       {/* Page header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div>
-          <h1 style={{ fontSize: 22, fontWeight: 700, color: 'var(--text-1)', letterSpacing: '-0.025em' }}>Personnel</h1>
-          <p style={{ fontSize: 13, color: 'var(--text-4)', marginTop: 3 }}>{list.length} staff members registered</p>
+          <h1 style={{ fontSize: 22, fontWeight: 700, color: '#111827', letterSpacing: '-0.025em' }}>Personnel</h1>
+          <p style={{ fontSize: 13, color: '#6b7280', marginTop: 3 }}>{list.length} staff members registered</p>
         </div>
         <button className="btn btn-brand" onClick={() => setShowAdd(true)}>
           <Plus size={14} strokeWidth={2.5} /> Add Personnel
@@ -350,8 +350,8 @@ export default function Personnel() {
 
         {/* List panel */}
         <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, overflow: 'hidden' }}>
-          <div style={{ padding: '12px 16px', borderBottom: '1px solid var(--border)', background: 'var(--surface-2)' }}>
-            <p style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-4)', textTransform: 'uppercase', letterSpacing: '.07em' }}>
+      <div style={{ padding: '12px 16px', borderBottom: '1px solid var(--border)', background: 'var(--surface-2)' }}>
+            <p style={{ fontSize: 12, fontWeight: 700, color: '#6b7280', textTransform: 'uppercase', letterSpacing: '.07em' }}>
               {filtered.length} member{filtered.length !== 1 ? 's' : ''}
             </p>
           </div>

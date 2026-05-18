@@ -70,7 +70,7 @@ body {
 /* Buttons */
 .btn-primary {
   background-color: var(--color-primary);
-  color: white;
+  color: rgb(255, 255, 255) !important;
   padding: 12px 24px;
   border-radius: var(--radius-button);
   border: none;
@@ -82,6 +82,10 @@ body {
   align-items: center;
   gap: 8px;
   font-family: var(--font-family);
+}
+
+.btn-primary * {
+  color: rgb(255, 255, 255) !important;
 }
 
 .btn-primary:hover {

@@ -166,8 +166,10 @@ export default defineConfig({
       'zustand',
       'lucide-react',
       'leaflet',
+      'react-leaflet',
       'fast-deep-equal',
     ],
+    exclude: ['@react-leaflet/core'],
   },
 
   // Resolve configuration to fix module import issues

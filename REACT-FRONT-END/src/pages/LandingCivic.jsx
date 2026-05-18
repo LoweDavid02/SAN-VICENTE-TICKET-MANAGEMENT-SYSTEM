@@ -208,8 +208,9 @@ export default function Landing() {
               <p style={{ fontSize: 15, color: '#4B5563', marginBottom: 24, lineHeight: 1.7 }}>
                 Report issues, suggest improvements, or request assistance directly from barangay officials.
               </p>
-              <button className="btn-primary" style={{ width: '100%' }}>
-                Get Started <ArrowRight size={16} />
+              <button className="btn-primary" style={{ width: '100%', color: '#FFFFFF', backgroundColor: '#1E2D4E' }}>
+                <span style={{ pointerEvents: 'none', color: '#FFFFFF' }}>Get Started</span>
+                <ArrowRight size={16} style={{ pointerEvents: 'none', color: '#FFFFFF' }} />
               </button>
             </div>
 
@@ -242,8 +243,8 @@ export default function Landing() {
               <p style={{ fontSize: 15, color: '#4B5563', marginBottom: 24, lineHeight: 1.7 }}>
                 Check the real-time status of your submitted reports using your ticket ID.
               </p>
-              <button className="btn-outline" style={{ width: '100%' }}>
-                Check Status
+              <button className="btn-outline" style={{ width: '100%', color: '#1E2D4E', borderColor: '#1E2D4E', backgroundColor: '#FFFFFF' }}>
+                <span style={{ pointerEvents: 'none', color: '#1E2D4E' }}>Check Status</span>
               </button>
             </div>
           </div>
@@ -377,11 +378,12 @@ export default function Landing() {
           </div>
 
           <div style={{ display: 'flex', gap: 20, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <button onClick={() => navigate('/report')} className="btn-primary">
-              Submit Request <ArrowRight size={16} />
+            <button onClick={() => navigate('/report')} className="btn-primary" style={{ color: '#FFFFFF', backgroundColor: '#1E2D4E' }}>
+              <span style={{ pointerEvents: 'none', color: '#FFFFFF' }}>Submit Request</span>
+              <ArrowRight size={16} style={{ pointerEvents: 'none', color: '#FFFFFF' }} />
             </button>
-            <button onClick={() => navigate('/track')} className="btn-outline">
-              Track Status
+            <button onClick={() => navigate('/track')} className="btn-outline" style={{ color: '#1E2D4E', borderColor: '#1E2D4E', backgroundColor: '#FFFFFF' }}>
+              <span style={{ pointerEvents: 'none', color: '#1E2D4E' }}>Track Status</span>
             </button>
           </div>
         </div>
@@ -410,8 +412,12 @@ export default function Landing() {
               <p style={{ fontSize: 12, fontWeight: 700, marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 Quick Links
               </p>
-              <button onClick={() => navigate('/report')} style={{ display: 'block', background: 'none', border: 'none', color: 'rgba(255,255,255,0.8)', fontSize: 14, padding: '4px 0', cursor: 'pointer', textAlign: 'left' }}>Submit Request</button>
-              <button onClick={() => navigate('/track')} style={{ display: 'block', background: 'none', border: 'none', color: 'rgba(255,255,255,0.8)', fontSize: 14, padding: '4px 0', cursor: 'pointer', textAlign: 'left' }}>Track Status</button>
+              <button onClick={() => navigate('/report')} style={{ display: 'block', background: 'none', border: 'none', color: 'rgba(255,255,255,0.8)', fontSize: 14, padding: '4px 0', cursor: 'pointer', textAlign: 'left' }}>
+                <span style={{ color: 'rgba(255,255,255,0.8)' }}>Submit Request</span>
+              </button>
+              <button onClick={() => navigate('/track')} style={{ display: 'block', background: 'none', border: 'none', color: 'rgba(255,255,255,0.8)', fontSize: 14, padding: '4px 0', cursor: 'pointer', textAlign: 'left' }}>
+                <span style={{ color: 'rgba(255,255,255,0.8)' }}>Track Status</span>
+              </button>
             </div>
 
             <div>

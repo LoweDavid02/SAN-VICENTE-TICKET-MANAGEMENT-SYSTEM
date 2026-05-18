@@ -85,7 +85,7 @@ class SyncManager {
     const token = localStorage.getItem('auth_token');
     if (!token) {
       if (import.meta.env.DEV) {
-        console.warn('[SyncManager] No auth token, skipping WebSocket connection');
+        console.log('[SyncManager] No auth token, skipping WebSocket connection (expected on public pages)');
       }
       return;
     }

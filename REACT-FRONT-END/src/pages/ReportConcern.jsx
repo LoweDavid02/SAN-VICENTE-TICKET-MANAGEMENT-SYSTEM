@@ -290,7 +290,22 @@ export default function ReportConcern() {
         // Validation errors from server
         const serverErrors = error.response.data.errors || {};
         console.error('Server validation errors:', serverErrors);
-        setErrors(serverErrors);
+        
+        // Format errors for display
+        const formattedErrors = {};
+        Object.keys(serverErrors).forEach(key => {
+          // Handle array errors like "photos.0" -> "photos"
+          const fieldName = key.split('.')[0];
+          const errorMessages = Array.isArray(serverErrors[key]) ? serverErrors[key] : [serverErrors[key]];
+          formattedErrors[fieldName] = errorMessages.join(', ');
+        });
+        
+        console.log('Formatted errors:', formattedErrors);
+        setErrors(formattedErrors);
+        
+        // Show user-friendly message
+        const errorMessage = Object.values(formattedErrors).join(' ');
+        alert(`Validation Error: ${errorMessage}`);
       } else if (error.response?.data?.message) {
         // Server returned a specific error message
         console.error('Server error message:', error.response.data.message);
@@ -688,11 +703,11 @@ export default function ReportConcern() {
             color: 'white',
             textAlign: 'center',
           }}>
-            <span className="material-symbols-outlined" style={{ fontSize: 40, marginBottom: 12, display: 'block' }}>account_balance</span>
-            <p style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>
+            <span className="material-symbols-outlined" style={{ fontSize: 40, marginBottom: 12, display: 'block', color: '#FFFFFF' }}>account_balance</span>
+            <p style={{ fontSize: 18, fontWeight: 600, marginBottom: 8, color: '#FFFFFF' }}>
               Office of Public Service
             </p>
-            <p style={{ fontSize: 14, opacity: 0.9 }}>
+            <p style={{ fontSize: 14, opacity: 0.9, color: '#FFFFFF' }}>
               Serving the citizens of San Vicente with integrity and care.
             </p>
           </div>
@@ -750,14 +765,17 @@ export default function ReportConcern() {
             <div style={{ display: 'grid', gap: 20 }}>
               {/* Full Name */}
               <div>
-                <label className="form-label required">Full Name</label>
+                <label htmlFor="guest_name" className="form-label required">Full Name</label>
                 <input
+                  id="guest_name"
+                  name="guest_name"
                   type="text"
                   className="civic-input"
                   placeholder="Juan Dela Cruz"
                   value={formData.guest_name}
                   onChange={(e) => updateField('guest_name', e.target.value)}
                   onBlur={() => handleBlur('guest_name')}
+                  autoComplete="name"
                 />
                 {errors.guest_name && (
                   <p className="error-message">{errors.guest_name}</p>
@@ -767,14 +785,17 @@ export default function ReportConcern() {
               {/* Contact Number & Address */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
                 <div>
-                  <label className="form-label required">Contact Number</label>
+                  <label htmlFor="guest_phone" className="form-label required">Contact Number</label>
                   <input
+                    id="guest_phone"
+                    name="guest_phone"
                     type="tel"
                     className="civic-input"
                     placeholder="09123456789"
                     value={formData.guest_phone}
                     onChange={(e) => updateField('guest_phone', e.target.value)}
                     onBlur={() => handleBlur('guest_phone')}
+                    autoComplete="tel"
                   />
                   {errors.guest_phone && (
                     <p className="error-message">{errors.guest_phone}</p>
@@ -782,14 +803,17 @@ export default function ReportConcern() {
                 </div>
 
                 <div>
-                  <label className="form-label required">Address</label>
+                  <label htmlFor="guest_address" className="form-label required">Address</label>
                   <input
+                    id="guest_address"
+                    name="guest_address"
                     type="text"
                     className="civic-input"
                     placeholder="Purok 1, San Vicente"
                     value={formData.guest_address}
                     onChange={(e) => updateField('guest_address', e.target.value)}
                     onBlur={() => handleBlur('guest_address')}
+                    autoComplete="street-address"
                   />
                   {errors.guest_address && (
                     <p className="error-message">{errors.guest_address}</p>
@@ -799,14 +823,17 @@ export default function ReportConcern() {
 
               {/* Email */}
               <div>
-                <label className="form-label required">Email Address</label>
+                <label htmlFor="guest_email" className="form-label required">Email Address</label>
                 <input
+                  id="guest_email"
+                  name="guest_email"
                   type="email"
                   className="civic-input"
                   placeholder="juan@example.com"
                   value={formData.guest_email}
                   onChange={(e) => updateField('guest_email', e.target.value)}
                   onBlur={() => handleBlur('guest_email')}
+                  autoComplete="email"
                 />
                 {errors.guest_email && (
                   <p className="error-message">{errors.guest_email}</p>
@@ -827,8 +854,10 @@ export default function ReportConcern() {
             <div style={{ display: 'grid', gap: 20 }}>
               {/* Category */}
               <div>
-                <label className="form-label required">Category</label>
+                <label htmlFor="category" className="form-label required">Category</label>
                 <select
+                  id="category"
+                  name="category"
                   className="civic-select"
                   value={formData.category}
                   onChange={(e) => updateField('category', e.target.value)}
@@ -846,8 +875,10 @@ export default function ReportConcern() {
 
               {/* Description */}
               <div>
-                <label className="form-label required">Description</label>
+                <label htmlFor="description" className="form-label required">Description</label>
                 <textarea
+                  id="description"
+                  name="description"
                   className="civic-textarea"
                   placeholder="Please describe your concern in detail..."
                   value={formData.description}
@@ -870,9 +901,11 @@ export default function ReportConcern() {
 
               {/* Specific Location */}
               <div>
-                <label className="form-label required">Specific Location</label>
+                <label htmlFor="location" className="form-label required">Specific Location</label>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 12 }}>
                   <input
+                    id="location"
+                    name="location"
                     type="text"
                     className="civic-input"
                     placeholder="e.g., Corner of Main St. and 2nd Ave."
@@ -886,6 +919,7 @@ export default function ReportConcern() {
                     disabled={locating}
                     className="btn-teal"
                     style={{ whiteSpace: 'nowrap', color: '#ffffff' }}
+                    aria-label="Use my current location"
                   >
                     {locating ? (
                       <>
@@ -908,12 +942,14 @@ export default function ReportConcern() {
               {/* Urgency Level */}
               <div>
                 <label className="form-label required">Urgency Level</label>
-                <div style={{ display: 'flex', gap: 12 }}>
+                <div style={{ display: 'flex', gap: 12 }} role="group" aria-label="Urgency level selection">
                   {URGENCY_LEVELS.map(level => (
                     <button
                       key={level.value}
                       type="button"
                       onClick={() => updateField('severity', level.value)}
+                      aria-pressed={formData.severity === level.value}
+                      aria-label={`${level.label} urgency`}
                       style={{
                         flex: 1,
                         padding: '12px 16px',
@@ -945,8 +981,10 @@ export default function ReportConcern() {
             </div>
 
             {/* Upload Zone */}
-            <div
+            <label
+              htmlFor="photo-input"
               style={{
+                display: 'block',
                 border: '2px dashed var(--color-border)',
                 borderRadius: 12,
                 padding: 40,
@@ -954,7 +992,6 @@ export default function ReportConcern() {
                 cursor: 'pointer',
                 transition: 'all 0.15s',
               }}
-              onClick={() => document.getElementById('photo-input').click()}
               onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--color-primary)'}
               onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--color-border)'}
             >
@@ -967,13 +1004,15 @@ export default function ReportConcern() {
               </p>
               <input
                 id="photo-input"
+                name="photos"
                 type="file"
                 accept="image/jpeg,image/png,image/webp"
                 multiple
                 onChange={handlePhotoUpload}
                 style={{ display: 'none' }}
+                aria-label="Upload photos"
               />
-            </div>
+            </label>
 
             {errors.photos && (
               <p className="error-message" style={{ marginTop: 8 }}>{errors.photos}</p>
@@ -998,6 +1037,7 @@ export default function ReportConcern() {
                     <button
                       type="button"
                       onClick={() => removePhoto(index)}
+                      aria-label={`Remove photo ${index + 1}`}
                       style={{
                         position: 'absolute',
                         top: 4,
