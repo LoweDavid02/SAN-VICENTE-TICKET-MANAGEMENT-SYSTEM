@@ -109,9 +109,9 @@ function AppRoutes() {
 
   const handlePreloaderDone = () => {
     clearPreloader();
-    if (preloader?.portal === 'logout') {
-      navigate('/login', { replace: true });
-    }
+    // Note: logout no longer uses the preloader — navigation happens via
+    // ProtectedRoute detecting isAuthenticated: false. This handler is kept
+    // for the login preloader only (portal: 'admin' | 'personnel').
   };
 
   return (

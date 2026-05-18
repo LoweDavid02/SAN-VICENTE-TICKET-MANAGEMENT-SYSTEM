@@ -5,6 +5,7 @@ import {
   Mail, Lock, ArrowRight, Home, ChevronDown,
 } from 'lucide-react';
 import useAuthStore from '../stores/authStore';
+import api from '../lib/axios';
 
 const STATS = [
   { value: '1,284', label: 'Tickets resolved' },
@@ -26,17 +27,31 @@ export default function Login() {
   const [ready,    setReady]    = useState(false);
 
   useEffect(() => {
-    // If already authenticated (page refresh), redirect to portal
+    // Validate stored token against the server before redirecting.
+    // This prevents stale/expired tokens from bouncing the user to the dashboard.
+    const token = localStorage.getItem('auth_token');
     const stored = localStorage.getItem('auth_user');
-    if (stored) {
-      try {
-        const u = JSON.parse(stored);
-        if (u?.portal && localStorage.getItem('auth_token')) {
-          navigate(`/${u.portal}/dashboard`, { replace: true });
-          return;
-        }
-      } catch { /* ignore */ }
+
+    if (token && stored) {
+      api.get('/auth/me')
+        .then((res) => {
+          // Token is valid — redirect to the user's portal
+          const u = res.data?.data || JSON.parse(stored);
+          if (u?.portal) {
+            navigate(`/${u.portal}/dashboard`, { replace: true });
+          }
+        })
+        .catch(() => {
+          // Token is invalid/expired — clear it and stay on login
+          localStorage.removeItem('auth_token');
+          localStorage.removeItem('auth_user');
+          useAuthStore.setState({ user: null, token: null, isAuthenticated: false });
+          document.documentElement.classList.remove('dark');
+          setTimeout(() => setReady(true), 80);
+        });
+      return; // don't setReady yet — wait for the /me check
     }
+
     document.documentElement.classList.remove('dark');
     const timer = setTimeout(() => setReady(true), 80);
     return () => clearTimeout(timer);

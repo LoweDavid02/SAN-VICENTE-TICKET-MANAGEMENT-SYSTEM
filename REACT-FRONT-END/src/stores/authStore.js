@@ -65,21 +65,21 @@ const useAuthStore = create((set) => ({
   },
 
   /**
-   * logout — show logout preloader, then clear state.
+   * logout — clear state immediately (optimistic), then fire API call in background.
+   * State is cleared BEFORE the API call so the UI responds instantly regardless
+   * of network latency or server cold-start delays.
    */
   logout: async () => {
-    // Show logout preloader immediately
-    set({ preloader: { portal: 'logout', userName: '' } });
+    // 1. Clear auth state immediately — don't wait for the API
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('auth_user');
+    set({ user: null, token: null, isAuthenticated: false, error: null, preloader: null });
 
+    // 2. Fire the server-side token revocation in the background (best-effort)
     try {
       await api.post('/auth/logout');
     } catch {
-      // ignore
-    } finally {
-      localStorage.removeItem('auth_token');
-      localStorage.removeItem('auth_user');
-      set({ user: null, token: null, isAuthenticated: false, error: null });
-      // preloader stays visible — caller dismisses it after navigation
+      // ignore — token is already cleared client-side
     }
   },
 

@@ -39,22 +39,36 @@ api.interceptors.request.use(
 );
 
 // ── Response interceptor: handle 401 globally ─────────────────────────────
+// We use a lazy getter for the auth store to avoid circular imports.
+// The store module is loaded on first 401, not at module init time.
+let _authStore = null;
+const getAuthStore = () => {
+  if (!_authStore) {
+    // Dynamic require — safe because this only runs in browser after full init
+    try { _authStore = require('../stores/authStore').default; } catch { /* ignore */ }
+  }
+  return _authStore;
+};
+
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // Clear stale auth data
+      // Clear localStorage
       localStorage.removeItem('auth_token');
       localStorage.removeItem('auth_user');
 
-      // Only redirect if not already on login page
+      // Clear Zustand store state so ProtectedRoute redirects immediately
+      const store = getAuthStore();
+      if (store?.setState) {
+        store.setState({ user: null, token: null, isAuthenticated: false, preloader: null });
+      }
+
+      // Redirect to login if not already there
       const isLoginPage = window.location.pathname === '/login'
         || window.location.pathname === '/';
       if (!isLoginPage) {
-        // Small delay so any in-flight state updates complete
-        setTimeout(() => {
-          window.location.href = '/login';
-        }, 100);
+        window.location.href = '/login';
       }
     }
     return Promise.reject(error);

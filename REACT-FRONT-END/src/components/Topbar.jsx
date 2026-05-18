@@ -193,8 +193,8 @@ export default function Topbar({ sidebarWidth }) {
                   openModal('logout', {
                     onConfirm: async () => {
                       await logout();
-                      // preloader is shown by authStore.logout()
-                      // App.jsx AppRoutes handles navigation when preloader finishes
+                      // logout() clears state immediately — navigate right away
+                      navigate('/login', { replace: true });
                     }
                   });
                 }}

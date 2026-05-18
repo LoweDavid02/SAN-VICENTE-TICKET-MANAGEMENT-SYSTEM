@@ -395,7 +395,11 @@ export default function Sidebar({ portalType }) {
             onClick={() => {
               setMobileDrawerOpen(false);
               openModal('logout', {
-                onConfirm: async () => { await logout(); }
+                onConfirm: async () => {
+                  await logout();
+                  // logout() clears state immediately — navigate right away
+                  navigate('/login', { replace: true });
+                }
               });
             }}
             className="mobile-drawer__action mobile-drawer__action--danger"
