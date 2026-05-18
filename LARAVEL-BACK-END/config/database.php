@@ -97,6 +97,10 @@ return [
             'prefix_indexes' => true,
             'search_path' => 'public',
             'sslmode' => env('DB_SSLMODE', 'prefer'),
+            // Reconnection resilience for Render free-tier DB restarts
+            'options' => [
+                PDO::ATTR_TIMEOUT => 5,
+            ],
         ],
 
         'sqlsrv' => [
