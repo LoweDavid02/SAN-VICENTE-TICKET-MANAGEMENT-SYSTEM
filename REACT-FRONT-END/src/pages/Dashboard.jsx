@@ -50,7 +50,7 @@ export default function Dashboard() {
     return (
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 300, flexDirection: 'column', gap: 12 }}>
         <div style={{ width: 32, height: 32, borderRadius: '50%', border: '3px solid #e2e8f0', borderTopColor: '#14b8a6', animation: 'spin .65s linear infinite' }} />
-        <p style={{ fontSize: 13, color: '#94a3b8' }}>{t('loading')}</p>
+        <p style={{ fontSize: 13, color: '#6b7280' }}>{t('loading')}</p>
       </div>
     );
   }
@@ -59,7 +59,7 @@ export default function Dashboard() {
     <div>
       {/* Live indicator */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', marginBottom: 16, gap: 8 }}>
-        <button onClick={() => refetch()} className="btn btn-ghost" style={{ fontSize: 11, gap: 5, padding: '4px 10px' }}>
+        <button onClick={() => refetch()} className="btn btn-ghost" style={{ fontSize: 11, gap: 5, padding: '4px 10px', color: '#111827' }}>
           <RefreshCw size={11} /> {t('refresh')}
         </button>
       </div>
@@ -80,14 +80,14 @@ export default function Dashboard() {
             <div style={{ padding: '14px 20px', borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
                 <div>
-                  <h2 style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-1)' }}>Complaint Map</h2>
-                  <p style={{ fontSize: 12, color: 'var(--text-4)', marginTop: 2 }}>Barangay San Vicente, Apalit, Pampanga · OpenStreetMap (Free)</p>
+                  <h2 style={{ fontSize: 15, fontWeight: 700, color: '#111827' }}>Complaint Map</h2>
+                  <p style={{ fontSize: 12, color: '#6b7280', marginTop: 2 }}>Barangay San Vicente, Apalit, Pampanga · OpenStreetMap (Free)</p>
                 </div>
                 <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap', flexShrink: 0, minWidth: 0 }}>
                   {[['#EF4444','Pending'],['#F59E0B','In Progress'],['#10B981','Resolved']].map(([c,l]) => (
                     <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 5, flexShrink: 0 }}>
                       <div style={{ width: 8, height: 8, borderRadius: '50%', background: c, flexShrink: 0 }} />
-                      <span style={{ fontSize: 11, color: 'var(--text-4)', whiteSpace: 'nowrap' }}>{l}</span>
+                      <span style={{ fontSize: 11, color: '#6b7280', whiteSpace: 'nowrap' }}>{l}</span>
                     </div>
                   ))}
                 </div>
@@ -100,12 +100,12 @@ export default function Dashboard() {
           </div>
 
         <div className="card animate-fade-up" style={{ padding: 24, animationDelay: '175ms' }}>
-          <h2 style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-1)', marginBottom: 4 }}>{t('deptWorkload')}</h2>
-          <p style={{ fontSize: 12, color: 'var(--text-4)', marginBottom: 22 }}>Active task distribution by sector</p>
+          <h2 style={{ fontSize: 15, fontWeight: 700, color: '#111827', marginBottom: 4 }}>{t('deptWorkload')}</h2>
+          <p style={{ fontSize: 12, color: '#6b7280', marginBottom: 22 }}>Active task distribution by sector</p>
           {departments.map((d) => <WorkloadBar key={d.name} dept={d} />)}
           <div style={{ marginTop: 8, padding: '12px 14px', background: 'rgba(245,158,11,.08)', border: '1px solid rgba(245,158,11,.25)', borderRadius: 'var(--radius)', display: 'flex', gap: 10 }}>
             <Lightbulb size={15} color="var(--amber)" style={{ flexShrink: 0, marginTop: 1 }} />
-            <p style={{ fontSize: 12, color: 'var(--text-2)', lineHeight: 1.55 }}>
+            <p style={{ fontSize: 12, color: '#374151', lineHeight: 1.55 }}>
               <strong style={{ color: 'var(--amber)' }}>Optimization Alert:</strong> Social Services is at near-full capacity.
             </p>
           </div>
@@ -122,7 +122,7 @@ export default function Dashboard() {
         />
         <div style={{ height: 420, overflowY: 'scroll', marginRight: -8, paddingRight: 8 }}>
           {incidents.length === 0 ? (
-            <p style={{ textAlign: 'center', color: 'var(--text-4)', padding: '24px 0', fontSize: 13 }}>{t('noTickets')} Residents can submit requests from their portal.</p>
+            <p style={{ textAlign: 'center', color: '#6b7280', padding: '24px 0', fontSize: 13 }}>{t('noTickets')} Residents can submit requests from their portal.</p>
           ) : (
             incidents.map((inc) => (
               <IncidentRow key={inc.id} incident={inc} onClick={() => setIncident(inc)} />
@@ -135,22 +135,22 @@ export default function Dashboard() {
       {incident && (
         <Portal>
           <div onClick={() => setIncident(null)} style={{ position: 'fixed', inset: 0, zIndex: 99999, background: 'rgba(9,18,32,.6)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem', animation: 'fadeIn .2s ease-out both' }}>
-          <div onClick={(e) => e.stopPropagation()} style={{ width: '100%', maxWidth: 520, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 20, boxShadow: '0 4px 8px rgba(15,23,42,.06), 0 24px 56px rgba(15,23,42,.2)', overflow: 'hidden', animation: 'scaleIn .22s cubic-bezier(.34,1.56,.64,1) both' }}>
-            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', padding: '20px 24px 16px', borderBottom: '1px solid var(--border)', background: 'var(--surface-2)' }}>
+          <div onClick={(e) => e.stopPropagation()} style={{ width: '100%', maxWidth: 520, background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: 20, boxShadow: '0 4px 8px rgba(15,23,42,.06), 0 24px 56px rgba(15,23,42,.2)', overflow: 'hidden', animation: 'scaleIn .22s cubic-bezier(.34,1.56,.64,1) both' }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', padding: '20px 24px 16px', borderBottom: '1px solid #e5e7eb', background: '#f9fafb' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14 }}>
                 <div style={{ width: 44, height: 44, borderRadius: 12, background: SEV_BG[incident.severity] || SEV_BG.Low, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, flexShrink: 0 }}>
                   {incident.icon}
                 </div>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                    <span style={{ fontFamily: 'monospace', fontSize: 11.5, fontWeight: 700, color: 'var(--brand)' }}>{incident.id}</span>
+                    <span style={{ fontFamily: 'monospace', fontSize: 11.5, fontWeight: 700, color: '#14b8a6' }}>{incident.id}</span>
                     <SeverityBadge severity={incident.severity} />
                     <StatusBadge status={incident.status} />
                   </div>
-                  <h2 style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-1)', lineHeight: 1.3 }}>{incident.title}</h2>
+                  <h2 style={{ fontSize: 15, fontWeight: 700, color: '#111827', lineHeight: 1.3 }}>{incident.title}</h2>
                 </div>
               </div>
-              <button onClick={() => setIncident(null)} style={{ width: 32, height: 32, borderRadius: 8, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--surface-3)', color: 'var(--text-3)', flexShrink: 0 }}><X size={15} /></button>
+              <button onClick={() => setIncident(null)} style={{ width: 32, height: 32, borderRadius: 8, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f3f4f6', color: '#6b7280', flexShrink: 0 }}><X size={15} /></button>
             </div>
             <div style={{ padding: '20px 24px 24px' }}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 20 }}>
@@ -160,17 +160,17 @@ export default function Dashboard() {
                   { icon: User,  label: 'Assigned To', value: incident.assignedTo },
                   { icon: MapPin,label: 'Location',    value: incident.location || '—' },
                 ].map(({ icon: Icon, label, value }) => (
-                  <div key={label} style={{ padding: '12px 14px', borderRadius: 12, background: 'var(--surface-2)', border: '1px solid var(--border)' }}>
+                  <div key={label} style={{ padding: '12px 14px', borderRadius: 12, background: '#f9fafb', border: '1px solid #e5e7eb' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
-                      <Icon size={12} style={{ color: 'var(--text-4)' }} />
-                      <span style={{ fontSize: 10.5, fontWeight: 600, color: 'var(--text-4)', textTransform: 'uppercase', letterSpacing: '0.07em' }}>{label}</span>
+                      <Icon size={12} style={{ color: '#9ca3af' }} />
+                      <span style={{ fontSize: 10.5, fontWeight: 600, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.07em' }}>{label}</span>
                     </div>
-                    <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-1)' }}>{value}</p>
+                    <p style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>{value}</p>
                   </div>
                 ))}
               </div>
               <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
-                <button onClick={() => setIncident(null)} style={{ padding: '9px 18px', borderRadius: 10, cursor: 'pointer', fontSize: '0.875rem', fontWeight: 600, fontFamily: 'inherit', background: 'var(--surface-3)', color: 'var(--text-2)', border: '1px solid var(--border)', transition: 'all .15s' }}>Close</button>
+                <button onClick={() => setIncident(null)} style={{ padding: '9px 18px', borderRadius: 10, cursor: 'pointer', fontSize: '0.875rem', fontWeight: 600, fontFamily: 'inherit', background: '#f3f4f6', color: '#374151', border: '1px solid #e5e7eb', transition: 'all .15s' }}>Close</button>
               </div>
             </div>
           </div>

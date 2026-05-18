@@ -67,20 +67,20 @@ export default function Login() {
 
   const inputStyle = {
     width: '100%', height: 44, paddingLeft: 40, paddingRight: 14,
-    borderRadius: 12, fontSize: '0.875rem', color: '#0f172a',
-    background: '#f8fafc', border: '1.5px solid #e2e8f0',
+    borderRadius: 12, fontSize: '0.875rem', color: '#111827',
+    background: '#ffffff', border: '1.5px solid #d1d5db',
     outline: 'none', transition: 'all .18s', fontFamily: 'inherit',
     boxSizing: 'border-box',
   };
   const onFocus = (e) => {
     e.target.style.borderColor = '#14b8a6';
     e.target.style.boxShadow   = '0 0 0 3px rgba(20,184,166,.12)';
-    e.target.style.background  = '#fff';
+    e.target.style.background  = '#ffffff';
   };
   const onBlur = (e) => {
-    e.target.style.borderColor = '#e2e8f0';
+    e.target.style.borderColor = '#d1d5db';
     e.target.style.boxShadow   = 'none';
-    e.target.style.background  = '#f8fafc';
+    e.target.style.background  = '#ffffff';
   };
 
   return (
@@ -217,10 +217,10 @@ export default function Login() {
 
               {/* Heading */}
               <div style={{ marginBottom: 28 }}>
-                <h2 style={{ fontSize: '1.75rem', fontWeight: 700, color: '#0f172a', letterSpacing: '-0.02em', marginBottom: 6 }}>
+                <h2 style={{ fontSize: '1.75rem', fontWeight: 700, color: '#111827', letterSpacing: '-0.02em', marginBottom: 6 }}>
                   Welcome back
                 </h2>
-                <p style={{ fontSize: '0.875rem', color: '#64748b', lineHeight: 1.5 }}>
+                <p style={{ fontSize: '0.875rem', color: '#6b7280', lineHeight: 1.5 }}>
                   Select your portal and sign in to continue.
                 </p>
               </div>
@@ -253,11 +253,11 @@ export default function Login() {
 
                 {/* Portal selector */}
                 <div>
-                  <label htmlFor="portal-select" style={{ display: 'block', fontSize: '10.5px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
+                  <label htmlFor="portal-select" style={{ display: 'block', fontSize: '10.5px', fontWeight: 700, color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
                     Select Portal
                   </label>
                   <div style={{ position: 'relative' }}>
-                    <ChevronDown size={14} style={{ position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: '#94a3b8' }} />
+                    <ChevronDown size={14} style={{ position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: '#6b7280' }} />
                     <select
                       id="portal-select"
                       name="portal"
@@ -272,7 +272,7 @@ export default function Login() {
                         appearance: 'none',
                         WebkitAppearance: 'none',
                         cursor: 'pointer',
-                        color: form.portal ? '#0f172a' : '#94a3b8',
+                        color: form.portal ? '#111827' : '#6b7280',
                       }}
                       onFocus={onFocus}
                       onBlur={onBlur}
@@ -285,7 +285,7 @@ export default function Login() {
                   </div>
                   {/* Portal description hint */}
                   {form.portal && (
-                    <p style={{ fontSize: 11.5, color: '#64748b', marginTop: 6, paddingLeft: 2 }}>
+                    <p style={{ fontSize: 11.5, color: '#6b7280', marginTop: 6, paddingLeft: 2 }}>
                       {PORTALS.find(p => p.value === form.portal)?.sub}
                     </p>
                   )}
@@ -293,11 +293,11 @@ export default function Login() {
 
                 {/* Email */}
                 <div>
-                  <label htmlFor="email-input" style={{ display: 'block', fontSize: '10.5px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
+                  <label htmlFor="email-input" style={{ display: 'block', fontSize: '10.5px', fontWeight: 700, color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
                     Email Address
                   </label>
                   <div style={{ position: 'relative' }}>
-                    <Mail size={14} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: form.email ? '#14b8a6' : '#94a3b8', transition: 'color .15s' }} />
+                    <Mail size={14} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: form.email ? '#14b8a6' : '#6b7280', transition: 'color .15s' }} />
                     <input
                       id="email-input"
                       name="email"
@@ -317,11 +317,11 @@ export default function Login() {
 
                 {/* Password */}
                 <div>
-                  <label htmlFor="password-input" style={{ display: 'block', fontSize: '10.5px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
+                  <label htmlFor="password-input" style={{ display: 'block', fontSize: '10.5px', fontWeight: 700, color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
                     Password
                   </label>
                   <div style={{ position: 'relative' }}>
-                    <Lock size={14} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: form.password ? '#14b8a6' : '#94a3b8', transition: 'color .15s' }} />
+                    <Lock size={14} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: form.password ? '#14b8a6' : '#6b7280', transition: 'color .15s' }} />
                     <input
                       id="password-input"
                       name="password"
@@ -344,7 +344,7 @@ export default function Login() {
                       style={{
                         position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)',
                         width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        borderRadius: 8, border: 'none', background: 'transparent', cursor: 'pointer', color: '#94a3b8',
+                        borderRadius: 8, border: 'none', background: 'transparent', cursor: 'pointer', color: '#6b7280',
                       }}
                     >
                       {showPass ? <EyeOff size={14} /> : <Eye size={14} />}
@@ -388,7 +388,7 @@ export default function Login() {
                 </button>
               </form>
 
-              <p style={{ textAlign: 'center', fontSize: 11, color: '#94a3b8', marginTop: 24 }}>
+              <p style={{ textAlign: 'center', fontSize: 11, color: '#9ca3af', marginTop: 24 }}>
                 Barangay Connect · v4.2.1-stable · Barangay San Vicente
               </p>
             </div>

@@ -1,0 +1,583 @@
+/**
+ * TEXT VISIBILITY FIX
+ * Ensures all text is visible on white/light backgrounds
+ * Professional, modern, minimalist design
+ */
+
+/* ══════════════════════════════════════════════════════════════════════════
+   GLOBAL TEXT COLOR OVERRIDES - HIGH CONTRAST FOR MAXIMUM VISIBILITY
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* Primary text - Pure black for maximum contrast */
+h1, h2, h3, h4, h5, h6,
+.stat-value,
+[class*="heading"],
+[class*="title"] {
+  color: #111827 !important;
+}
+
+/* Secondary text - Dark gray for readability */
+p:not(.badge):not([class*="status"]):not(.sidebar p):not(.mobile-drawer p),
+span:not(.badge):not([class*="status"]):not([class*="icon"]):not(.sidebar span):not(.mobile-drawer span),
+div:not(.badge):not([class*="status"]):not([class*="icon"]):not(.sidebar div):not(.mobile-drawer div),
+label,
+.text-secondary {
+  color: #374151 !important;
+}
+
+/* Tertiary/muted text - Medium gray (not in sidebar) */
+.section-label:not(.sidebar .section-label):not(.mobile-drawer .section-label),
+.text-muted,
+[class*="muted"],
+[class*="subtitle"],
+small {
+  color: #6b7280 !important;
+}
+
+/* Placeholder text */
+::placeholder,
+input::placeholder,
+textarea::placeholder {
+  color: #9ca3af !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   MODAL & CARD TEXT FIXES
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.modal-box h1,
+.modal-box h2,
+.modal-box h3,
+.modal-box p,
+.modal-box span:not(.badge),
+.modal-box label,
+.card h1,
+.card h2,
+.card h3,
+.card p:not(.badge),
+.card span:not(.badge),
+.card label {
+  color: inherit;
+}
+
+.modal-box h1,
+.modal-box h2,
+.modal-box h3,
+.card h1,
+.card h2,
+.card h3 {
+  color: #111827 !important;
+}
+
+.modal-box p,
+.modal-box span:not(.badge),
+.card p:not(.badge),
+.card span:not(.badge) {
+  color: #374151 !important;
+}
+
+.modal-box label,
+.card label {
+  color: #6b7280 !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   FORM ELEMENTS
+   ══════════════════════════════════════════════════════════════════════════ */
+
+input,
+textarea,
+select,
+.input,
+.civic-input {
+  color: #111827 !important;
+  background: #ffffff !important;
+  border-color: #d1d5db !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+.input:focus,
+.civic-input:focus {
+  border-color: #14b8a6 !important;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1) !important;
+}
+
+label,
+.form-label {
+  color: #6b7280 !important;
+  font-weight: 600 !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   BUTTON TEXT - ENSURE WHITE TEXT ON COLORED BUTTONS
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.btn-brand,
+.btn-brand *,
+.btn-primary,
+.btn-primary *,
+.btn-teal,
+.btn-teal *,
+button[style*="background: linear-gradient"],
+button[style*="background: linear-gradient"] *,
+button[style*="background: #14b8a6"],
+button[style*="background: #14b8a6"] *,
+button[style*="background: #0d9488"],
+button[style*="background: #0d9488"] *,
+button[style*="background: #10b981"],
+button[style*="background: #10b981"] *,
+button[style*="background: #f59e0b"],
+button[style*="background: #f59e0b"] *,
+button[style*="background: #ef4444"],
+button[style*="background: #ef4444"] *,
+button[style*="background: #3b82f6"],
+button[style*="background: #3b82f6"] *,
+button[style*="background: #7c3aed"],
+button[style*="background: #7c3aed"] * {
+  color: #ffffff !important;
+}
+
+/* Outline and ghost buttons */
+.btn-outline,
+.btn-ghost {
+  color: #111827 !important;
+}
+
+.btn-outline:hover,
+.btn-ghost:hover {
+  background: #f3f4f6 !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   TABLE TEXT
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.data-table th,
+table th {
+  color: #111827 !important;
+  background: #f9fafb !important;
+  font-weight: 600 !important;
+}
+
+.data-table td,
+table td {
+  color: #374151 !important;
+}
+
+.data-table tbody tr:hover,
+table tbody tr:hover {
+  background: #f9fafb !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   NAVIGATION & SIDEBAR
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Sidebar: Navy Blue — do NOT override to white ── */
+.nav-item {
+  color: rgba(255,255,255,0.7) !important;
+}
+
+.nav-item:hover {
+  color: #ffffff !important;
+  background: rgba(255,255,255,0.08) !important;
+}
+
+.nav-item.active {
+  color: #ffffff !important;
+  background: rgba(255,255,255,0.15) !important;
+  border-left: 3px solid #14b8a6 !important;
+}
+
+/* Sidebar text — white on navy */
+.sidebar p,
+.sidebar span:not(.badge),
+.sidebar div:not(.badge) {
+  color: rgba(255,255,255,0.7) !important;
+}
+
+.topbar h1,
+.topbar h2,
+.topbar h3 {
+  color: #111827 !important;
+}
+
+.topbar p,
+.topbar span:not(.badge) {
+  color: #6b7280 !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   LOADING SPINNERS & EMPTY STATES
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.empty-state,
+[class*="loading"] p,
+[class*="loading"] span {
+  color: #6b7280 !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   DROPDOWN MENUS
+   ══════════════════════════════════════════════════════════════════════════ */
+
+[class*="dropdown"] p,
+[class*="dropdown"] span:not(.badge),
+[class*="dropdown"] button:not(.btn-brand):not(.btn-primary) {
+  color: #374151 !important;
+}
+
+.notif-dropdown p,
+.notif-dropdown span:not(.badge) {
+  color: #374151 !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   CHART TEXT (Recharts)
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.recharts-text,
+.recharts-cartesian-axis-tick-value,
+.recharts-legend-item-text {
+  fill: #374151 !important;
+}
+
+.recharts-label {
+  fill: #111827 !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   STAT CARDS & METRICS
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.stat-label {
+  color: #6b7280 !important;
+}
+
+.stat-value {
+  color: #111827 !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   BADGES - KEEP THEIR SEMANTIC COLORS
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.badge {
+  font-weight: 600 !important;
+}
+
+.badge-success,
+.badge-green {
+  background: rgba(16, 185, 129, 0.12) !important;
+  color: #059669 !important;
+  border: 1px solid rgba(16, 185, 129, 0.2) !important;
+}
+
+.badge-warning,
+.badge-amber {
+  background: rgba(245, 158, 11, 0.12) !important;
+  color: #d97706 !important;
+  border: 1px solid rgba(245, 158, 11, 0.2) !important;
+}
+
+.badge-error,
+.badge-red {
+  background: rgba(239, 68, 68, 0.12) !important;
+  color: #dc2626 !important;
+  border: 1px solid rgba(239, 68, 68, 0.2) !important;
+}
+
+.badge-blue {
+  background: rgba(124, 58, 237, 0.12) !important;
+  color: #7c3aed !important;
+  border: 1px solid rgba(124, 58, 237, 0.2) !important;
+}
+
+.badge-slate {
+  background: #f3f4f6 !important;
+  color: #4b5563 !important;
+  border: 1px solid #e5e7eb !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   SPECIFIC COMPONENT FIXES
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* Personnel Dashboard */
+.personnel-dashboard h1,
+.personnel-dashboard h2,
+.personnel-dashboard h3 {
+  color: #111827 !important;
+}
+
+.personnel-dashboard p,
+.personnel-dashboard span:not(.badge) {
+  color: #374151 !important;
+}
+
+/* Admin Dashboard */
+.admin-dashboard h1,
+.admin-dashboard h2,
+.admin-dashboard h3 {
+  color: #111827 !important;
+}
+
+.admin-dashboard p,
+.admin-dashboard span:not(.badge) {
+  color: #374151 !important;
+}
+
+/* Requests page */
+.requests-page h1,
+.requests-page h2,
+.requests-page h3 {
+  color: #111827 !important;
+}
+
+.requests-page p,
+.requests-page span:not(.badge) {
+  color: #374151 !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ENSURE BACKGROUNDS ARE LIGHT (except sidebar/drawer which are navy)
+   ══════════════════════════════════════════════════════════════════════════ */
+
+body {
+  background: #f8f9fa !important;
+}
+
+.card,
+.modal-box,
+.topbar {
+  background: #ffffff !important;
+}
+
+/* Sidebar and mobile drawer: navy blue */
+.sidebar {
+  background: #0f2044 !important;
+}
+
+.mobile-drawer {
+  background: #0f2044 !important;
+}
+
+.card:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   MONOSPACE TEXT (Tracking IDs, etc.)
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.mono,
+[style*="fontFamily: 'monospace'"],
+[style*="fontFamily: monospace"],
+code,
+pre {
+  color: #111827 !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   LINKS
+   ══════════════════════════════════════════════════════════════════════════ */
+
+a {
+  color: #7c3aed !important;
+}
+
+a:hover {
+  color: #6d28d9 !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   MOBILE DRAWER — Navy Blue
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.mobile-drawer {
+  background: #0f2044 !important;
+}
+
+.mobile-drawer__action {
+  color: rgba(255,255,255,0.7) !important;
+}
+
+.mobile-drawer__action:hover {
+  color: #ffffff !important;
+  background: rgba(255,255,255,0.08) !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════════
+   SIDEBAR - PROFESSIONAL NAVY BLUE THEME
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.sidebar {
+  background: #0f172a !important; /* Deep navy blue */
+  border-right-color: #1e293b !important; /* Lighter navy border */
+}
+
+/* Nav items on navy background */
+.nav-item {
+  color: rgba(148,163,184,0.85) !important; /* Light gray text */
+}
+
+.nav-item svg,
+.nav-item svg path,
+.nav-item svg line,
+.nav-item svg circle,
+.nav-item svg polyline,
+.nav-item svg rect {
+  color: rgba(148,163,184,0.85) !important; /* Light gray icons */
+  stroke: rgba(148,163,184,0.85) !important; /* Ensure stroke is also light */
+}
+
+.nav-item:hover {
+  background: #1e293b !important; /* Lighter navy on hover */
+  color: #ffffff !important; /* White text on hover */
+}
+
+.nav-item:hover svg,
+.nav-item:hover svg path,
+.nav-item:hover svg line,
+.nav-item:hover svg circle,
+.nav-item:hover svg polyline,
+.nav-item:hover svg rect {
+  color: #ffffff !important; /* White icons on hover */
+  stroke: #ffffff !important; /* White stroke on hover */
+}
+
+.nav-item.active {
+  background: rgba(20,184,166,0.15) !important; /* Teal active highlight */
+  color: #5eead4 !important; /* Teal-300 active text */
+}
+
+.nav-item.active svg,
+.nav-item.active svg path,
+.nav-item.active svg line,
+.nav-item.active svg circle,
+.nav-item.active svg polyline,
+.nav-item.active svg rect {
+  color: #5eead4 !important; /* Teal-300 active icons */
+  stroke: #5eead4 !important; /* Teal-300 active stroke */
+}
+
+/* Section labels on navy */
+.sidebar .section-label {
+  color: rgba(100,116,139,0.7) !important; /* Subtle gray */
+}
+
+/* Sidebar borders on navy */
+.sidebar > div[style*="border"] {
+  border-color: #1e293b !important;
+}
+
+/* All text in sidebar should be light colored */
+.sidebar p,
+.sidebar span:not(.badge),
+.sidebar div:not(.badge) {
+  color: rgba(148,163,184,0.85) !important;
+}
+
+/* Brand/logo area text */
+.sidebar > div:first-child p {
+  color: #ffffff !important;
+}
+
+.sidebar > div:first-child p:last-child {
+  color: rgba(148,163,184,0.6) !important;
+}
+
+/* User footer area */
+.sidebar > div:last-child p:first-child {
+  color: #ffffff !important;
+}
+
+.sidebar > div:last-child p:last-child {
+  color: rgba(148,163,184,0.5) !important;
+}
+
+/* Mobile drawer navy theme */
+.mobile-drawer {
+  background: #0f172a !important; /* Deep navy blue */
+}
+
+.mobile-drawer__header {
+  border-bottom-color: #1e293b !important;
+}
+
+.mobile-drawer__close {
+  background: #1e293b !important;
+  color: rgba(148,163,184,0.85) !important;
+}
+
+.mobile-drawer__close:hover {
+  background: #334155 !important;
+  color: #ffffff !important;
+}
+
+.mobile-drawer__profile {
+  border-bottom-color: #1e293b !important;
+}
+
+.mobile-drawer__profile p {
+  color: #ffffff !important;
+}
+
+.mobile-drawer__profile p:last-child {
+  color: rgba(148,163,184,0.6) !important;
+}
+
+.mobile-drawer__footer {
+  border-top-color: #1e293b !important;
+}
+
+.mobile-drawer__action {
+  color: rgba(148,163,184,0.85) !important;
+}
+
+.mobile-drawer__action svg,
+.mobile-drawer__action svg path,
+.mobile-drawer__action svg line,
+.mobile-drawer__action svg circle {
+  color: rgba(148,163,184,0.85) !important;
+  stroke: rgba(148,163,184,0.85) !important;
+}
+
+.mobile-drawer__action:hover {
+  background: #1e293b !important;
+  color: #ffffff !important;
+}
+
+.mobile-drawer__action:hover svg,
+.mobile-drawer__action:hover svg path,
+.mobile-drawer__action:hover svg line,
+.mobile-drawer__action:hover svg circle {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+.mobile-drawer__action--danger {
+  color: rgba(239,68,68,0.85) !important;
+}
+
+.mobile-drawer__action--danger:hover {
+  background: rgba(239,68,68,0.1) !important;
+  color: #ef4444 !important;
+}
+
+/* Mobile drawer text colors */
+.mobile-drawer p,
+.mobile-drawer span:not(.badge) {
+  color: rgba(148,163,184,0.85) !important;
+}
+
+.mobile-drawer__header p:first-child {
+  color: #ffffff !important;
+}
+
+.mobile-drawer .section-label {
+  color: rgba(100,116,139,0.7) !important;
+}

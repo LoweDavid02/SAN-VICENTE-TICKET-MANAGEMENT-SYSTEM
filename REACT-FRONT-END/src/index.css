@@ -13,6 +13,9 @@
 /* ── Monospace font import for data values ─────────────────────────────── */
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
 
+/* ── Text Visibility Fix - Professional Light Mode ────────────────────── */
+@import './styles/text-visibility-fix.css';
+
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -61,19 +64,24 @@
   --brand-light:    var(--accent-bg);
   --brand-muted:    var(--accent-bg);
   --navy:           var(--surface);
-  --sidebar-bg:     var(--surface);
-  --sidebar-border: var(--border);
-  --sidebar-hover:  var(--raised);
-  --sidebar-active: var(--accent-bg);
+  /* ── Sidebar — Professional Navy Blue ──────────────────────────────────── */
+  --sidebar-bg:     #0f172a;
+  --sidebar-border: #1e293b;
+  --sidebar-hover:  #1e293b;
+  --sidebar-active: rgba(20,184,166,0.15);
   
   /* ── Topbar ────────────────────────────────────────────────────────────── */
   --topbar-h:      56px;
   --topbar-bg:     var(--surface);
   --topbar-border: var(--border);
   
-  /* ── Sidebar ───────────────────────────────────────────────────────────── */
+  /* ── Sidebar - Professional Navy Blue Theme ───────────────────────────── */
   --sidebar-w:     240px;
   --sidebar-w-sm:  64px;
+  --sidebar-bg:     #0f172a;  /* Deep navy blue */
+  --sidebar-border: #1e293b;  /* Lighter navy for borders */
+  --sidebar-hover:  #1e293b;  /* Hover state */
+  --sidebar-active: rgba(20,184,166,0.15); /* Teal active highlight */
   
   /* ── Shadows (Subtle for depth) ────────────────────────────────────────── */
   --shadow-sm:     0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -149,12 +157,24 @@ label, a {
   color: #FFFFFF !important;
 }
 
-/* Ensure card text inside hero section is dark */
+/* Ensure card text inside hero section is dark - EXCEPT primary buttons */
 .hero-section .civic-card h3,
-.hero-section .civic-card p,
-.hero-section .civic-card span,
-.hero-section .civic-card button {
+.hero-section .civic-card p {
   color: #1E2D4E !important;
+}
+
+/* Spans and buttons inside cards should be dark UNLESS they're inside btn-primary */
+.hero-section .civic-card span:not(.btn-primary *),
+.hero-section .civic-card button:not(.btn-primary) {
+  color: #1E2D4E !important;
+}
+
+/* Force btn-primary buttons to have white text even in hero section */
+.hero-section .civic-card .btn-primary,
+.hero-section .civic-card .btn-primary *,
+.hero-section .btn-primary,
+.hero-section .btn-primary * {
+  color: #FFFFFF !important;
 }
 
 .hero-section .civic-card p {
@@ -167,7 +187,7 @@ label, a {
 
 /* ✅ Ensure hero text remains white/light colored */
 #hero .font-display {
-  color: #fff !important;
+  color: #d9c2c2 !important;
 }
 
 #hero [style*="color: #fff"],
@@ -179,22 +199,35 @@ label, a {
 }
 
 .nav-item {
-  color: #6B7280;
+  color: rgba(148,163,184,0.85);
+}
+
+.nav-item svg {
+  color: rgba(148,163,184,0.85);
 }
 
 .nav-item:hover {
-  color: #111827;
-  background: #F3F4F6;
+  color: #ffffff;
+  background: #1e293b;
+}
+
+.nav-item:hover svg {
+  color: #ffffff;
 }
 
 .nav-item.active {
-  color: #7C3AED;
-  background: rgba(124, 58, 237, 0.08);
+  color: #5eead4;
+  background: rgba(20,184,166,0.15);
   font-weight: 600;
+  border-left: 3px solid #14b8a6;
+}
+
+.nav-item.active svg {
+  color: #5eead4;
 }
 
 .section-label {
-  color: #6B7280;
+  color: rgba(100,116,139,0.7);
   font-weight: 600;
   text-transform: uppercase;
 }
@@ -326,9 +359,9 @@ label, a {
 }
 
 .sidebar {
-  background: #FFFFFF;
-  border-right-color: #E5E7EB;
-  box-shadow: 1px 0 3px 0 rgba(0, 0, 0, 0.05);
+  background: #0f172a;
+  border-right-color: #1e293b;
+  box-shadow: 1px 0 3px 0 rgba(0, 0, 0, 0.2);
 }
 
 .modal-backdrop {
@@ -386,17 +419,17 @@ button[style*="background:#0d9488"] * {
 
 /* Mobile drawer */
 .mobile-drawer {
-  background: #FFFFFF;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  background: #0f172a;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
 }
 
 .mobile-drawer__action {
-  color: #6B7280;
+  color: rgba(148,163,184,0.85);
 }
 
 .mobile-drawer__action:hover {
-  color: #111827;
-  background: #F3F4F6;
+  color: #ffffff;
+  background: #1e293b;
 }
 
 /* Notification dropdown */
@@ -516,11 +549,11 @@ textarea::placeholder {
   color: #6B7280 !important;
 }
 
-/* Ensure sidebar text is visible */
+/* Ensure sidebar text is visible — white on navy */
 .sidebar p,
 .sidebar span,
 .sidebar div {
-  color: inherit;
+  color: rgba(255,255,255,0.7);
 }
 
 /* Ensure modal text is visible */
@@ -597,8 +630,8 @@ button:not([style*="color: #fff"]):not([style*="color:#fff"]):not([style*="color
 /* ── Sidebar ─────────────────────────────────────────────── */
 .sidebar { 
   transition: width .25s cubic-bezier(.4,0,.2,1);
-  background: var(--surface);
-  border-right: 1px solid var(--border);
+  background: #0f172a;
+  border-right: 1px solid #1e293b;
   box-shadow: var(--shadow-sm);
 }
 .sidebar-label { transition: opacity .15s, width .25s; white-space:nowrap; overflow:hidden }
@@ -609,7 +642,7 @@ button:not([style*="color: #fff"]):not([style*="color:#fff"]):not([style*="color
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--dim);
+  color: rgba(255,255,255,0.4);
   margin-bottom: 6px;
 }
 
@@ -619,20 +652,22 @@ button:not([style*="color: #fff"]):not([style*="color:#fff"]):not([style*="color
   padding: 6px 8px;
   border-radius: var(--radius-sm);
   font-size: 12px; font-weight: 400;
-  color: var(--muted);
+  color: rgba(255,255,255,0.7);
   cursor: pointer;
   transition: all .15s;
   text-decoration: none;
   margin-bottom: 2px;
+  border-left: 3px solid transparent;
 }
-.nav-item:hover { background: var(--raised); color: var(--txt) }
+.nav-item:hover { background: rgba(255,255,255,0.08); color: #ffffff }
 .nav-item.active {
-  background: var(--accent-bg);
-  color: var(--accent);
+  background: rgba(255,255,255,0.15);
+  color: #ffffff;
   font-weight: 500;
+  border-left: 3px solid #14b8a6;
 }
 .nav-item.active svg {
-  color: var(--accent);
+  color: #ffffff;
 }
 
 /* ── Topbar ──────────────────────────────────────────────── */
@@ -1123,7 +1158,7 @@ button:not([style*="color: #fff"]):not([style*="color:#fff"]):not([style*="color
   position: fixed;
   top: 0; left: 0; bottom: 0;
   width: min(320px, 85vw);
-  background: var(--surface);
+  background: #0f2044;
   z-index: 200;
   display: flex;
   flex-direction: column;
@@ -1165,14 +1200,14 @@ button:not([style*="color: #fff"]):not([style*="color:#fff"]):not([style*="color
   transition: background .15s;
   flex-shrink: 0;
 }
-.mobile-drawer__close:hover { background: var(--raised); }
+.mobile-drawer__close:hover { background: rgba(255,255,255,0.1); }
 
 .mobile-drawer__profile {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 16px 14px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid #1a3060;
   flex-shrink: 0;
 }
 
@@ -1187,7 +1222,7 @@ button:not([style*="color: #fff"]):not([style*="color:#fff"]):not([style*="color
 }
 
 .mobile-drawer__footer {
-  border-top: 1px solid var(--border);
+  border-top: 1px solid #1a3060;
   padding: 8px;
   flex-shrink: 0;
   display: flex;
@@ -1375,7 +1410,7 @@ button:not([style*="color: #fff"]):not([style*="color:#fff"]):not([style*="color
 /* ── Civic Buttons ─────────────────────────────────────────────────────── */
 .btn-primary {
   background-color: var(--color-primary);
-  color: white;
+  color: white !important;
   padding: 12px 24px;
   border-radius: var(--radius-button);
   border: none;
@@ -1388,6 +1423,10 @@ button:not([style*="color: #fff"]):not([style*="color:#fff"]):not([style*="color
   gap: 8px;
   font-family: var(--font-family);
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary * {
+  color: white !important;
 }
 
 .btn-primary:hover {
@@ -2245,25 +2284,57 @@ footer *,
   /* Inherit from parent or use default text colors */
 }
 
-/* ── Ensure Headings Are Always Visible ────────────────────────────────── */
-h1[style*="color"],
-h2[style*="color"],
-h3[style*="color"],
-h4[style*="color"],
-h5[style*="color"],
-h6[style*="color"] {
+/* ── Ensure Headings Are Always Visible (except white text) ────────────────────────────────── */
+h1[style*="color"]:not([style*="#FFFFFF"]):not([style*="white"]):not([style*="#FFF"]):not([style*="rgb(255"]):not([style*="rgba(255, 255, 255"]),
+h2[style*="color"]:not([style*="#FFFFFF"]):not([style*="white"]):not([style*="#FFF"]):not([style*="rgb(255"]):not([style*="rgba(255, 255, 255"]),
+h3[style*="color"]:not([style*="#FFFFFF"]):not([style*="white"]):not([style*="#FFF"]):not([style*="rgb(255"]):not([style*="rgba(255, 255, 255"]),
+h4[style*="color"]:not([style*="#FFFFFF"]):not([style*="white"]):not([style*="#FFF"]):not([style*="rgb(255"]):not([style*="rgba(255, 255, 255"]),
+h5[style*="color"]:not([style*="#FFFFFF"]):not([style*="white"]):not([style*="#FFF"]):not([style*="rgb(255"]):not([style*="rgba(255, 255, 255"]),
+h6[style*="color"]:not([style*="#FFFFFF"]):not([style*="white"]):not([style*="#FFF"]):not([style*="rgb(255"]):not([style*="rgba(255, 255, 255"]) {
   color: #111827 !important;
 }
 
-/* ── Ensure Paragraphs Are Always Visible ──────────────────────────────── */
-p[style*="color: '#64748b'"],
-p[style*="color:'#64748b'"],
-p[style*="color: #64748b"],
-p[style*="color:#64748b"],
-p[style*="color: '#475569'"],
-p[style*="color:'#475569'"],
-p[style*="color: #475569"],
-p[style*="color:#475569"] {
+/* ── Force White Text on Colored Backgrounds ────────────────────────────── */
+[style*="background: '#0D9488'"] h3,
+[style*="background:'#0D9488'"] h3,
+[style*="background: #0D9488"] h3,
+[style*="background:#0D9488"] h3,
+[style*="background: '#1E2D4E'"] h3,
+[style*="background:'#1E2D4E'"] h3,
+[style*="background: #1E2D4E"] h3,
+[style*="background:#1E2D4E"] h3,
+[style*="background: '#0D9488'"] p,
+[style*="background:'#0D9488'"] p,
+[style*="background: #0D9488"] p,
+[style*="background:#0D9488"] p,
+[style*="background: '#1E2D4E'"] p,
+[style*="background:'#1E2D4E'"] p,
+[style*="background: #1E2D4E"] p,
+[style*="background:#1E2D4E"] p {
+  color: #FFFFFF !important;
+}
+
+/* ── CRITICAL: Force white text on teal and navy backgrounds (highest priority) ────────────────────────────── */
+div[style*="#0D9488"] h3[style*="color"],
+div[style*="#0D9488"] p[style*="color"],
+div[style*="#1E2D4E"] h3[style*="color"],
+div[style*="#1E2D4E"] p[style*="color"],
+.help-card h3[style*="color"],
+.help-card p[style*="color"],
+.track-hero h3[style*="color"],
+.track-hero p[style*="color"] {
+  color: #FFFFFF !important;
+}
+
+/* ── Ensure Paragraphs Are Always Visible (except white text) ──────────────────────────────── */
+p[style*="color: '#64748b'"]:not([style*="#FFFFFF"]):not([style*="white"]),
+p[style*="color:'#64748b'"]:not([style*="#FFFFFF"]):not([style*="white"]),
+p[style*="color: #64748b"]:not([style*="#FFFFFF"]):not([style*="white"]),
+p[style*="color:#64748b"]:not([style*="#FFFFFF"]):not([style*="white"]),
+p[style*="color: '#475569'"]:not([style*="#FFFFFF"]):not([style*="white"]),
+p[style*="color:'#475569'"]:not([style*="#FFFFFF"]):not([style*="white"]),
+p[style*="color: #475569"]:not([style*="#FFFFFF"]):not([style*="white"]),
+p[style*="color:#475569"]:not([style*="#FFFFFF"]):not([style*="white"]) {
   color: #6B7280 !important;
 }
 
@@ -2299,7 +2370,7 @@ span[style*="color:#64748b"] {
 }
 
 /* ── Professional Color Hierarchy ──────────────────────────────────────── */
-{
+:root {
   /* Primary text - Pure black for maximum readability */
   --color-text-primary: #111827;
   
@@ -2453,14 +2524,22 @@ nav button:hover {
 
 /* ── Help Section Card ─────────────────────────────────────────────────── */
 .help-card {
-  background: var(--color-primary);
-  color: white;
+  background: #1E2D4E;
+  color: white !important;
   border-radius: 12px;
   padding: 32px;
 }
 
-.help-card {
-  background: #1E2D4E;
+.help-card *,
+.help-card h1,
+.help-card h2,
+.help-card h3,
+.help-card h4,
+.help-card h5,
+.help-card h6,
+.help-card p,
+.help-card span {
+  color: white !important;
 }
 
 .contact-card {
@@ -2505,6 +2584,18 @@ nav button:hover {
   max-width: 900px;
   margin: 0 auto;
   text-align: center;
+}
+
+.track-hero h1,
+.track-hero h2,
+.track-hero h3,
+.track-hero h4,
+.track-hero h5,
+.track-hero h6,
+.track-hero p,
+.track-hero span,
+.track-hero * {
+  color: white !important;
 }
 
 /* ── Search Panel Floating Effect ──────────────────────────────────────── */
