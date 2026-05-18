@@ -145,7 +145,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
 }
 
-p, span:not(.badge):not([class*="icon"]):not([class*="status"]):not([class*="recharts"]),
+p, span:not(.badge):not([class*="icon"]):not([class*="status"]):not([class*="recharts"]):not(button span),
 div:not([class*="badge"]):not([class*="icon"]):not([class*="status"]):not([class*="recharts"]),
 label, a {
   color: #374151;
@@ -2708,3 +2708,24 @@ nav button:hover {
 /* ═══════════════════════════════════════════════════════════════════════════
    END CIVIC DESIGN SYSTEM STYLES
    ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════════════════════════════════
+   BUTTON TEXT — ALWAYS INHERIT BUTTON COLOR
+   Prevents broad span/p rules from overriding button text color
+   ══════════════════════════════════════════════════════════════════════════ */
+button span,
+button span *,
+a span,
+a span * {
+  color: inherit !important;
+}
+
+/* Explicit white text for all primary/colored buttons */
+.btn-primary,
+.btn-primary *,
+.btn-brand,
+.btn-brand *,
+.btn-teal,
+.btn-teal * {
+  color: #ffffff !important;
+}

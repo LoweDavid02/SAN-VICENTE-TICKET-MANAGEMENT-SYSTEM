@@ -5,6 +5,40 @@
  */
 
 /* ══════════════════════════════════════════════════════════════════════════
+   ENSURE "SUBMIT REQUEST" BUTTONS ALWAYS HAVE WHITE TEXT
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* Green buttons (#22a83a) - Submit Request buttons */
+button[style*="background: #22a83a"],
+button[style*="background:#22a83a"],
+button[style*="background: #10b981"],
+button[style*="background:#10b981"] {
+  color: #ffffff !important;
+}
+
+button[style*="background: #22a83a"] *,
+button[style*="background:#22a83a"] *,
+button[style*="background: #10b981"] *,
+button[style*="background:#10b981"] * {
+  color: #ffffff !important;
+}
+
+/* Blue buttons (#0058be) - Submit Concern buttons */
+button[style*="background: #0058be"],
+button[style*="background:#0058be"],
+button[style*="background: #004a9f"],
+button[style*="background:#004a9f"] {
+  color: #ffffff !important;
+}
+
+button[style*="background: #0058be"] *,
+button[style*="background:#0058be"] *,
+button[style*="background: #004a9f"] *,
+button[style*="background:#004a9f"] * {
+  color: #ffffff !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
    GLOBAL TEXT COLOR OVERRIDES - HIGH CONTRAST FOR MAXIMUM VISIBILITY
    ══════════════════════════════════════════════════════════════════════════ */
 
@@ -18,7 +52,7 @@ h1, h2, h3, h4, h5, h6,
 
 /* Secondary text - Dark gray for readability */
 p:not(.badge):not([class*="status"]):not(.sidebar p):not(.mobile-drawer p),
-span:not(.badge):not([class*="status"]):not([class*="icon"]):not(.sidebar span):not(.mobile-drawer span),
+span:not(.badge):not([class*="status"]):not([class*="icon"]):not(.sidebar span):not(.mobile-drawer span):not(button span):not(.btn-primary span):not(.btn-brand span):not(.btn-teal span),
 div:not(.badge):not([class*="status"]):not([class*="icon"]):not(.sidebar div):not(.mobile-drawer div),
 label,
 .text-secondary {
@@ -128,6 +162,12 @@ button[style*="background: #0d9488"],
 button[style*="background: #0d9488"] *,
 button[style*="background: #10b981"],
 button[style*="background: #10b981"] *,
+button[style*="background: #22a83a"],
+button[style*="background: #22a83a"] *,
+button[style*="background: #0058be"],
+button[style*="background: #0058be"] *,
+button[style*="background: #004a9f"],
+button[style*="background: #004a9f"] *,
 button[style*="background: #f59e0b"],
 button[style*="background: #f59e0b"] *,
 button[style*="background: #ef4444"],
@@ -580,4 +620,62 @@ a:hover {
 
 .mobile-drawer .section-label {
   color: rgba(100,116,139,0.7) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   BUTTON SPANS — ALWAYS INHERIT BUTTON COLOR (never override to dark)
+   This prevents the global span rule from making button text dark/muted
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* All spans inside any button must inherit the button's color */
+button span,
+button span * {
+  color: inherit !important;
+}
+
+/* Explicitly white text for all colored/primary buttons */
+.btn-primary,
+.btn-primary span,
+.btn-primary *,
+button.btn-primary,
+button.btn-primary span,
+button.btn-primary * {
+  color: #ffffff !important;
+}
+
+/* Ensure LandingCivic Submit Request button text is white */
+button[style*="backgroundColor: '#1E2D4E'"] span,
+button[style*="backgroundColor: #1E2D4E"] span,
+button[style*="background-color: #1E2D4E"] span,
+button[style*="background: #1E2D4E"] span {
+  color: #ffffff !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   FOOTER — WHITE TEXT ON DARK BACKGROUND (must be LAST to win cascade)
+   Overrides the broad p/span/h1-h6 dark-color rules above
+   ══════════════════════════════════════════════════════════════════════════ */
+
+footer,
+footer *,
+footer p,
+footer span,
+footer span:not(.badge),
+footer div,
+footer h1,
+footer h2,
+footer h3,
+footer h4,
+footer h5,
+footer h6,
+footer label,
+footer a,
+footer button,
+footer button span {
+  color: #ffffff !important;
+}
+
+footer button:hover,
+footer a:hover {
+  color: #14b8a6 !important;
 }

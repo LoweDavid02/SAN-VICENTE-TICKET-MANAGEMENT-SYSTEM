@@ -161,7 +161,6 @@ export default function Landing() {
           <p style={{
             fontSize: 'clamp(1rem, 2vw, 1.25rem)',
             color: '#FFFFFF',
-            opacity: 0.95,
             marginBottom: 60,
             maxWidth: 600,
             margin: '0 auto 60px',
@@ -390,7 +389,15 @@ export default function Landing() {
       </section>
 
       {/* FOOTER */}
-      <footer style={{ background: 'var(--color-primary)', padding: '60px 40px 40px', color: 'white' }}>
+      <footer id="civic-footer" style={{ background: '#1E2D4E', padding: '60px 40px 40px' }}>
+        <style>{`
+          #civic-footer, #civic-footer * {
+            color: #ffffff !important;
+          }
+          #civic-footer button:hover {
+            color: #5eead4 !important;
+          }
+        `}</style>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{
             display: 'grid',
@@ -400,32 +407,32 @@ export default function Landing() {
           }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
-                <Shield size={24} color="white" />
-                <span style={{ fontSize: 16, fontWeight: 700 }}>BLINKED</span>
+                <Shield size={24} color="#ffffff" />
+                <span style={{ fontSize: 16, fontWeight: 700, color: '#ffffff' }}>BLINKED</span>
               </div>
-              <p style={{ fontSize: 14, opacity: 0.8, lineHeight: 1.6 }}>
+              <p style={{ fontSize: 14, lineHeight: 1.6, color: '#ffffff' }}>
                 Serving the community with integrity and care.
               </p>
             </div>
 
             <div>
-              <p style={{ fontSize: 12, fontWeight: 700, marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <p style={{ fontSize: 12, fontWeight: 700, marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#ffffff' }}>
                 Quick Links
               </p>
-              <button onClick={() => navigate('/report')} style={{ display: 'block', background: 'none', border: 'none', color: 'rgba(255,255,255,0.8)', fontSize: 14, padding: '4px 0', cursor: 'pointer', textAlign: 'left' }}>
-                <span style={{ color: 'rgba(255,255,255,0.8)' }}>Submit Request</span>
+              <button onClick={() => navigate('/report')} style={{ display: 'block', background: 'none', border: 'none', color: '#ffffff', fontSize: 14, padding: '4px 0', cursor: 'pointer', textAlign: 'left' }}>
+                Submit Request
               </button>
-              <button onClick={() => navigate('/track')} style={{ display: 'block', background: 'none', border: 'none', color: 'rgba(255,255,255,0.8)', fontSize: 14, padding: '4px 0', cursor: 'pointer', textAlign: 'left' }}>
-                <span style={{ color: 'rgba(255,255,255,0.8)' }}>Track Status</span>
+              <button onClick={() => navigate('/track')} style={{ display: 'block', background: 'none', border: 'none', color: '#ffffff', fontSize: 14, padding: '4px 0', cursor: 'pointer', textAlign: 'left' }}>
+                Track Status
               </button>
             </div>
 
             <div>
-              <p style={{ fontSize: 12, fontWeight: 700, marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <p style={{ fontSize: 12, fontWeight: 700, marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#ffffff' }}>
                 Contact
               </p>
-              <p style={{ fontSize: 14, opacity: 0.8, marginBottom: 6 }}>Phone: (02) 8123-4567</p>
-              <p style={{ fontSize: 14, opacity: 0.8 }}>San Vicente, Apalit, Pampanga</p>
+              <p style={{ fontSize: 14, marginBottom: 6, color: '#ffffff' }}>Phone: (02) 8123-4567</p>
+              <p style={{ fontSize: 14, color: '#ffffff' }}>San Vicente, Apalit, Pampanga</p>
             </div>
           </div>
 
@@ -438,10 +445,10 @@ export default function Landing() {
             flexWrap: 'wrap',
             gap: 12,
           }}>
-            <p style={{ fontSize: 13, opacity: 0.7 }}>
+            <p style={{ fontSize: 13, color: '#ffffff' }}>
               © 2026 BLINKED. All rights reserved.
             </p>
-            <p style={{ fontSize: 13, opacity: 0.7 }}>
+            <p style={{ fontSize: 13, color: '#ffffff' }}>
               Public Service Portal v1.0
             </p>
           </div>
