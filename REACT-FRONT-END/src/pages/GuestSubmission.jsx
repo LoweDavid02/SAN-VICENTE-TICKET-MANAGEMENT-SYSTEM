@@ -294,7 +294,7 @@ export default function GuestSubmission() {
             Submit a Request
           </h1>
           <p style={{ fontSize: 16, color: 'var(--muted)' }}>
-            Report issues and request services from Barangay San Vicente
+            Report issues and request services from San Vicente
           </p>
         </div>
 
@@ -401,7 +401,7 @@ export default function GuestSubmission() {
                   </label>
                   <textarea
                     className="input"
-                    placeholder="House No., Street, Barangay San Vicente, Apalit, Pampanga"
+                    placeholder="House No., Street, San Vicente, Apalit, Pampanga"
                     value={formData.guest_address}
                     onChange={(e) => updateField('guest_address', e.target.value)}
                     rows={3}

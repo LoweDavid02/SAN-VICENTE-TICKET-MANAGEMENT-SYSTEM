@@ -81,7 +81,7 @@ export default function Dashboard() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
                 <div>
                   <h2 style={{ fontSize: 15, fontWeight: 700, color: '#111827' }}>Complaint Map</h2>
-                  <p style={{ fontSize: 12, color: '#6b7280', marginTop: 2 }}>Barangay San Vicente, Apalit, Pampanga · OpenStreetMap (Free)</p>
+                  <p style={{ fontSize: 12, color: '#6b7280', marginTop: 2 }}>San Vicente, Apalit, Pampanga · OpenStreetMap (Free)</p>
                 </div>
                 <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap', flexShrink: 0, minWidth: 0 }}>
                   {[['#EF4444','Pending'],['#F59E0B','In Progress'],['#10B981','Resolved']].map(([c,l]) => (

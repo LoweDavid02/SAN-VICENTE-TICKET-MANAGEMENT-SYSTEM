@@ -1,7 +1,7 @@
 {
-  "name": "Barangay San Vicente - Ticket Management System",
-  "short_name": "San Vicente",
-  "description": "Progressive Web App for managing barangay tickets and service requests in San Vicente, Apalit, Pampanga",
+  "name": "BLINKED - Ticket Management System",
+  "short_name": "BLINKED",
+  "description": "Progressive Web App for managing tickets and service requests in Apalit, Pampanga",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

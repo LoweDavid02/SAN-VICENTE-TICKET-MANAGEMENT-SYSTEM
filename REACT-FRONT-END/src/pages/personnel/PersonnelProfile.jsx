@@ -265,7 +265,7 @@ export default function PersonnelProfile() {
 
           {/* Branding */}
           <div style={{ padding: '12px 16px', borderRadius: 12, background: '#f8fafc', border: '1px solid #e8edf2', textAlign: 'center' }}>
-            <p style={{ fontSize: '11.5px', fontWeight: 700, color: '#334155' }}>Barangay Connect</p>
+            <p style={{ fontSize: '11.5px', fontWeight: 700, color: '#334155' }}>BLINKED</p>
             <p style={{ fontSize: '10px', color: '#94a3b8', marginTop: 1 }}>Personnel Portal · Centralized Intelligence Platform · v4.2.1</p>
           </div>
         </div>

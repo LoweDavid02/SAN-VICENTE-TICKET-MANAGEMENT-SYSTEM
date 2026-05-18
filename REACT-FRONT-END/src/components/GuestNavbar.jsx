@@ -68,7 +68,7 @@ export default function GuestNavbar() {
               lineHeight: 1.1,
               textAlign: 'left'
             }}>
-              Barangay Connect
+              BLINKED
             </p>
             <p style={{
               fontSize: 10,

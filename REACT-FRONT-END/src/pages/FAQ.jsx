@@ -9,8 +9,8 @@ const FAQ_DATA = [
     bg: '#f0fdfa',
     items: [
       {
-        q: 'What is Barangay Connect?',
-        a: 'Barangay Connect is a unified digital platform for Barangay San Vicente that connects residents, field personnel, and administrators. It enables real-time incident tracking, service request management, and transparent community governance.',
+        q: 'What is BLINKED?',
+        a: 'BLINKED is a unified digital platform for San Vicente that connects residents, field personnel, and administrators. It enables real-time incident tracking, service request management, and transparent community governance.',
       },
       {
         q: 'Who can use this system?',
@@ -18,7 +18,7 @@ const FAQ_DATA = [
       },
       {
         q: 'How do I create an account?',
-        a: 'Contact the Barangay San Vicente office to register. Residents can self-register using their barangay ID. Personnel and Admin accounts are created by the system administrator.',
+        a: 'Contact the San Vicente office to register. Residents can self-register using their barangay ID. Personnel and Admin accounts are created by the system administrator.',
       },
     ],
   },
@@ -106,7 +106,7 @@ const FAQ_DATA = [
       },
       {
         q: 'How do I report a false or abusive report?',
-        a: 'Contact the Barangay San Vicente office directly or use the emergency hotline. Submitting false reports may result in account suspension per barangay regulations.',
+        a: 'Contact the San Vicente office directly or use the emergency hotline. Submitting false reports may result in account suspension per barangay regulations.',
       },
     ],
   },
@@ -307,7 +307,7 @@ export default function FAQ() {
         <div>
           <p style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-1)' }}>Still have questions?</p>
           <p style={{ fontSize: '12px', color: 'var(--text-3)', marginTop: 2 }}>
-            Contact the Barangay San Vicente office directly.
+            Contact the San Vicente office directly.
           </p>
         </div>
         <div style={{ display: 'flex', gap: 8 }}>

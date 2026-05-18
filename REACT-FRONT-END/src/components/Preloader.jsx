@@ -39,7 +39,7 @@ const PORTAL_CONFIG = {
     orb2:     'rgba(245,166,35,.12)',
   },
   logout: {
-    label:    'Barangay San Vicente',
+    label:    'BLINKED',
     color:    '#22a83a',
     accent:   '#f5a623',
     gradient: 'linear-gradient(160deg, #071a0f 0%, #0d2e18 40%, #0a2010 75%, #061208 100%)',
@@ -186,7 +186,7 @@ export default function Preloader({ portal = 'admin', userName = '', onDone }) {
             {cfg.label}
           </h1>
 
-          {/* ── "Barangay San Vicente" subtitle ── */}
+          {/* ── "BLINKED" subtitle ── */}
           <p style={{
             fontSize: 12,
             fontWeight: 600,

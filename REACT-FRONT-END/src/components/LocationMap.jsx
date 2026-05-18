@@ -39,7 +39,7 @@ function MapUpdater({ center, zoom }) {
   return null;
 }
 
-// Known locations in Barangay San Vicente, Apalit, Pampanga
+// Known locations in San Vicente, Apalit, Pampanga
 // Add exact coordinates for common locations here
 const KNOWN_LOCATIONS = {
   'san vicente barangay hall': { lat: 14.9605, lng: 120.7606, name: 'San Vicente Barangay Hall' },
@@ -134,7 +134,7 @@ export default function LocationMap({ address, height = 300 }) {
   const [error, setError] = useState(null);
   const mapRef = useRef(null);
   
-  // Default center: Barangay San Vicente, Apalit, Pampanga
+  // Default center: San Vicente, Apalit, Pampanga
   const defaultCenter = [14.9605, 120.7606];
   const defaultZoom = 15;
   

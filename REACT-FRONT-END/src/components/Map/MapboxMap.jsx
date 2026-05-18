@@ -4,7 +4,7 @@ import { useGeolocation } from '../../hooks/useGeolocation';
 import { isPointInBoundary, BARANGAY_BOUNDARY } from '../../utils/geofencing';
 import './mapbox.css';
 
-// Barangay San Vicente center and bounds
+// San Vicente center and bounds
 const BRGY_CENTER = [14.9467, 120.7548]; // [lat, lng] for Leaflet
 const BRGY_BOUNDS = [
   [14.938, 120.747],  // SW
@@ -169,7 +169,7 @@ const GeofenceAlert = memo(({ isInside }) => {
       animation: 'slideDown 0.3s ease-out',
     }}>
       <AlertCircle size={16} />
-      <span>You are outside Barangay San Vicente</span>
+      <span>You are outside San Vicente</span>
     </div>
   );
 });

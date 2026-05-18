@@ -156,7 +156,7 @@ export default function PersonnelDashboard() {
       {/* Branding */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 16px', borderRadius: 12, background: '#f8fafc', border: '1px solid #e8edf2' }}>
         <div>
-          <p style={{ fontSize: '11.5px', fontWeight: 700, color: '#334155' }}>Barangay Connect</p>
+          <p style={{ fontSize: '11.5px', fontWeight: 700, color: '#334155' }}>BLINKED</p>
           <p style={{ fontSize: '10px', color: '#94a3b8', marginTop: 1 }}>Personnel Portal · v4.2.1-stable</p>
         </div>
         <span style={{ fontSize: '10px', fontWeight: 600, padding: '4px 10px', borderRadius: 99, background: 'rgba(5,150,105,.08)', color: '#059669', border: '1px solid rgba(5,150,105,.15)' }}>{t('onDuty')}</span>

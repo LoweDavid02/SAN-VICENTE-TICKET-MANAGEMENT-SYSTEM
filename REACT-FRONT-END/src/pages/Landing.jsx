@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { Shield, ArrowRight, Menu, X, ChevronUp, ChevronLeft, ChevronRight, Users, FileText, CheckCircle, Zap, MapPin, Phone, Mail } from 'lucide-react';
 
 const SLIDES = [
-  { id:1, title:'Community-First Governance', desc:'Barangay San Vicente serves over 12,000 residents with transparent, responsive, technology-driven public service.', stat:'12,000+', statLabel:'Residents Served' },
+  { id:1, title:'Community-First Governance', desc:'BLINKED serves over 12,000 residents with transparent, responsive, technology-driven public service.', stat:'12,000+', statLabel:'Residents Served' },
   { id:2, title:'Submit Requests in Minutes', desc:'Report streetlight outages, road damage, drainage issues and more through a simple 4-step wizard with photo evidence.', stat:'4 Steps', statLabel:'To Submit a Request' },
   { id:3, title:'Real-Time Status Tracking', desc:'Every request is tracked from submission to completion. Residents receive live updates as field personnel work on issues.', stat:'14.2h', statLabel:'Avg. Resolution Time' },
-  { id:4, title:'Field Personnel Coordination', desc:'Assigned barangay staff receive tasks on their dedicated portal, update statuses in the field, and document work digitally.', stat:'86', statLabel:'Active Field Personnel' },
+  { id:4, title:'Field Personnel Coordination', desc:'Assigned staff receive tasks on their dedicated portal, update statuses in the field, and document work digitally.', stat:'86', statLabel:'Active Field Personnel' },
   { id:5, title:'Admin Analytics Dashboard', desc:'Administrators monitor department workloads, resolution times, and incident heatmaps in real time for data-driven decisions.', stat:'98%', statLabel:'System Uptime' },
 ];
 
@@ -123,8 +123,8 @@ export default function Landing() {
               <Shield size={18} color="#fff" strokeWidth={2.5} />
             </div>
             <div>
-              <p style={{ fontSize:14, fontWeight:700, color:'#0f172a', lineHeight:1.1 }}>Barangay Connect</p>
-              <p style={{ fontSize:10, color:'#94a3b8', letterSpacing:'0.05em' }}>San Vicente</p>
+              <p style={{ fontSize:14, fontWeight:700, color:'#0f172a', lineHeight:1.1 }}>BLINKED</p>
+              <p style={{ fontSize:10, color:'#94a3b8', letterSpacing:'0.05em' }}>Apalit, Pampanga</p>
             </div>
           </div>
 
@@ -184,7 +184,7 @@ export default function Landing() {
           <div style={{ display:'inline-flex', alignItems:'center', gap:8, padding:'6px 16px', borderRadius:99, background:'rgba(34,168,58,.15)', border:'1px solid rgba(34,168,58,.35)', backdropFilter:'blur(8px)' }}>
             <span style={{ width:7, height:7, borderRadius:'50%', background:'#22a83a', display:'inline-block', animation:'pulse 2s ease-in-out infinite' }} />
             <span style={{ fontSize:11.5, fontWeight:700, color:'#86efac', letterSpacing:'0.1em', textTransform:'uppercase', whiteSpace:'nowrap' }}>
-              Barangay San Vicente · Apalit, Pampanga
+              San Vicente, Apalit, Pampanga
             </span>
           </div>
         </div>
@@ -197,7 +197,7 @@ export default function Landing() {
           </h1>
 
           <p style={{ fontSize:'clamp(1rem,2.2vw,1.2rem)', color:'rgba(226,232,240,.9)', lineHeight:1.6, marginBottom:12, textShadow:'0 1px 8px rgba(0,0,0,.3)', animation:'heroFadeUp .7s ease-out .1s both' }}>
-            Barangay San Vicente, Apalit, Pampanga
+            San Vicente, Apalit, Pampanga
           </p>
 
           <p style={{ fontSize:'clamp(.9rem,1.8vw,1.05rem)', color:'rgba(148,163,184,.8)', lineHeight:1.7, maxWidth:540, margin:'0 auto 40px', animation:'heroFadeUp .7s ease-out .2s both' }}>
@@ -252,7 +252,7 @@ export default function Landing() {
           <div style={{ textAlign:'center', marginBottom:56 }}>
             <span style={{ fontSize:12, fontWeight:700, color:'#14b8a6', textTransform:'uppercase', letterSpacing:'0.12em' }}>About the System</span>
             <h2 className="font-display" style={{ fontSize:'clamp(1.75rem,4vw,2.5rem)', fontWeight:400, color:'#0f172a', marginTop:10, lineHeight:1.2 }}>Three portals. One mission.</h2>
-            <p style={{ fontSize:16, color:'#64748b', lineHeight:1.7, maxWidth:560, margin:'16px auto 0' }}>Barangay Connect bridges the gap between residents and local government through a unified digital platform.</p>
+            <p style={{ fontSize:16, color:'#64748b', lineHeight:1.7, maxWidth:560, margin:'16px auto 0' }}>BLINKED bridges the gap between residents and local government through a unified digital platform.</p>
           </div>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:20 }}>
             {[
@@ -318,12 +318,12 @@ export default function Landing() {
         <div style={{ maxWidth:700, margin:'0 auto', textAlign:'center' }}>
           <span style={{ fontSize:12, fontWeight:700, color:'#14b8a6', textTransform:'uppercase', letterSpacing:'0.12em' }}>Contact</span>
           <h2 className="font-display" style={{ fontSize:'clamp(1.75rem,4vw,2.5rem)', fontWeight:400, color:'#0f172a', marginTop:10, marginBottom:16, lineHeight:1.2 }}>Get in touch.</h2>
-          <p style={{ fontSize:16, color:'#64748b', lineHeight:1.7, marginBottom:40 }}>Have questions about Barangay Connect? Reach out to the Barangay San Vicente office.</p>
+          <p style={{ fontSize:16, color:'#64748b', lineHeight:1.7, marginBottom:40 }}>Have questions about BLINKED? Reach out to the San Vicente office.</p>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(180px,1fr))', gap:16, marginBottom:40 }}>
             {[
               { icon:Phone, label:'Phone', value:'(02) 8123-4567', delay: 0 },
               { icon:Mail,  label:'Email', value:'info@bsv.gov.ph', delay: 0.1 },
-              { icon:MapPin,label:'Address', value:'Barangay San Vicente, QC', delay: 0.2 },
+              { icon:MapPin,label:'Address', value:'San Vicente, QC', delay: 0.2 },
             ].map(({ icon:Icon, label, value, delay }) => (
               <div key={label} style={{ 
                 padding:'20px', 
@@ -364,9 +364,9 @@ export default function Landing() {
                 <div style={{ width:32, height:32, borderRadius:9, background:'#0d9488', display:'flex', alignItems:'center', justifyContent:'center' }}>
                   <Shield size={16} color="#fff" strokeWidth={2.5} />
                 </div>
-                <span style={{ fontSize:14, fontWeight:700, color:'#fff' }}>Barangay Connect</span>
+                <span style={{ fontSize:14, fontWeight:700, color:'#fff' }}>BLINKED</span>
               </div>
-              <p style={{ fontSize:13, lineHeight:1.7 }}>Centralized Intelligence Platform for Barangay San Vicente. v4.2.1-stable.</p>
+              <p style={{ fontSize:13, lineHeight:1.7 }}>Centralized Intelligence Platform for Apalit, Pampanga. v4.2.1-stable.</p>
             </div>
             <div>
               <p style={{ fontSize:12, fontWeight:700, color:'#fff', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:14 }}>Quick Links</p>
@@ -383,12 +383,12 @@ export default function Landing() {
               <p style={{ fontSize:12, fontWeight:700, color:'#fff', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:14 }}>Contact</p>
               <p style={{ fontSize:13, marginBottom:6 }}>Phone: (02) 8123-4567</p>
               <p style={{ fontSize:13, marginBottom:6 }}>Email: info@bsv.gov.ph</p>
-              <p style={{ fontSize:13 }}>Barangay San Vicente, QC</p>
+              <p style={{ fontSize:13 }}>San Vicente, Apalit, Pampanga</p>
             </div>
           </div>
           <div style={{ borderTop:'1px solid rgba(255,255,255,.08)', paddingTop:24, display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:12 }}>
-            <p style={{ fontSize:12 }}>2025 Barangay San Vicente. All rights reserved.</p>
-            <p style={{ fontSize:12 }}>Barangay Connect v4.2.1-stable</p>
+            <p style={{ fontSize:12 }}>2025 BLINKED. All rights reserved.</p>
+            <p style={{ fontSize:12 }}>BLINKED v4.2.1-stable</p>
           </div>
         </div>
       </footer>
@@ -406,7 +406,7 @@ export default function Landing() {
           <div onClick={(e) => e.stopPropagation()} style={{ width:'100%', maxWidth:680, background:'#fff', borderRadius:24, overflow:'hidden', boxShadow:'0 4px 8px rgba(15,23,42,.06), 0 32px 72px rgba(15,23,42,.22)', animation:'scaleIn .25s cubic-bezier(.34,1.56,.64,1) both' }}>
             <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'18px 24px', borderBottom:'1px solid #f1f5f9', background:'#f8fafc' }}>
               <div>
-                <p style={{ fontSize:15, fontWeight:700, color:'#0f172a' }}>Learn About Barangay Connect</p>
+                <p style={{ fontSize:15, fontWeight:700, color:'#0f172a' }}>Learn About BLINKED</p>
                 <p style={{ fontSize:12, color:'#94a3b8', marginTop:2 }}>Slide {slide + 1} of {SLIDES.length}</p>
               </div>
               <button onClick={() => setShowLearn(false)} style={{ width:32, height:32, borderRadius:8, border:'none', background:'#f1f5f9', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', color:'#64748b', transition:'background .15s' }} onMouseEnter={(e) => { e.currentTarget.style.background='#e2e8f0'; }} onMouseLeave={(e) => { e.currentTarget.style.background='#f1f5f9'; }}>

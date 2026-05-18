@@ -11,9 +11,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
       manifest: {
-        name: 'San Vicente Barangay System',
-        short_name: 'San Vicente',
-        description: 'Barangay San Vicente Ticket Management System',
+        name: 'BLINKED System',
+        short_name: 'BLINKED',
+        description: 'BLINKED Ticket Management System',
         theme_color: '#7B6CF6',
         background_color: '#0D0D10',
         display: 'standalone',

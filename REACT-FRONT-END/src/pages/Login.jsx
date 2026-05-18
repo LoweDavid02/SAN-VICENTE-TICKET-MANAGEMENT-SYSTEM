@@ -127,7 +127,7 @@ export default function Login() {
             <Shield size={18} style={{ color: '#5eead4' }} />
           </div>
           <div>
-            <p className="text-white font-semibold text-sm tracking-wide leading-none">Barangay Connect</p>
+            <p className="text-white font-semibold text-sm tracking-wide leading-none">BLINKED</p>
             <p className="text-[10px] mt-0.5" style={{ color: 'rgba(94,234,212,.6)' }}>v4.2.1-stable</p>
           </div>
         </div>
@@ -138,7 +138,7 @@ export default function Login() {
                style={{ background: 'rgba(20,184,166,.1)', border: '1px solid rgba(20,184,166,.2)' }}>
             <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
             <span className="text-[10.5px] font-semibold tracking-[0.1em] uppercase" style={{ color: '#5eead4' }}>
-              Barangay San Vicente
+              San Vicente, Apalit, Pampanga
             </span>
           </div>
           <h1 className="font-display text-white leading-[1.1] mb-5"
@@ -212,7 +212,7 @@ export default function Login() {
                      style={{ background: 'linear-gradient(135deg, #14b8a6, #0d9488)' }}>
                   <Shield size={15} className="text-white" />
                 </div>
-                <span className="font-semibold text-slate-800 text-sm">Barangay Connect</span>
+                <span className="font-semibold text-slate-800 text-sm">BLINKED</span>
               </div>
 
               {/* Heading */}
@@ -389,7 +389,7 @@ export default function Login() {
               </form>
 
               <p style={{ textAlign: 'center', fontSize: 11, color: '#9ca3af', marginTop: 24 }}>
-                Barangay Connect · v4.2.1-stable · Barangay San Vicente
+                BLINKED · v4.2.1-stable · San Vicente, Apalit, Pampanga
               </p>
             </div>
           </div>

@@ -1,5 +1,5 @@
 /**
- * Service Worker — Barangay San Vicente PWA
+ * Service Worker — BLINKED PWA
  * 
  * Workbox 7 custom SW with offline-first caching, background sync,
  * and push notification support.
@@ -161,7 +161,7 @@ self.addEventListener('fetch', (event) => {
 // ── Push Notifications ─────────────────────────────────────────────────────
 self.addEventListener('push', (event) => {
   const data = event.data?.json() || {};
-  const title = data.title || 'Barangay San Vicente';
+  const title = data.title || 'BLINKED';
   const options = {
     body: data.body || 'You have a new notification',
     icon: data.icon || '/icons/icon-192.png',

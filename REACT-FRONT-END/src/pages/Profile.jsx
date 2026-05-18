@@ -331,7 +331,7 @@ export default function Profile() {
 
           {/* Branding */}
           <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '13px 16px', textAlign: 'center' }}>
-            <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-2)' }}>Barangay Connect</p>
+            <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-2)' }}>BLINKED</p>
             <p style={{ fontSize: 11, color: 'var(--text-4)', marginTop: 3 }}>
               Centralized Intelligence Platform · v4.2.1
             </p>

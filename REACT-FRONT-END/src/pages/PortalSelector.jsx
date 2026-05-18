@@ -38,9 +38,9 @@ export default function PortalSelector() {
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6"
                style={{ background:'rgba(20,184,166,.15)', border:'1px solid rgba(20,184,166,.3)' }}>
             <Shield size={13} className="text-teal-400" />
-            <span className="text-teal-400 text-xs font-semibold tracking-wide">Barangay San Vicente</span>
+            <span className="text-teal-400 text-xs font-semibold tracking-wide">San Vicente</span>
           </div>
-          <h1 className="text-4xl font-bold text-white mb-3">Barangay Connect</h1>
+          <h1 className="text-4xl font-bold text-white mb-3">BLINKED</h1>
           <p className="text-slate-400 text-sm max-w-sm mx-auto">
             Select your portal to continue. You can switch portals at any time from the sidebar.
           </p>
@@ -83,7 +83,7 @@ export default function PortalSelector() {
         </div>
 
         <p className="text-center text-xs text-slate-600">
-          Barangay Connect · v4.2.1-stable · Powered by modern technology
+          BLINKED · v4.2.1-stable · Powered by modern technology
         </p>
       </div>
     </div>

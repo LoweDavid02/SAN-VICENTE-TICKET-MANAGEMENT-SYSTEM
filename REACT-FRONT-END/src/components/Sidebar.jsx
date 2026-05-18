@@ -75,7 +75,7 @@ export default function Sidebar({ portalType }) {
     ? t('systemOversight')
     : isPersonnel
     ? t('fieldOperations')
-    : t('barangaySanVicente');
+    : t('sanVicenteApalit');
 
   const navSectionLabel = isAdmin
     ? 'Main Menu'

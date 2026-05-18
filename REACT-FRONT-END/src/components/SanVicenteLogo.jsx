@@ -1,5 +1,5 @@
 /**
- * SanVicenteLogo — SVG logo for Barangay San Vicente, Apalit, Pampanga.
+ * SanVicenteLogo — SVG logo for BLINKED, Apalit, Pampanga.
  *
  * Color scheme extracted from the official barangay seal:
  *   Deep green  : #1a7a2e  (outer ring)

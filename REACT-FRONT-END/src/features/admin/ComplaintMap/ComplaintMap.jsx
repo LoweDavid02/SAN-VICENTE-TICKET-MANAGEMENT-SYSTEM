@@ -1,5 +1,5 @@
 ﻿/**
- * ComplaintMap — Real interactive Leaflet map with Barangay San Vicente boundary.
+ * ComplaintMap — Real interactive Leaflet map with San Vicente boundary.
  *
  * Features:
  * - Real OpenStreetMap tiles (street) + Esri World Imagery (satellite)
@@ -30,7 +30,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl:     "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
 
-// Barangay San Vicente, Apalit, Pampanga — center + zoom
+// San Vicente, Apalit, Pampanga — center + zoom
 const CENTER = [14.9456, 120.7558];
 const ZOOM   = 16;
 
@@ -65,13 +65,13 @@ const TILES = {
   },
 };
 
-// Approximate GeoJSON boundary of Barangay San Vicente, Apalit, Pampanga
+// Approximate GeoJSON boundary of San Vicente, Apalit, Pampanga
 // Coordinates sourced from OpenStreetMap relation data
 const BARANGAY_BOUNDARY = {
   type: "FeatureCollection",
   features: [{
     type: "Feature",
-    properties: { name: "Barangay San Vicente, Apalit, Pampanga" },
+    properties: { name: "San Vicente, Apalit, Pampanga" },
     geometry: {
       type: "Polygon",
       coordinates: [[
@@ -135,7 +135,7 @@ function RecenterControl() {
   return (
     <button
       onClick={() => map.setView(CENTER, ZOOM)}
-      title="Recenter to Barangay San Vicente"
+      title="Recenter to San Vicente"
       style={{
         position:"absolute", bottom:100, right:12, zIndex:1000,
         width:36, height:36, borderRadius:8,
@@ -237,7 +237,7 @@ export default function ComplaintMap() {
       <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:12 }}>
         <div>
           <h1 style={{ fontSize:"1.25rem", fontWeight:700, color:"var(--text-1)", letterSpacing:"-0.02em" }}>Complaint Map</h1>
-          <p style={{ fontSize:12, color:"var(--text-4)", marginTop:2 }}>Live geospatial view — Barangay San Vicente, Apalit, Pampanga</p>
+          <p style={{ fontSize:12, color:"var(--text-4)", marginTop:2 }}>Live geospatial view — San Vicente, Apalit, Pampanga</p>
         </div>
         <div style={{ display:"flex", gap:8, alignItems:"center" }}>
           <button onClick={() => setShowFilters(v => !v)} className="btn btn-outline" style={{ fontSize:12, gap:6, position:"relative" }}>

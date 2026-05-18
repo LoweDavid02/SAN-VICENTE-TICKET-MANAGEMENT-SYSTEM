@@ -1,5 +1,5 @@
 /**
- * Landing.jsx — Barangay San Vicente Public Service Portal
+ * Landing.jsx — BLINKED Public Service Portal
  * Civic UI Design - Clean government interface with NO auth references
  */
 
@@ -54,7 +54,7 @@ export default function Landing() {
             </div>
             <div>
               <p style={{ fontSize: 16, fontWeight: 700, color: '#1E2D4E', lineHeight: 1.2 }}>
-                Barangay San Vicente
+                BLINKED
               </p>
               <p style={{ fontSize: 11, color: '#6B7280', letterSpacing: '0.05em' }}>
                 Public Service Portal
@@ -155,7 +155,7 @@ export default function Landing() {
             lineHeight: 1.2,
             textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
           }}>
-            Welcome to the official<br />San Vicente Service Portal
+            Welcome to the official<br />BLINKED Service Portal
           </h1>
 
           <p style={{
@@ -206,7 +206,7 @@ export default function Landing() {
                 Submit a Concern
               </h3>
               <p style={{ fontSize: 15, color: '#4B5563', marginBottom: 24, lineHeight: 1.7 }}>
-                Report issues, suggest improvements, or request assistance directly from barangay officials.
+                Report issues, suggest improvements, or request assistance directly from local officials.
               </p>
               <button className="btn-primary" style={{ width: '100%', color: '#FFFFFF', backgroundColor: '#1E2D4E' }}>
                 <span style={{ pointerEvents: 'none', color: '#FFFFFF' }}>Get Started</span>
@@ -259,7 +259,7 @@ export default function Landing() {
               Quick Resources
             </h2>
             <p style={{ fontSize: 18, color: '#4B5563' }}>
-              Access essential barangay services and information
+              Access essential services and information
             </p>
           </div>
 
@@ -270,7 +270,7 @@ export default function Landing() {
           }}>
             {[
               { icon: Phone, title: 'Emergency Hotlines', desc: '24/7 Response Team', color: '#EF4444' },
-              { icon: FileText, title: 'Barangay Clearance', desc: 'Online Application', color: '#3B82F6' },
+              { icon: FileText, title: 'Clearance', desc: 'Online Application', color: '#3B82F6' },
               { icon: Calendar, title: 'Community Events', desc: 'Calendar & Announcements', color: '#F59E0B' },
               { icon: MapPin, title: 'District Map', desc: 'Boundaries & Landmarks', color: '#10B981' },
             ].map((item, idx) => (
@@ -341,7 +341,7 @@ export default function Landing() {
             Get in Touch
           </h2>
           <p style={{ fontSize: 18, color: '#4B5563', marginBottom: 48 }}>
-            Have questions? Reach out to the Barangay San Vicente office.
+            Have questions? Reach out to the San Vicente office.
           </p>
 
           <div style={{
@@ -401,7 +401,7 @@ export default function Landing() {
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
                 <Shield size={24} color="white" />
-                <span style={{ fontSize: 16, fontWeight: 700 }}>Barangay San Vicente</span>
+                <span style={{ fontSize: 16, fontWeight: 700 }}>BLINKED</span>
               </div>
               <p style={{ fontSize: 14, opacity: 0.8, lineHeight: 1.6 }}>
                 Serving the community with integrity and care.
@@ -439,7 +439,7 @@ export default function Landing() {
             gap: 12,
           }}>
             <p style={{ fontSize: 13, opacity: 0.7 }}>
-              © 2026 Barangay San Vicente. All rights reserved.
+              © 2026 BLINKED. All rights reserved.
             </p>
             <p style={{ fontSize: 13, opacity: 0.7 }}>
               Public Service Portal v1.0
