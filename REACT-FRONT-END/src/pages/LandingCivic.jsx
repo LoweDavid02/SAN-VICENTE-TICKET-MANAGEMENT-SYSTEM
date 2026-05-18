@@ -18,7 +18,7 @@ const FAQS = [
   },
   {
     q: 'How do I track my submitted request?',
-    a: 'After submitting, you receive a unique tracking code via the confirmation screen. Go to the "Track Status" page, enter your code, and view real-time updates on your request.',
+    a: 'After submitting, you receive a unique tracking code via the confirmation screen. Go to the "Track My Request" page, enter your code, and view real-time updates on your request.',
   },
   {
     q: 'How long does it take to resolve a request?',
@@ -140,15 +140,15 @@ export default function LandingCivic() {
 
           {/* Desktop CTA */}
           <div className="lc-nav-actions" style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
-            <button onClick={() => navigate('/track')} style={{ height: 38, padding: '0 18px', borderRadius: 9, border: '1.5px solid #e2e8f0', background: '#fff', fontSize: 13, fontWeight: 600, color: '#4b5563', cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s' }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = '#cbd5e1'; e.currentTarget.style.color = '#1E2D4E'; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.color = '#4b5563'; }}>
-              Track Status
+            <button onClick={() => navigate('/track')} style={{ height: 38, padding: '0 14px', border: 'none', background: 'none', fontSize: 13, fontWeight: 500, color: '#4b5563', cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s' }}
+              onMouseEnter={e => { e.currentTarget.style.color = '#1E2D4E'; }}
+              onMouseLeave={e => { e.currentTarget.style.color = '#4b5563'; }}>
+              Track My Request
             </button>
             <button onClick={() => navigate('/report')} style={{ height: 38, padding: '0 20px', borderRadius: 9, border: 'none', background: '#1E2D4E', fontSize: 13, fontWeight: 700, color: '#fff', cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s' }}
               onMouseEnter={e => { e.currentTarget.style.background = '#2A3F6B'; }}
               onMouseLeave={e => { e.currentTarget.style.background = '#1E2D4E'; }}>
-              Submit Request
+              Submit a Concern
             </button>
           </div>
 
@@ -165,8 +165,8 @@ export default function LandingCivic() {
               <button key={l.label} onClick={() => scrollTo(l.href)} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '11px 8px', border: 'none', background: 'none', fontSize: 15, fontWeight: 500, color: '#1f2937', cursor: 'pointer', fontFamily: 'inherit', borderBottom: '1px solid #f8fafc' }}>{l.label}</button>
             ))}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 14 }}>
-              <button onClick={() => navigate('/report')} style={{ height: 46, borderRadius: 10, border: 'none', background: '#1E2D4E', fontSize: 15, fontWeight: 700, color: '#fff', cursor: 'pointer', fontFamily: 'inherit' }}>Submit Request</button>
-              <button onClick={() => navigate('/track')} style={{ height: 42, borderRadius: 10, border: '1.5px solid #e2e8f0', background: '#fff', fontSize: 14, fontWeight: 600, color: '#4b5563', cursor: 'pointer', fontFamily: 'inherit' }}>Track Status</button>
+              <button onClick={() => navigate('/report')} style={{ height: 46, borderRadius: 10, border: 'none', background: '#1E2D4E', fontSize: 15, fontWeight: 700, color: '#fff', cursor: 'pointer', fontFamily: 'inherit' }}>Submit a Concern</button>
+              <button onClick={() => navigate('/track')} style={{ height: 42, border: 'none', background: 'none', fontSize: 14, fontWeight: 500, color: '#4b5563', cursor: 'pointer', fontFamily: 'inherit' }}>Track My Request</button>
             </div>
           </div>
         )}
@@ -277,11 +277,6 @@ export default function LandingCivic() {
             <p style={{ fontSize: 16, fontWeight: 600, color: '#fff', marginBottom: 8 }}>Still have questions?</p>
             <p className="lc-faq-sub" style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)', marginBottom: 24 }}>Contact the San Vicente office directly or submit your concern and we'll get back to you.</p>
             <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
-              <button onClick={() => navigate('/report')} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', borderRadius: 10, border: 'none', background: '#0D9488', fontSize: 14, fontWeight: 700, color: '#fff', cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s' }}
-                onMouseEnter={e => e.currentTarget.style.background = '#0f766e'}
-                onMouseLeave={e => e.currentTarget.style.background = '#0D9488'}>
-                Submit a Concern <ArrowRight size={14} />
-              </button>
               <button onClick={() => scrollTo('#contact')} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', borderRadius: 10, border: '1.5px solid rgba(255,255,255,0.25)', background: 'transparent', fontSize: 14, fontWeight: 600, color: '#fff', cursor: 'pointer', fontFamily: 'inherit', transition: 'all .15s' }}
                 onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)'}
                 onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)'}>
@@ -331,8 +326,8 @@ export default function LandingCivic() {
             </div>
             <div>
               <p style={{ fontSize: 11, fontWeight: 700, color: '#fff', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 14 }}>Quick Links</p>
-              <button onClick={() => navigate('/report')} style={{ display: 'block', background: 'none', border: 'none', cursor: 'pointer', fontSize: 13, color: '#fff', fontFamily: 'inherit', padding: '4px 0', textAlign: 'left', transition: 'color .15s' }}>Submit Request</button>
-              <button onClick={() => navigate('/track')} style={{ display: 'block', background: 'none', border: 'none', cursor: 'pointer', fontSize: 13, color: '#fff', fontFamily: 'inherit', padding: '4px 0', textAlign: 'left', transition: 'color .15s' }}>Track Status</button>
+              <button onClick={() => navigate('/report')} style={{ display: 'block', background: 'none', border: 'none', cursor: 'pointer', fontSize: 13, color: '#fff', fontFamily: 'inherit', padding: '4px 0', textAlign: 'left', transition: 'color .15s' }}>Submit a Concern</button>
+              <button onClick={() => navigate('/track')} style={{ display: 'block', background: 'none', border: 'none', cursor: 'pointer', fontSize: 13, color: '#fff', fontFamily: 'inherit', padding: '4px 0', textAlign: 'left', transition: 'color .15s' }}>Track My Request</button>
               <button onClick={() => scrollTo('#faq')} style={{ display: 'block', background: 'none', border: 'none', cursor: 'pointer', fontSize: 13, color: '#fff', fontFamily: 'inherit', padding: '4px 0', textAlign: 'left', transition: 'color .15s' }}>FAQ</button>
             </div>
             <div>
