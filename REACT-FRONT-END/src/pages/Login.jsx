@@ -116,8 +116,7 @@ export default function Login() {
           color: #ffffff !important;
         }
         #login-left-panel .lp-gradient-text {
-          color: transparent !important;
-          -webkit-text-fill-color: transparent !important;
+          color: #3B82F6 !important;
         }
       `}</style>
       <div
