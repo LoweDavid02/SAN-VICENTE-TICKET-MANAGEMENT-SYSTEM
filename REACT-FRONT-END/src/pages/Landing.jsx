@@ -142,7 +142,7 @@ export default function Landing() {
 
           {/* Desktop actions — hidden on mobile via CSS */}
           <div className="land-nav-actions" style={{ display:'flex', alignItems:'center', gap:12, flexShrink:0 }}>
-            <button onClick={() => navigate('/submit')} style={{ height:40, padding:'0 28px', borderRadius:10, border:'none', background:'#22a83a', fontSize:14, fontWeight:700, color:'#ffffff', cursor:'pointer', fontFamily:'inherit', boxShadow:'0 2px 8px rgba(34,168,58,.2)', transition:'all .15s', whiteSpace:'nowrap' }} onMouseEnter={(e) => { e.currentTarget.style.transform='translateY(-1px)'; e.currentTarget.style.boxShadow='0 4px 12px rgba(34,168,58,.3)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform=''; e.currentTarget.style.boxShadow='0 2px 8px rgba(34,168,58,.2)'; }}>
+            <button onClick={() => navigate('/submit')} style={{ height:40, padding:'0 28px', borderRadius:10, border:'none', background:'#1E3A8A', fontSize:14, fontWeight:700, color:'#ffffff', cursor:'pointer', fontFamily:'inherit', boxShadow:'0 2px 8px rgba(30,58,138,.2)', transition:'all .15s', whiteSpace:'nowrap' }} onMouseEnter={(e) => { e.currentTarget.style.transform='translateY(-1px)'; e.currentTarget.style.boxShadow='0 4px 12px rgba(30,58,138,.3)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform=''; e.currentTarget.style.boxShadow='0 2px 8px rgba(30,58,138,.2)'; }}>
               <span style={{ pointerEvents:'none', color:'#ffffff' }}>Submit Request</span>
             </button>
             <button onClick={() => navigate('/login')} style={{ height:40, padding:'0 20px', borderRadius:10, border:'1.5px solid #e2e8f0', background:'#fff', fontSize:13, fontWeight:600, color:'#475569', cursor:'pointer', fontFamily:'inherit', transition:'all .15s', whiteSpace:'nowrap' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor='#cbd5e1'; e.currentTarget.style.color='#334155'; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor='#e2e8f0'; e.currentTarget.style.color='#475569'; }}>Staff Login</button>
@@ -159,7 +159,7 @@ export default function Landing() {
           <div style={{ borderTop:'1px solid #f1f5f9', background:'#fff', padding:'12px 16px 20px' }}>
             {NAV.map((l) => (<button key={l.label} onClick={() => scrollTo(l.href)} style={{ display:'block', width:'100%', textAlign:'left', padding:'12px 8px', border:'none', background:'none', fontSize:15, fontWeight:500, color:'#334155', cursor:'pointer', fontFamily:'inherit', borderBottom:'1px solid #f8fafc', minHeight:44 }}>{l.label}</button>))}
             <div style={{ display:'flex', flexDirection:'column', gap:12, marginTop:14 }}>
-              <button onClick={() => navigate('/submit')} style={{ height:48, borderRadius:12, border:'none', background:'#22a83a', fontSize:15, fontWeight:700, color:'#ffffff', cursor:'pointer', fontFamily:'inherit', boxShadow:'0 2px 8px rgba(34,168,58,.2)' }}>
+              <button onClick={() => navigate('/submit')} style={{ height:48, borderRadius:12, border:'none', background:'#1E3A8A', fontSize:15, fontWeight:700, color:'#ffffff', cursor:'pointer', fontFamily:'inherit', boxShadow:'0 2px 8px rgba(30,58,138,.2)' }}>
                 <span style={{ pointerEvents:'none', color:'#ffffff' }}>Submit Request</span>
               </button>
               <button onClick={() => navigate('/login')} style={{ height:44, borderRadius:10, border:'1.5px solid #e2e8f0', background:'#fff', fontSize:14, fontWeight:600, color:'#334155', cursor:'pointer', fontFamily:'inherit' }}>Staff Login</button>
@@ -184,8 +184,8 @@ export default function Landing() {
 
         {/* Live badge */}
         <div style={{ position:'absolute', top:88, left:'50%', transform:'translateX(-50%)', zIndex:10 }}>
-          <div style={{ display:'inline-flex', alignItems:'center', gap:8, padding:'6px 16px', borderRadius:99, background:'rgba(34,168,58,.15)', border:'1px solid rgba(34,168,58,.35)', backdropFilter:'blur(8px)' }}>
-            <span style={{ width:7, height:7, borderRadius:'50%', background:'#22a83a', display:'inline-block', animation:'pulse 2s ease-in-out infinite' }} />
+          <div style={{ display:'inline-flex', alignItems:'center', gap:8, padding:'6px 16px', borderRadius:99, background:'rgba(30,58,138,.15)', border:'1px solid rgba(30,58,138,.35)', backdropFilter:'blur(8px)' }}>
+            <span style={{ width:7, height:7, borderRadius:'50%', background:'#1E3A8A', display:'inline-block', animation:'pulse 2s ease-in-out infinite' }} />
             <span style={{ fontSize:11.5, fontWeight:700, color:'#ffffff', letterSpacing:'0.1em', textTransform:'uppercase', whiteSpace:'nowrap' }}>
               San Vicente, Apalit, Pampanga
             </span>
@@ -212,9 +212,9 @@ export default function Landing() {
           <div style={{ display:'flex', gap:16, justifyContent:'center', flexWrap:'wrap', marginBottom:56, animation:'heroFadeUp .7s ease-out .3s both' }}>
             <button
               onClick={() => navigate('/submit')}
-              style={{ display:'flex', alignItems:'center', gap:12, padding:'18px 40px', borderRadius:16, border:'none', background:'#22a83a', fontSize:17, fontWeight:700, color:'#ffffff', cursor:'pointer', fontFamily:'inherit', boxShadow:'0 4px 16px rgba(34,168,58,.3)', transition:'all .2s' }}
-              onMouseEnter={e => { e.currentTarget.style.transform='translateY(-3px)'; e.currentTarget.style.boxShadow='0 8px 24px rgba(34,168,58,.4)'; }}
-              onMouseLeave={e => { e.currentTarget.style.transform=''; e.currentTarget.style.boxShadow='0 4px 16px rgba(34,168,58,.3)'; }}
+              style={{ display:'flex', alignItems:'center', gap:12, padding:'18px 40px', borderRadius:16, border:'none', background:'#1E3A8A', fontSize:17, fontWeight:700, color:'#ffffff', cursor:'pointer', fontFamily:'inherit', boxShadow:'0 4px 16px rgba(30,58,138,.3)', transition:'all .2s' }}
+              onMouseEnter={e => { e.currentTarget.style.transform='translateY(-3px)'; e.currentTarget.style.boxShadow='0 8px 24px rgba(30,58,138,.4)'; }}
+              onMouseLeave={e => { e.currentTarget.style.transform=''; e.currentTarget.style.boxShadow='0 4px 16px rgba(30,58,138,.3)'; }}
             >
               <span style={{ pointerEvents:'none', color:'#ffffff' }}>Submit a Request</span>
               <ArrowRight size={18} strokeWidth={2.5} style={{ pointerEvents:'none', color:'#ffffff' }} />
@@ -224,19 +224,19 @@ export default function Landing() {
           {/* Stats strip */}
           <div className="land-stats-grid" style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:0, borderRadius:16, overflow:'hidden', border:'1px solid rgba(255,255,255,.12)', maxWidth:700, margin:'0 auto', background:'rgba(0,0,0,.35)', backdropFilter:'blur(16px)', animation:'heroFadeUp .7s ease-out .4s both' }}>
             <div style={{ padding:'18px 12px', borderRight:'1px solid rgba(255,255,255,.08)', textAlign:'center' }}>
-              <p className="font-display" style={{ fontSize:'1.5rem', fontWeight:700, color:'#22a83a', lineHeight:1, marginBottom:4 }}>{animatedStats.tickets.toLocaleString()}</p>
+              <p className="font-display" style={{ fontSize:'1.5rem', fontWeight:700, color:'#1E3A8A', lineHeight:1, marginBottom:4 }}>{animatedStats.tickets.toLocaleString()}</p>
               <p style={{ fontSize:10, color:'rgba(148,163,184,.75)', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.07em', lineHeight:1.3 }}>Tickets Resolved</p>
             </div>
             <div style={{ padding:'18px 12px', borderRight:'1px solid rgba(255,255,255,.08)', textAlign:'center' }}>
-              <p className="font-display" style={{ fontSize:'1.5rem', fontWeight:700, color:'#22a83a', lineHeight:1, marginBottom:4 }}>{animatedStats.resolution}h</p>
+              <p className="font-display" style={{ fontSize:'1.5rem', fontWeight:700, color:'#1E3A8A', lineHeight:1, marginBottom:4 }}>{animatedStats.resolution}h</p>
               <p style={{ fontSize:10, color:'rgba(148,163,184,.75)', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.07em', lineHeight:1.3 }}>Avg Resolution</p>
             </div>
             <div style={{ padding:'18px 12px', borderRight:'1px solid rgba(255,255,255,.08)', textAlign:'center' }}>
-              <p className="font-display" style={{ fontSize:'1.5rem', fontWeight:700, color:'#22a83a', lineHeight:1, marginBottom:4 }}>{animatedStats.uptime}%</p>
+              <p className="font-display" style={{ fontSize:'1.5rem', fontWeight:700, color:'#1E3A8A', lineHeight:1, marginBottom:4 }}>{animatedStats.uptime}%</p>
               <p style={{ fontSize:10, color:'rgba(148,163,184,.75)', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.07em', lineHeight:1.3 }}>System Uptime</p>
             </div>
             <div style={{ padding:'18px 12px', textAlign:'center' }}>
-              <p className="font-display" style={{ fontSize:'1.5rem', fontWeight:700, color:'#22a83a', lineHeight:1, marginBottom:4 }}>{animatedStats.personnel}</p>
+              <p className="font-display" style={{ fontSize:'1.5rem', fontWeight:700, color:'#1E3A8A', lineHeight:1, marginBottom:4 }}>{animatedStats.personnel}</p>
               <p style={{ fontSize:10, color:'rgba(148,163,184,.75)', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.07em', lineHeight:1.3 }}>Active Personnel</p>
             </div>
           </div>
@@ -253,7 +253,7 @@ export default function Landing() {
       <section id="about" ref={aboutRef} style={{ padding:'96px 24px', background:'#fff', opacity: aboutVisible ? 1 : 0, transform: aboutVisible ? 'translateY(0)' : 'translateY(30px)', transition: 'opacity 0.6s ease-out, transform 0.6s ease-out' }}>
         <div style={{ maxWidth:1100, margin:'0 auto' }}>
           <div style={{ textAlign:'center', marginBottom:56 }}>
-            <span style={{ fontSize:12, fontWeight:700, color:'#14b8a6', textTransform:'uppercase', letterSpacing:'0.12em' }}>About the System</span>
+            <span style={{ fontSize:12, fontWeight:700, color:'#1E3A8A', textTransform:'uppercase', letterSpacing:'0.12em' }}>About the System</span>
             <h2 className="font-display" style={{ fontSize:'clamp(1.75rem,4vw,2.5rem)', fontWeight:400, color:'#0f172a', marginTop:10, lineHeight:1.2 }}>Three portals. One mission.</h2>
             <p style={{ fontSize:16, color:'#64748b', lineHeight:1.7, maxWidth:560, margin:'16px auto 0' }}>BLINKED bridges the gap between residents and local government through a unified digital platform.</p>
           </div>

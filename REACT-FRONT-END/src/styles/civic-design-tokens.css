@@ -7,7 +7,7 @@
   /* Primary Colors - High Contrast for Maximum Visibility */
   --color-primary: #1E2D4E;        /* Navy — buttons, headings */
   --color-primary-hover: #2A3F6B;  /* Navy hover state */
-  --color-teal: #0D9488;           /* Icons, Locate Me button */
+  --color-teal: #1E2D4E;           /* Changed to navy for consistency */
   --color-green: #10B981;          /* Success, Completed status */
   --color-amber: #F59E0B;          /* Under Review status */
   --color-danger: #EF4444;         /* Errors, Rejected status */
@@ -126,7 +126,7 @@ body {
 }
 
 .btn-teal {
-  background-color: var(--color-teal);
+  background-color: #1E2D4E;
   color: white;
   padding: 12px 24px;
   border-radius: var(--radius-button);
@@ -142,7 +142,7 @@ body {
 }
 
 .btn-teal:hover {
-  background-color: #0F766E;
+  background-color: #2A3F6B;
 }
 
 /* Cards */

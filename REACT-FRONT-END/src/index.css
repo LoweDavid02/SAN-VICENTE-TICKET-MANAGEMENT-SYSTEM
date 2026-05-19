@@ -1375,7 +1375,7 @@ button:not([style*="color: #fff"]):not([style*="color:#fff"]):not([style*="color
   /* Civic Primary Colors (Legacy Support) */
   --color-primary: #1E2D4E;        /* Navy — buttons, headings */
   --color-primary-hover: #2A3F6B;  /* Navy hover state */
-  --color-teal: #0D9488;           /* Icons, Locate Me button */
+  --color-teal: #1E2D4E;           /* Changed to navy for consistency */
   --color-green: #10B981;          /* Success, Completed status */
   --color-amber: #F59E0B;          /* Under Review status */
   --color-danger: #EF4444;         /* Errors, Rejected status */
@@ -1473,7 +1473,7 @@ button:not([style*="color: #fff"]):not([style*="color:#fff"]):not([style*="color
 }
 
 .btn-teal {
-  background-color: var(--color-teal);
+  background-color: #1E2D4E;
   color: white;
   padding: 12px 24px;
   border-radius: var(--radius-button);
@@ -1490,7 +1490,7 @@ button:not([style*="color: #fff"]):not([style*="color:#fff"]):not([style*="color
 }
 
 .btn-teal:hover {
-  background-color: #0F766E;
+  background-color: #2A3F6B;
   transform: translateY(-1px);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }

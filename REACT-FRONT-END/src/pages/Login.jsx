@@ -89,8 +89,8 @@ export default function Login() {
     boxSizing: 'border-box',
   };
   const onFocus = (e) => {
-    e.target.style.borderColor = '#14b8a6';
-    e.target.style.boxShadow   = '0 0 0 3px rgba(20,184,166,.12)';
+    e.target.style.borderColor = '#1E2D4E';
+    e.target.style.boxShadow   = '0 0 0 3px rgba(30,45,78,.12)';
     e.target.style.background  = '#ffffff';
   };
   const onBlur = (e) => {
@@ -164,8 +164,8 @@ export default function Login() {
         {/* Hero */}
         <div className="relative z-10">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-7"
-               style={{ background: 'rgba(20,184,166,.1)', border: '1px solid rgba(20,184,166,.2)' }}>
-            <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
+               style={{ background: 'rgba(30,45,78,.1)', border: '1px solid rgba(30,45,78,.2)' }}>
+            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#3B82F6' }} />
             <span className="text-[10.5px] font-semibold tracking-[0.1em] uppercase" style={{ color: '#ffffff' }}>
               San Vicente, Apalit, Pampanga
             </span>
@@ -174,8 +174,7 @@ export default function Login() {
               style={{ fontSize: 'clamp(2.4rem, 3.8vw, 3.2rem)', fontWeight: 400, color: '#ffffff' }}>
             Smarter local<br />
             <span className="lp-gradient-text" style={{
-              background: 'linear-gradient(90deg, #5eead4 0%, #2dd4bf 50%, #14b8a6 100%)',
-              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontStyle: 'italic',
+              color: '#3B82F6', fontStyle: 'italic',
             }}>
               governance
             </span>
@@ -327,7 +326,7 @@ export default function Login() {
                     Email Address
                   </label>
                   <div style={{ position: 'relative' }}>
-                    <Mail size={14} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: form.email ? '#14b8a6' : '#6b7280', transition: 'color .15s' }} />
+                    <Mail size={14} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: form.email ? '#1E2D4E' : '#6b7280', transition: 'color .15s' }} />
                     <input
                       id="email-input"
                       name="email"
@@ -351,7 +350,7 @@ export default function Login() {
                     Password
                   </label>
                   <div style={{ position: 'relative' }}>
-                    <Lock size={14} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: form.password ? '#14b8a6' : '#6b7280', transition: 'color .15s' }} />
+                    <Lock size={14} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: form.password ? '#1E2D4E' : '#6b7280', transition: 'color .15s' }} />
                     <input
                       id="password-input"
                       name="password"
@@ -392,15 +391,13 @@ export default function Login() {
                     cursor: isLoading ? 'not-allowed' : 'pointer',
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
                     fontSize: '0.9375rem', fontWeight: 700, color: '#fff', fontFamily: 'inherit',
-                    background: isLoading
-                      ? '#0d9488'
-                      : 'linear-gradient(135deg, #1ac9b5 0%, #14b8a6 45%, #0d9488 100%)',
-                    boxShadow: isLoading ? 'none' : '0 4px 16px rgba(20,184,166,.4)',
+                    background: isLoading ? '#2A3F6B' : '#1E2D4E',
+                    boxShadow: isLoading ? 'none' : '0 4px 16px rgba(30,45,78,.4)',
                     opacity: isLoading ? 0.8 : 1,
                     transition: 'all .18s',
                   }}
-                  onMouseEnter={(e) => { if (!isLoading) e.currentTarget.style.transform = 'translateY(-1px)'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.transform = ''; }}
+                  onMouseEnter={(e) => { if (!isLoading) { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.background = '#2A3F6B'; } }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = ''; e.currentTarget.style.background = '#1E2D4E'; }}
                 >
                   {isLoading ? (
                     <>
