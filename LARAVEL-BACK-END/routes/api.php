@@ -5,7 +5,13 @@ use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\Guest\GuestController;
 use App\Http\Controllers\Api\V1\NotificationController;
 use App\Http\Controllers\Api\V1\Personnel\PersonnelController;
+use App\Http\Controllers\HealthCheckController;
 use Illuminate\Support\Facades\Route;
+
+// ── Health Check & Keep-Alive (Public, No Rate Limit) ──────────────────────
+// Used by external monitoring services to prevent cold starts
+Route::get('/health', [HealthCheckController::class, 'index']);
+Route::get('/ping', [HealthCheckController::class, 'ping']);
 
 Route::prefix('v1')->group(function () {
 

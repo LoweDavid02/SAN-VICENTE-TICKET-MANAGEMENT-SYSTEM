@@ -98,6 +98,16 @@ export default defineConfig({
     // Raise chunk size warning limit to 1000 KB (we have optimized chunking)
     chunkSizeWarningLimit: 1000,
 
+    // Minify with terser for better compression
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true, // Remove console.logs in production
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info', 'console.debug'],
+      },
+    },
+
     rollupOptions: {
       output: {
         // Manual chunk splitting — function form required for rolldown (Vite 8)
