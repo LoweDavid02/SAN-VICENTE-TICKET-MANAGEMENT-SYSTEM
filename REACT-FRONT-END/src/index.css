@@ -1057,8 +1057,11 @@ button:not([style*="color: #fff"]):not([style*="color:#fff"]):not([style*="color
 /* ── App layout ──────────────────────────────────────────── */
 .app-content {
   padding: 28px;
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
+  /* Use padding to create comfortable reading width while allowing full expansion */
+  padding-left: max(28px, calc((100vw - 1400px) / 2));
+  padding-right: max(28px, calc((100vw - 1400px) / 2));
 }
 
 /* ── Text utilities ──────────────────────────────────────── */
@@ -1264,7 +1267,11 @@ button:not([style*="color: #fff"]):not([style*="color:#fff"]):not([style*="color
 
   html { font-size: 15px; }
 
-  .app-content { padding: 24px 20px; }
+  .app-content { 
+    padding: 24px 20px;
+    padding-left: max(20px, calc((100vw - 1200px) / 2));
+    padding-right: max(20px, calc((100vw - 1200px) / 2));
+  }
   .topbar { padding: 0 20px; gap: 10px; }
 
   .sidebar { display: none !important; }
@@ -1303,7 +1310,9 @@ button:not([style*="color: #fff"]):not([style*="color:#fff"]):not([style*="color
   .mobile-drawer--open { visibility: visible; }
   .mobile-drawer-backdrop { display: block; }
 
-  .app-content { padding: 16px 14px; }
+  .app-content { 
+    padding: 16px 14px;
+  }
 
   .modal-backdrop {
     align-items: flex-end;
@@ -2276,13 +2285,7 @@ footer *,
 }
 
 /* ── Card Text on Light Backgrounds ────────────────────────────────────── */
-[style*="background: '#fff'"] [style*="color"],
-[style*="background:'#fff'"] [style*="color"],
-[style*="background: #fff"] [style*="color"],
-[style*="background:#fff"] [style*="color"],
-[style*="background: white"] [style*="color"] {
-  /* Inherit from parent or use default text colors */
-}
+/* Inherit from parent or use default text colors for light backgrounds */
 
 /* ── Ensure Headings Are Always Visible (except white text) ────────────────────────────────── */
 h1[style*="color"]:not([style*="#FFFFFF"]):not([style*="white"]):not([style*="#FFF"]):not([style*="rgb(255"]):not([style*="rgba(255, 255, 255"]),
@@ -2463,10 +2466,8 @@ nav button:hover {
 }
 
 /* ── Accessibility - Ensure WCAG AA Contrast Ratios ────────────────────── */
-{
-  /* Minimum contrast ratio of 4.5:1 for normal text */
-  /* Minimum contrast ratio of 3:1 for large text (18pt+ or 14pt+ bold) */
-}
+/* Minimum contrast ratio of 4.5:1 for normal text */
+/* Minimum contrast ratio of 3:1 for large text (18pt+ or 14pt+ bold) */
 
 /* ── Force White Text on All Dark Gradient Backgrounds ─────────────────── */
 [style*="background: linear-gradient"][style*="rgba(15,23,42"],

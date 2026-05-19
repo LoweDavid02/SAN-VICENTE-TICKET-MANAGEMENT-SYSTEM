@@ -2,7 +2,7 @@
   "info": {
     "name": "Barangay Connect API",
     "_postman_id": "barangay-connect-api-v1",
-    "description": "Complete API collection for Barangay Connect - Community service request management system",
+    "description": "Complete API collection for Barangay Connect - Community service request management system.\n\nNote: DB sslmode changed from 'prefer' to 'require' for Render deployment. connect_timeout=10s, statement_timeout=30s added.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -18,6 +18,11 @@
     },
     {
       "key": "tracking_code",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "tracking_id",
       "value": "",
       "type": "string"
     }
@@ -39,8 +44,9 @@
                   "",
                   "pm.test(\"Response has token\", function () {",
                   "    var jsonData = pm.response.json();",
-                  "    pm.expect(jsonData).to.have.property('token');",
-                  "    pm.collectionVariables.set('token', jsonData.token);",
+                  "    var token = jsonData.token || (jsonData.data && jsonData.data.token);",
+                  "    pm.expect(token).to.be.a('string');",
+                  "    if (token) pm.collectionVariables.set('token', token);",
                   "});"
                 ],
                 "type": "text/javascript"
@@ -50,14 +56,8 @@
           "request": {
             "method": "POST",
             "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
             ],
             "body": {
               "mode": "raw",
@@ -84,8 +84,9 @@
                   "",
                   "pm.test(\"Response has token\", function () {",
                   "    var jsonData = pm.response.json();",
-                  "    pm.expect(jsonData).to.have.property('token');",
-                  "    pm.collectionVariables.set('token', jsonData.token);",
+                  "    var token = jsonData.token || (jsonData.data && jsonData.data.token);",
+                  "    pm.expect(token).to.be.a('string');",
+                  "    if (token) pm.collectionVariables.set('token', token);",
                   "});"
                 ],
                 "type": "text/javascript"
@@ -95,14 +96,8 @@
           "request": {
             "method": "POST",
             "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
             ],
             "body": {
               "mode": "raw",
@@ -140,14 +135,8 @@
           "request": {
             "method": "GET",
             "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
             ],
             "url": {
               "raw": "{{base_url}}/auth/me",
@@ -175,14 +164,8 @@
           "request": {
             "method": "POST",
             "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
             ],
             "url": {
               "raw": "{{base_url}}/auth/logout",
@@ -198,7 +181,7 @@
       "name": "Guest",
       "item": [
         {
-          "name": "Submit Ticket",
+          "name": "Submit Ticket (Civic UI)",
           "event": [
             {
               "listen": "test",
@@ -208,10 +191,11 @@
                   "    pm.response.to.have.status(201);",
                   "});",
                   "",
-                  "pm.test(\"Response has tracking code\", function () {",
+                  "pm.test(\"Response has tracking_id\", function () {",
                   "    var jsonData = pm.response.json();",
-                  "    pm.expect(jsonData).to.have.property('tracking_code');",
-                  "    pm.collectionVariables.set('tracking_code', jsonData.tracking_code);",
+                  "    pm.expect(jsonData).to.have.property('tracking_id');",
+                  "    pm.collectionVariables.set('tracking_id', jsonData.tracking_id);",
+                  "    pm.collectionVariables.set('tracking_code', jsonData.tracking_id);",
                   "});"
                 ],
                 "type": "text/javascript"
@@ -221,29 +205,24 @@
           "request": {
             "method": "POST",
             "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"category\": \"streetlight\",\n  \"description\": \"Streetlight not working on Main St\",\n  \"location\": \"Main Street, San Vicente\",\n  \"latitude\": 14.9500,\n  \"longitude\": 120.7000,\n  \"severity\": \"medium\",\n  \"contact_name\": \"Juan Dela Cruz\",\n  \"contact_phone\": \"09171234567\",\n  \"contact_email\": \"juan@example.com\"\n}"
+              "raw": "{\n  \"guest_name\": \"Juan Dela Cruz\",\n  \"guest_email\": \"juan@example.com\",\n  \"guest_phone\": \"09171234567\",\n  \"guest_address\": \"123 Main Street, San Vicente\",\n  \"title\": \"Streetlight not working on Main St\",\n  \"description\": \"The streetlight at the corner of Main St and Rizal Ave has been out for 3 days.\",\n  \"category\": \"streetlight\",\n  \"location\": \"Main Street, San Vicente\",\n  \"latitude\": 14.9500,\n  \"longitude\": 120.7000,\n  \"severity\": \"medium\"\n}"
             },
             "url": {
-              "raw": "{{base_url}}/guest/tickets",
+              "raw": "{{base_url}}/tickets",
               "host": ["{{base_url}}"],
-              "path": ["guest", "tickets"]
-            }
+              "path": ["tickets"]
+            },
+            "description": "Submit a guest ticket via the Civic UI route (POST /tickets). Note: captcha_token is required by the server in production but is omitted here for testing. If reCAPTCHA is enforced, the request will return 422. Disable reCAPTCHA validation in local .env (RECAPTCHA_SECRET=test) to bypass."
           },
           "response": []
         },
         {
-          "name": "Track Ticket",
+          "name": "Track Ticket (GET — Legacy)",
           "event": [
             {
               "listen": "test",
@@ -255,8 +234,10 @@
                   "",
                   "pm.test(\"Response has ticket data\", function () {",
                   "    var jsonData = pm.response.json();",
-                  "    pm.expect(jsonData).to.have.property('tracking_code');",
-                  "    pm.expect(jsonData).to.have.property('status');",
+                  "    pm.expect(jsonData).to.have.property('success');",
+                  "    pm.expect(jsonData).to.have.property('ticket');",
+                  "    pm.expect(jsonData.ticket).to.have.property('tracking_id');",
+                  "    pm.expect(jsonData.ticket).to.have.property('status');",
                   "});"
                 ],
                 "type": "text/javascript"
@@ -266,15 +247,223 @@
           "request": {
             "method": "GET",
             "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
+              { "key": "Accept", "value": "application/json" }
             ],
             "url": {
-              "raw": "{{base_url}}/guest/tickets/{{tracking_code}}",
+              "raw": "{{base_url}}/guest/tickets/{{tracking_id}}",
               "host": ["{{base_url}}"],
-              "path": ["guest", "tickets", "{{tracking_code}}"]
+              "path": ["guest", "tickets", "{{tracking_id}}"]
+            },
+            "description": "Legacy GET route: GET /guest/tickets/{trackingCode}. Still works alongside the newer POST /tickets/track route."
+          },
+          "response": []
+        },
+        {
+          "name": "Track Ticket (POST — Civic UI)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response has success and ticket\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "    pm.expect(jsonData).to.have.property('ticket');",
+                  "    pm.expect(jsonData.ticket).to.have.property('tracking_id');",
+                  "    pm.expect(jsonData.ticket).to.have.property('status');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reference_code\": \"{{tracking_id}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tickets/track",
+              "host": ["{{base_url}}"],
+              "path": ["tickets", "track"]
+            },
+            "description": "Civic UI route for tracking a ticket by reference code. POST /tickets/track with body { reference_code }."
+          },
+          "response": []
+        },
+        {
+          "name": "Confirm Resolution",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response has success\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resolved\": true,\n  \"note\": \"Issue has been resolved\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tickets/{{tracking_id}}/confirm",
+              "host": ["{{base_url}}"],
+              "path": ["tickets", "{{tracking_id}}", "confirm"]
+            },
+            "description": "Resident confirms whether the ticket issue has been resolved. PATCH /tickets/{ref}/confirm. Ticket must be in 'Completed' status. resolved=true closes the ticket as 'Verified & Closed'; resolved=false adds a note that the issue is still unresolved."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "item": [
+        {
+          "name": "Get Notifications",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is object with data array\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('object');",
+                  "    if (jsonData.data) {",
+                  "        pm.expect(jsonData.data).to.be.an('array');",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/notifications",
+              "host": ["{{base_url}}"],
+              "path": ["notifications"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Mark Notification as Read",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/notifications/1/read",
+              "host": ["{{base_url}}"],
+              "path": ["notifications", "1", "read"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Mark All Notifications as Read",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/notifications/mark-all-read",
+              "host": ["{{base_url}}"],
+              "path": ["notifications", "mark-all-read"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Notification",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/notifications/1",
+              "host": ["{{base_url}}"],
+              "path": ["notifications", "1"]
             }
           },
           "response": []
@@ -307,14 +496,8 @@
           "request": {
             "method": "GET",
             "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
             ],
             "url": {
               "raw": "{{base_url}}/admin/dashboard",
@@ -347,14 +530,8 @@
           "request": {
             "method": "GET",
             "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
             ],
             "url": {
               "raw": "{{base_url}}/admin/tickets",
@@ -382,18 +559,9 @@
           "request": {
             "method": "PATCH",
             "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
             ],
             "body": {
               "mode": "raw",
@@ -425,18 +593,9 @@
           "request": {
             "method": "POST",
             "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
             ],
             "body": {
               "mode": "raw",
@@ -473,14 +632,8 @@
           "request": {
             "method": "GET",
             "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
             ],
             "url": {
               "raw": "{{base_url}}/admin/users",
@@ -508,18 +661,9 @@
           "request": {
             "method": "POST",
             "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
             ],
             "body": {
               "mode": "raw",
@@ -551,14 +695,8 @@
           "request": {
             "method": "DELETE",
             "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
             ],
             "url": {
               "raw": "{{base_url}}/admin/users/2",
@@ -586,18 +724,9 @@
           "request": {
             "method": "PATCH",
             "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
             ],
             "body": {
               "mode": "raw",
@@ -634,14 +763,8 @@
           "request": {
             "method": "GET",
             "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
             ],
             "url": {
               "raw": "{{base_url}}/admin/personnel",
@@ -669,14 +792,8 @@
           "request": {
             "method": "GET",
             "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
             ],
             "url": {
               "raw": "{{base_url}}/admin/profile",
@@ -704,18 +821,9 @@
           "request": {
             "method": "PATCH",
             "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
             ],
             "body": {
               "mode": "raw",
@@ -752,14 +860,8 @@
           "request": {
             "method": "GET",
             "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
             ],
             "url": {
               "raw": "{{base_url}}/admin/map",
@@ -797,14 +899,8 @@
           "request": {
             "method": "GET",
             "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
             ],
             "url": {
               "raw": "{{base_url}}/personnel/dashboard",
@@ -837,14 +933,8 @@
           "request": {
             "method": "GET",
             "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
             ],
             "url": {
               "raw": "{{base_url}}/personnel/tasks",
@@ -872,18 +962,9 @@
           "request": {
             "method": "PATCH",
             "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
             ],
             "body": {
               "mode": "raw",
@@ -915,14 +996,8 @@
           "request": {
             "method": "GET",
             "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
             ],
             "url": {
               "raw": "{{base_url}}/personnel/profile",
@@ -950,18 +1025,9 @@
           "request": {
             "method": "PATCH",
             "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
             ],
             "body": {
               "mode": "raw",
