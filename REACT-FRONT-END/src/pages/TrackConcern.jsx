@@ -101,6 +101,54 @@ export default function TrackConcern() {
         #track-page #track-hero .track-badge-text { color: #94a3b8 !important; }
         #track-page #track-hero .track-concern-word { color: #38bdf8 !important; -webkit-text-fill-color: #38bdf8 !important; }
         #track-page #track-hero .track-subtitle { color: rgba(255,255,255,0.75) !important; }
+        
+        /* Search input text visibility fix */
+        #track-page #track-hero input[type="text"] {
+          color: #111827 !important;
+          -webkit-text-fill-color: #111827 !important;
+        }
+        #track-page #track-hero input[type="text"]::placeholder {
+          color: #6B7280 !important;
+          opacity: 1 !important;
+        }
+        
+        /* "Need Help?" card - ensure all text is white on dark background */
+        #track-page .help-card,
+        #track-page .help-card *,
+        #track-page .help-card h1,
+        #track-page .help-card h2,
+        #track-page .help-card h3,
+        #track-page .help-card h4,
+        #track-page .help-card h5,
+        #track-page .help-card h6,
+        #track-page .help-card p,
+        #track-page .help-card span,
+        #track-page .help-card div {
+          color: #ffffff !important;
+        }
+        
+        /* Contact card text - ensure visibility */
+        #track-page .contact-card,
+        #track-page .contact-card *,
+        #track-page .contact-card p,
+        #track-page .contact-card span {
+          color: #ffffff !important;
+        }
+        
+        /* "Our Commitment to Transparency" card - ensure all text is white on teal background */
+        #track-page .transparency-card,
+        #track-page .transparency-card *,
+        #track-page .transparency-card h1,
+        #track-page .transparency-card h2,
+        #track-page .transparency-card h3,
+        #track-page .transparency-card h4,
+        #track-page .transparency-card h5,
+        #track-page .transparency-card h6,
+        #track-page .transparency-card p,
+        #track-page .transparency-card span,
+        #track-page .transparency-card div {
+          color: #ffffff !important;
+        }
       `}</style>
 
       {/* ══ HERO ══════════════════════════════════════════════════════════ */}
@@ -204,7 +252,7 @@ export default function TrackConcern() {
               onChange={e => { setReferenceCode(e.target.value.toUpperCase()); setError(null); }}
               style={{
                 flex: 1, border: 'none', outline: 'none',
-                fontSize: 15, color: '#1e293b',
+                fontSize: 15, color: '#111827',
                 background: 'transparent',
                 fontFamily: 'inherit',
                 padding: '10px 0',
@@ -478,7 +526,7 @@ export default function TrackConcern() {
                     </div>
                   </div>
                 </div>
-                <div style={{ background: '#0D9488', borderRadius: 16, padding: 24, color: 'white' }}>
+                <div className="transparency-card" style={{ background: '#0D9488', borderRadius: 16, padding: 24, color: 'white' }}>
                   <span className="material-symbols-outlined" style={{ fontSize: 32, marginBottom: 12, display: 'block', color: '#FFFFFF' }}>verified_user</span>
                   <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#FFFFFF' }}>Our Commitment to Transparency</h3>
                   <p style={{ fontSize: 14, lineHeight: 1.6, color: '#FFFFFF' }}>We're dedicated to keeping you informed every step of the way.</p>
