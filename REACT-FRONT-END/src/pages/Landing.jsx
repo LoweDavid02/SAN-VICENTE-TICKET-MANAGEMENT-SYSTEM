@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Shield, ArrowRight, Menu, X, ChevronUp, ChevronLeft, ChevronRight, Users, FileText, CheckCircle, Zap, MapPin, Phone, Mail } from 'lucide-react';
+import blinkedLogo from '../assets/BLINKED.png';
 
 const SLIDES = [
   { id:1, title:'Community-First Governance', desc:'BLINKED serves over 12,000 residents with transparent, responsive, technology-driven public service.', stat:'12,000+', statLabel:'Residents Served' },
@@ -119,9 +120,11 @@ export default function Landing() {
         <div style={{ maxWidth:1200, margin:'0 auto', padding:'0 16px', height:64, display:'flex', alignItems:'center', justifyContent:'space-between', gap:12 }}>
           {/* Logo */}
           <div style={{ display:'flex', alignItems:'center', gap:10, flexShrink:0 }}>
-            <div style={{ width:36, height:36, borderRadius:10, background:'#0d9488', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 2px 8px rgba(13,148,136,.2)' }}>
-              <Shield size={18} color="#fff" strokeWidth={2.5} />
-            </div>
+            <img 
+              src={blinkedLogo} 
+              alt="BLINKED Logo" 
+              style={{ width: 36, height: 36, objectFit: 'contain' }}
+            />
             <div>
               <p style={{ fontSize:14, fontWeight:700, color:'#0f172a', lineHeight:1.1 }}>BLINKED</p>
               <p style={{ fontSize:10, color:'#94a3b8', letterSpacing:'0.05em' }}>Apalit, Pampanga</p>
@@ -361,9 +364,11 @@ export default function Landing() {
           <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))', gap:32, marginBottom:40 }}>
             <div>
               <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:14 }}>
-                <div style={{ width:32, height:32, borderRadius:9, background:'#0d9488', display:'flex', alignItems:'center', justifyContent:'center' }}>
-                  <Shield size={16} color="#fff" strokeWidth={2.5} />
-                </div>
+                <img 
+                  src={blinkedLogo} 
+                  alt="BLINKED Logo" 
+                  style={{ width: 32, height: 32, objectFit: 'contain' }}
+                />
                 <span style={{ fontSize:14, fontWeight:700, color:'#fff' }}>BLINKED</span>
               </div>
               <p style={{ fontSize:13, lineHeight:1.7, color:'#ffffff' }}>Centralized Intelligence Platform for Apalit, Pampanga. v4.2.1-stable.</p>

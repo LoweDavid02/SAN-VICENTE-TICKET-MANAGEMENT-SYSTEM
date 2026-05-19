@@ -6,6 +6,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Shield, ArrowRight, Phone, MapPin, FileText, Menu, X, ChevronDown, CheckCircle, Clock } from 'lucide-react';
 import { useState } from 'react';
+import blinkedLogo from '../assets/BLINKED.png';
 
 const FAQS = [
   {
@@ -118,9 +119,11 @@ export default function LandingCivic() {
 
           {/* Logo */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
-            <div style={{ width: 36, height: 36, borderRadius: 9, background: '#1E2D4E', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Shield size={18} color="#fff" strokeWidth={2.5} />
-            </div>
+            <img 
+              src={blinkedLogo} 
+              alt="BLINKED Logo" 
+              style={{ width: 36, height: 36, objectFit: 'contain' }}
+            />
             <div>
               <p style={{ fontSize: 14, fontWeight: 700, color: '#1E2D4E', lineHeight: 1.1 }}>BLINKED</p>
               <p style={{ fontSize: 10, color: '#9ca3af', letterSpacing: '0.05em' }}>Public Service Portal</p>
@@ -319,7 +322,11 @@ export default function LandingCivic() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 36, marginBottom: 40 }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-                <Shield size={20} color="#fff" strokeWidth={2.5} />
+                <img 
+                  src={blinkedLogo} 
+                  alt="BLINKED Logo" 
+                  style={{ width: 20, height: 20, objectFit: 'contain' }}
+                />
                 <span style={{ fontSize: 15, fontWeight: 700, color: '#fff' }}>BLINKED</span>
               </div>
               <p style={{ fontSize: 13, lineHeight: 1.7, color: '#fff' }}>Serving the community of San Vicente, Apalit, Pampanga with integrity and care.</p>

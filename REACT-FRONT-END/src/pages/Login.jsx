@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import useAuthStore from '../stores/authStore';
 import api from '../lib/axios';
+import blinkedLogo from '../assets/BLINKED.png';
 
 const STATS = [
   { value: '1,284', label: 'Tickets resolved' },
@@ -149,10 +150,11 @@ export default function Login() {
 
         {/* Logo */}
         <div className="relative z-10 flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl flex items-center justify-center"
-               style={{ background: 'linear-gradient(135deg, rgba(20,184,166,.3), rgba(13,148,136,.2))', border: '1px solid rgba(20,184,166,.4)' }}>
-            <Shield size={18} style={{ color: '#5eead4' }} />
-          </div>
+          <img 
+            src={blinkedLogo} 
+            alt="BLINKED Logo" 
+            style={{ width: 40, height: 40, objectFit: 'contain' }}
+          />
           <div>
             <p className="text-white font-semibold text-sm tracking-wide leading-none" style={{ color: '#ffffff' }}>BLINKED</p>
             <p className="text-[10px] mt-0.5" style={{ color: '#ffffff' }}>v4.2.1-stable</p>
@@ -235,10 +237,11 @@ export default function Login() {
 
               {/* Logo — mobile only */}
               <div className="flex items-center gap-2.5 mb-6 lg:hidden">
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center"
-                     style={{ background: 'linear-gradient(135deg, #14b8a6, #0d9488)' }}>
-                  <Shield size={15} className="text-white" />
-                </div>
+                <img 
+                  src={blinkedLogo} 
+                  alt="BLINKED Logo" 
+                  style={{ width: 32, height: 32, objectFit: 'contain' }}
+                />
                 <span className="font-semibold text-slate-800 text-sm">BLINKED</span>
               </div>
 
