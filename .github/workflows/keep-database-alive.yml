@@ -1,0 +1,30 @@
+name: Keep Render Database Alive
+
+on:
+  schedule:
+    # Run every 12 hours to keep PostgreSQL database from spinning down
+    # Render free-tier databases pause after 90 days of inactivity
+    - cron: '0 */12 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  ping-database:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Database via API Health Check
+        run: |
+          echo "Pinging API to trigger database connection..."
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "${{ secrets.RENDER_API_URL }}/api/health")
+          echo "Health Check Response Code: $HTTP_CODE"
+          if [ "$HTTP_CODE" -eq 200 ]; then
+            echo "✅ Database connection successful"
+          else
+            echo "⚠️ Health check returned $HTTP_CODE"
+          fi
+        continue-on-error: true
+
+      - name: Summary
+        run: |
+          echo "Database keep-alive ping completed at $(date)"
+          echo "This workflow runs every 12 hours to prevent database from pausing."
+          echo "The /api/health endpoint checks database connectivity."
